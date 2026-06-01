@@ -2,489 +2,834 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Dashboard Fiscal Gerencial - Ibirité/MG 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0D1B2A;--navy-light:#162233;--navy-mid:#1E3048;--accent:#00C9A7;--accent-dim:rgba(0,201,167,0.15);--accent2:#3A9BDC;--accent2-dim:rgba(58,155,220,0.15);--amber:#F5A623;--amber-dim:rgba(245,166,35,0.15);--red:#E05252;--red-dim:rgba(224,82,82,0.15);--green:#4CAF7D;--green-dim:rgba(76,175,125,0.15);--text-primary:#E8EDF2;--text-secondary:#8A9BB0;--text-muted:#526070;--border:rgba(255,255,255,0.07);--border-light:rgba(255,255,255,0.04);--card-bg:#162233;--card-bg2:#1A2840;--surface:#1E3048;}
+:root{--navy:#0D1B2A;--nl:#162233;--nm:#1E3048;--ac:#00C9A7;--acd:rgba(0,201,167,.15);--a2:#3A9BDC;--a2d:rgba(58,155,220,.15);--am:#F5A623;--amd:rgba(245,166,35,.15);--rd:#E05252;--rdd:rgba(224,82,82,.15);--gn:#4CAF7D;--gnd:rgba(76,175,125,.15);--tp:#E8EDF2;--ts:#8A9BB0;--tm:#526070;--br:rgba(255,255,255,.07);--bl:rgba(255,255,255,.04);--cb:#162233;--cb2:#1A2840;--sf:#1E3048;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--text-primary);min-height:100vh;font-size:14px;line-height:1.6;}
-header{background:var(--navy-light);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px;}
-.logo-badge{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0;}
-.header-left{display:flex;align-items:center;gap:14px;}
-.header-title{font-size:15px;font-weight:600;}
-.header-sub{font-size:11px;color:var(--text-secondary);}
-.header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.badge-status{display:flex;align-items:center;gap:6px;background:var(--green-dim);border:1px solid rgba(76,175,125,0.3);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:500;color:var(--green);}
-.badge-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);}
-.badge-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);}
-.badge-source{background:var(--accent-dim);border:1px solid rgba(0,201,167,0.25);border-radius:6px;padding:3px 10px;font-size:11px;color:var(--accent);font-weight:500;}
-.container{max-width:1400px;margin:0 auto;padding:2rem;}
-.section-title{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;margin-top:2rem;display:flex;align-items:center;gap:8px;}
-.section-title::after{content:'';flex:1;height:1px;background:var(--border);}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
-.kpi-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;position:relative;overflow:hidden;transition:transform 0.2s,border-color 0.2s;}
-.kpi-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.14);}
-.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.kpi-card.accent::before{background:var(--accent);}
-.kpi-card.blue::before{background:var(--accent2);}
-.kpi-card.amber::before{background:var(--amber);}
-.kpi-card.red::before{background:var(--red);}
-.kpi-card.green::before{background:var(--green);}
-.kpi-label{font-size:11px;color:var(--text-secondary);font-weight:500;letter-spacing:0.3px;margin-bottom:6px;}
-.kpi-value{font-size:22px;font-weight:700;line-height:1.1;color:var(--text-primary);font-family:'JetBrains Mono',monospace;}
-.kpi-meta{font-size:11px;color:var(--text-muted);margin-top:6px;}
-.kpi-pill{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;margin-top:8px;}
-.pill-ok{background:var(--green-dim);color:var(--green);border:1px solid rgba(76,175,125,0.3);}
-.pill-warn{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,166,35,0.3);}
-.pill-crit{background:var(--red-dim);color:var(--red);border:1px solid rgba(224,82,82,0.3);}
-.pill-info{background:var(--accent2-dim);color:var(--accent2);border:1px solid rgba(58,155,220,0.3);}
-.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;}
-.chart-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1.5rem;}
-.chart-card.full{grid-column:1/-1;}
-.chart-title{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px;}
-.chart-sub{font-size:11px;color:var(--text-muted);margin-bottom:1.25rem;}
-.progress-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-.progress-label{font-size:12px;color:var(--text-secondary);width:180px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.progress-bar-wrap{flex:1;height:8px;background:var(--surface);border-radius:4px;overflow:hidden;}
-.progress-bar{height:100%;border-radius:4px;}
-.progress-pct{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-secondary);width:44px;text-align:right;flex-shrink:0;}
-.flow-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
-.flow-card{background:var(--card-bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;}
-.flow-type{font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
-.flow-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;}
-.flow-val.pos{color:var(--green);}
-.flow-val.neg{color:var(--red);}
-.flow-val.neutral{color:var(--accent2);}
-.flow-sub{font-size:10px;color:var(--text-muted);margin-top:4px;}
-.risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
-.risk-card{background:var(--card-bg2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;border-left:3px solid transparent;}
-.risk-card.high{border-left-color:var(--red);}
-.risk-card.medium{border-left-color:var(--amber);}
-.risk-card.low{border-left-color:var(--green);}
-.risk-area{font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
-.risk-title{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:6px;}
-.risk-action{font-size:11px;color:var(--text-secondary);line-height:1.5;}
-.risk-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
-.risk-resp{font-size:10px;color:var(--text-muted);}
-.checklist-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;}
-.check-card{background:var(--card-bg2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;display:flex;gap:12px;align-items:flex-start;}
-.check-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-weight:700;}
-.check-icon.ok{background:var(--green-dim);color:var(--green);}
-.check-icon.warn{background:var(--amber-dim);color:var(--amber);}
-.check-icon.pending{background:var(--accent2-dim);color:var(--accent2);}
-.check-title{font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:3px;}
-.check-detail{font-size:11px;color:var(--text-muted);line-height:1.5;}
-.check-period{font-size:10px;color:var(--text-muted);margin-top:4px;}
-.data-table{width:100%;border-collapse:collapse;}
-.data-table th{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;}
-.data-table td{padding:10px 12px;font-size:12px;color:var(--text-secondary);border-bottom:1px solid var(--border-light);}
-.data-table tr:last-child td{border-bottom:none;}
-.data-table td.name{color:var(--text-primary);font-weight:500;}
-footer{border-top:1px solid var(--border);margin-top:3rem;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--text-muted);max-width:1400px;margin-left:auto;margin-right:auto;}
-@media(max-width:768px){header{height:auto;padding:0.75rem 1rem;}.container{padding:1.25rem 1rem;}.kpi-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));}.chart-grid{grid-template-columns:1fr;}.risk-grid{grid-template-columns:1fr;}.checklist-grid{grid-template-columns:1fr;}.flow-grid{grid-template-columns:repeat(2,1fr);}footer{flex-direction:column;}}
-@media(max-width:480px){.kpi-grid{grid-template-columns:1fr 1fr;}.kpi-value{font-size:17px;}.flow-grid{grid-template-columns:1fr 1fr;}}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--tp);min-height:100vh;font-size:14px;line-height:1.6;-webkit-text-size-adjust:100%;}
+
+/* HEADER */
+header{background:var(--nl);border-bottom:1px solid var(--br);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;min-height:60px;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px;padding-top:8px;padding-bottom:8px;}
+.lb{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--ac),var(--a2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;flex-shrink:0;}
+.hl{display:flex;align-items:center;gap:12px;}
+.ht{font-size:14px;font-weight:600;}
+.hs{font-size:11px;color:var(--ts);}
+.hr{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.bs{display:flex;align-items:center;gap:5px;background:var(--gnd);border:1px solid rgba(76,175,125,.3);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:500;color:var(--gn);}
+.bs::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gn);}
+.bsc{background:var(--acd);border:1px solid rgba(0,201,167,.25);border-radius:6px;padding:2px 8px;font-size:10px;color:var(--ac);font-weight:500;}
+.bd{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tm);}
+
+/* NAV TABS */
+.nav-tabs{background:var(--nl);border-bottom:1px solid var(--br);padding:0 1.5rem;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.nav-tabs::-webkit-scrollbar{display:none;}
+.nt{padding:10px 16px;font-size:12px;font-weight:500;color:var(--tm);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+.nt:hover{color:var(--ts);}
+.nt.active{color:var(--ac);border-bottom-color:var(--ac);}
+
+/* LAYOUT */
+.page{display:none;}.page.active{display:block;}
+.container{max-width:1400px;margin:0 auto;padding:1.5rem;}
+.stitle{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--tm);margin-bottom:.75rem;margin-top:1.5rem;display:flex;align-items:center;gap:8px;}
+.stitle::after{content:'';flex:1;height:1px;background:var(--br);}
+
+/* KPI GRID */
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;}
+.kc{background:var(--cb);border:1px solid var(--br);border-radius:10px;padding:1rem 1.25rem;position:relative;overflow:hidden;transition:transform .2s,border-color .2s;}
+.kc:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.14);}
+.kc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.kc.c-ac::before{background:var(--ac);}
+.kc.c-a2::before{background:var(--a2);}
+.kc.c-am::before{background:var(--am);}
+.kc.c-rd::before{background:var(--rd);}
+.kc.c-gn::before{background:var(--gn);}
+.kl{font-size:10px;color:var(--ts);font-weight:500;margin-bottom:4px;}
+.kv{font-size:19px;font-weight:700;line-height:1.1;color:var(--tp);font-family:'JetBrains Mono',monospace;}
+.km{font-size:10px;color:var(--tm);margin-top:4px;}
+.kp{display:inline-block;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:600;margin-top:6px;}
+.p-ok{background:var(--gnd);color:var(--gn);border:1px solid rgba(76,175,125,.3);}
+.p-wn{background:var(--amd);color:var(--am);border:1px solid rgba(245,166,35,.3);}
+.p-cr{background:var(--rdd);color:var(--rd);border:1px solid rgba(224,82,82,.3);}
+.p-if{background:var(--a2d);color:var(--a2);border:1px solid rgba(58,155,220,.3);}
+
+/* CHARTS */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;}
+.cc{background:var(--cb);border:1px solid var(--br);border-radius:10px;padding:1.25rem;}
+.cc.full{grid-column:1/-1;}
+.ct{font-size:13px;font-weight:600;color:var(--tp);margin-bottom:3px;}
+.cs{font-size:11px;color:var(--tm);margin-bottom:1rem;}
+
+/* PROGRESS */
+.pr{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.prl{font-size:11px;color:var(--ts);width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.prw{flex:1;height:7px;background:var(--sf);border-radius:4px;overflow:hidden;}
+.prb{height:100%;border-radius:4px;}
+.prp{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ts);width:42px;text-align:right;flex-shrink:0;}
+
+/* LRF BAR */
+.lrfw{display:grid;gap:10px;}
+.lrfd{display:flex;justify-content:space-between;margin-bottom:6px;}
+.lrfv{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--gn);}
+.lrfm{text-align:right;}
+.lrfml{font-size:10px;color:var(--tm);}
+.lrfmv{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--am);font-weight:600;}
+.lrfbar{width:100%;background:var(--sf);border-radius:8px;height:18px;overflow:hidden;position:relative;margin:6px 0;}
+.lrffill{position:absolute;left:0;top:0;height:100%;background:var(--gn);border-radius:8px;}
+.lrfmk{position:absolute;top:0;width:2px;height:100%;}
+.lrftk{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--tm);}
+.lrfcards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
+.lrfcard{background:var(--sf);border-radius:7px;padding:8px;text-align:center;}
+.lrfcl{font-size:9px;color:var(--tm);}
+.lrfcv{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tp);font-weight:600;}
+
+/* FLOW CARDS */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;}
+.fc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem;text-align:center;}
+.ft{font-size:9px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);margin-bottom:3px;}
+.fv{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;}
+.fv.pos{color:var(--gn);}
+.fv.neg{color:var(--rd);}
+.fv.neu{color:var(--a2);}
+.fs{font-size:9px;color:var(--tm);margin-top:3px;}
+
+/* RISK CARDS */
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;}
+.rc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:1rem 1.125rem;border-left:3px solid transparent;}
+.rc.rh{border-left-color:var(--rd);}
+.rc.rm{border-left-color:var(--am);}
+.rc.rl{border-left-color:var(--gn);}
+.ra{font-size:9px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);margin-bottom:3px;}
+.rt{font-size:12px;font-weight:600;color:var(--tp);margin-bottom:5px;}
+.rac{font-size:11px;color:var(--ts);line-height:1.5;}
+.rf{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
+.rr{font-size:9px;color:var(--tm);}
+
+/* TABLES */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--br);}
+.tbl{width:100%;border-collapse:collapse;min-width:600px;}
+.tbl th{font-size:9px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--tm);padding:8px 12px;border-bottom:1px solid var(--br);text-align:left;white-space:nowrap;background:var(--cb2);}
+.tbl td{padding:9px 12px;font-size:11px;color:var(--ts);border-bottom:1px solid var(--bl);}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:rgba(255,255,255,.02);}
+.tbl td.nm{color:var(--tp);font-weight:500;}
+.tbl td.mono{font-family:'JetBrains Mono',monospace;color:var(--tp);font-size:11px;}
+.tbl td.pos{color:var(--gn);}
+.tbl td.neg{color:var(--rd);}
+.tbl td.warn{color:var(--am);}
+.badge{display:inline-block;padding:1px 6px;border-radius:8px;font-size:9px;font-weight:600;}
+.badge-ok{background:var(--gnd);color:var(--gn);}
+.badge-wn{background:var(--amd);color:var(--am);}
+.badge-cr{background:var(--rdd);color:var(--rd);}
+.badge-if{background:var(--a2d);color:var(--a2);}
+
+/* CHECKLIST */
+.chkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;}
+.chkc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem 1.125rem;display:flex;gap:10px;align-items:flex-start;}
+.chki{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;}
+.chki.ok{background:var(--gnd);color:var(--gn);}
+.chki.wn{background:var(--amd);color:var(--am);}
+.chki.pd{background:var(--a2d);color:var(--a2);}
+.chkt{font-size:11px;font-weight:600;color:var(--tp);margin-bottom:2px;}
+.chkd{font-size:10px;color:var(--tm);line-height:1.5;}
+.chkp{font-size:9px;color:var(--tm);margin-top:3px;}
+
+/* LIQUIDAÇÕES */
+.liq-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:14px;}
+.liq-card{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem;text-align:center;}
+.liq-lbl{font-size:9px;color:var(--tm);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.liq-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--tp);}
+.liq-sub{font-size:9px;color:var(--tm);margin-top:2px;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--br);margin-top:2.5rem;padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:10px;color:var(--tm);max-width:1400px;margin-left:auto;margin-right:auto;}
+
+/* MOBILE */
+@media(max-width:768px){
+  header{padding:.75rem 1rem;}
+  .container{padding:1rem;}
+  .kgrid{grid-template-columns:1fr 1fr;}
+  .kv{font-size:16px;}
+  .cgrid{grid-template-columns:1fr;}
+  .lrfcards{grid-template-columns:1fr 1fr 1fr;}
+  .fgrid{grid-template-columns:1fr 1fr;}
+  .rgrid{grid-template-columns:1fr;}
+  .chkgrid{grid-template-columns:1fr;}
+  .liq-stats{grid-template-columns:1fr 1fr;}
+  footer{flex-direction:column;}
+  .nav-tabs{padding:0 1rem;}
+}
+@media(max-width:480px){
+  .kgrid{grid-template-columns:1fr 1fr;}
+  .kv{font-size:14px;}
+  .fgrid{grid-template-columns:1fr 1fr;}
+  .lrfcards{grid-template-columns:1fr 1fr 1fr;}
+  .liq-stats{grid-template-columns:1fr 1fr;}
+  .prl{width:130px;}
+}
 </style>
+<script>
+// Função de navegação definida no head para estar disponível antes dos botões
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nt').forEach(function(b){b.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
 </head>
 <body>
+
 <header>
-  <div class="header-left">
-    <div class="logo-badge">TC</div>
+  <div class="hl">
+    <div class="lb">TC</div>
     <div>
-      <div class="header-title">Painel Fiscal Gerencial - Ibirité / MG</div>
-      <div class="header-sub">Prefeitura Municipal · Exercício 2026 · Fontes: RREO, RGF, DFC - Betha Sistemas</div>
+      <div class="ht">Painel Fiscal Gerencial &mdash; Ibirité / MG</div>
+      <div class="hs">Exercício 2026 &middot; RREO, RGF, DFC, Liquidações &middot; Betha Sistemas</div>
     </div>
   </div>
-  <div class="header-right">
-    <div class="badge-status">Em conformidade</div>
-    <div class="badge-source">LRF / LC 141 / TCE-MG</div>
-    <div class="badge-date">01/06/2026 · 11h56</div>
+  <div class="hr">
+    <div class="bs">Em conformidade</div>
+    <div class="bsc">LRF &middot; LC 141 &middot; TCE-MG</div>
+    <div class="bd">01/06/2026</div>
   </div>
 </header>
 
+<nav class="nav-tabs" role="tablist">
+  <button class="nt active" onclick="showPage('p-exec',this)">Visão Executiva</button>
+  <button class="nt" onclick="showPage('p-receita',this)">Receita Detalhada</button>
+  <button class="nt" onclick="showPage('p-pessoal',this)">Pessoal / LRF</button>
+  <button class="nt" onclick="showPage('p-saude',this)">Saúde / ASPS</button>
+  <button class="nt" onclick="showPage('p-caixa',this)">Fluxo de Caixa</button>
+  <button class="nt" onclick="showPage('p-liq',this)">Liquidações</button>
+  <button class="nt" onclick="showPage('p-riscos',this)">Riscos &amp; Checklist</button>
+</nav>
+
+<!-- ========== PÁGINA 1: VISÃO EXECUTIVA ========== -->
+<div id="p-exec" class="page active">
 <div class="container">
 
-<div class="section-title">Indicadores Executivos Principais</div>
-<div class="kpi-grid">
-  <div class="kpi-card accent">
-    <div class="kpi-label">Receita Total Arrecadada</div>
-    <div class="kpi-value">R$ 266,6 M</div>
-    <div class="kpi-meta">Orçada: R$ 781,1 M &middot; 34,1% realizado</div>
-    <div class="kpi-pill pill-crit">CRÍTICO &mdash; Abaixo da meta de 50%</div>
+  <div class="stitle">Indicadores Executivos Principais</div>
+  <div class="kgrid">
+    <div class="kc c-ac">
+      <div class="kl">Receita Total Arrecadada</div>
+      <div class="kv">R$ 266,6 M</div>
+      <div class="km">Orçada: R$ 781,1 M &middot; 34,1%</div>
+      <div class="kp p-cr">CRÍTICO &mdash; Abaixo da meta 50%</div>
+    </div>
+    <div class="kc c-a2">
+      <div class="kl">Receita Corrente Arrecadada</div>
+      <div class="kv">R$ 255,6 M</div>
+      <div class="km">Orçada: R$ 679,9 M &middot; 37,6%</div>
+      <div class="kp p-wn">ATENÇÃO &mdash; Monitorar</div>
+    </div>
+    <div class="kc c-am">
+      <div class="kl">Despesa Total com Pessoal (DTP)</div>
+      <div class="kv">R$ 275,1 M</div>
+      <div class="km">42,88% da RCL Ajustada &middot; Lim: 60%</div>
+      <div class="kp p-ok">REGULAR &mdash; Dentro da LRF</div>
+    </div>
+    <div class="kc c-gn">
+      <div class="kl">ASPS &mdash; Saúde Liquidada</div>
+      <div class="kv">R$ 41,4 M</div>
+      <div class="km">24,96% da base &middot; Mínimo: 15%</div>
+      <div class="kp p-ok">CUMPRIDO &mdash; LC 141/2012</div>
+    </div>
+    <div class="kc c-ac">
+      <div class="kl">Geração Líquida de Caixa</div>
+      <div class="kv">R$ 12,2 M</div>
+      <div class="km">Caixa final: R$ 617,2 M</div>
+      <div class="kp p-ok">POSITIVA &mdash; Saldo saudável</div>
+    </div>
+    <div class="kc c-a2">
+      <div class="kl">Fluxo Operacional Líquido</div>
+      <div class="kv">R$ 26,0 M</div>
+      <div class="km">Ing: R$ 325,2 M &middot; Des: R$ 299,3 M</div>
+      <div class="kp p-ok">SUPERÁVIT OPERACIONAL</div>
+    </div>
+    <div class="kc c-rd">
+      <div class="kl">Receitas de Capital</div>
+      <div class="kv">R$ 159,5 K</div>
+      <div class="km">Orçada: R$ 101,1 M &middot; 0,16%</div>
+      <div class="kp p-cr">CRÍTICO &mdash; Convênios pendentes</div>
+    </div>
+    <div class="kc c-am">
+      <div class="kl">RCL Ajustada (Base LRF)</div>
+      <div class="kv">R$ 641,6 M</div>
+      <div class="km">RCL bruta: R$ 666,1 M</div>
+      <div class="kp p-if">Referência 12 meses</div>
+    </div>
+    <div class="kc c-a2">
+      <div class="kl">Liquidações Emitidas &mdash; Total</div>
+      <div class="kv">R$ 139,9 M</div>
+      <div class="km">2.274 registros &middot; 213 credores</div>
+      <div class="kp p-if">Jan&ndash;Jun 2026</div>
+    </div>
+    <div class="kc c-am">
+      <div class="kl">Saldo Líquido Liquidações</div>
+      <div class="kv">R$ 139,6 M</div>
+      <div class="km">Anulações: R$ 330,1 K</div>
+      <div class="kp p-ok">MONITORADO</div>
+    </div>
+    <div class="kc c-rd">
+      <div class="kl">Intraorçamentárias</div>
+      <div class="kv">R$ 10,9 M</div>
+      <div class="km">Sem dotação inicial &middot; Excedente</div>
+      <div class="kp p-if">Realizada sem previsão</div>
+    </div>
+    <div class="kc c-gn">
+      <div class="kl">Outras Receitas Correntes</div>
+      <div class="kv">R$ 2,7 M</div>
+      <div class="km">Orçada: R$ 1,5 M &middot; 185,2%</div>
+      <div class="kp p-ok">EXCEDENTE &mdash; Acima do orçado</div>
+    </div>
   </div>
-  <div class="kpi-card blue">
-    <div class="kpi-label">Receita Corrente Arrecadada</div>
-    <div class="kpi-value">R$ 255,6 M</div>
-    <div class="kpi-meta">Orçada: R$ 679,9 M &middot; 37,6% realizado</div>
-    <div class="kpi-pill pill-warn">ATENÇÃO &mdash; Monitorar</div>
+
+  <div class="stitle">Composição da Receita Arrecadada</div>
+  <div class="cgrid">
+    <div class="cc full">
+      <div class="ct">Receita Orçada &times; Arrecadada por Categoria Principal</div>
+      <div class="cs">Valores em R$ milhões &middot; Anexo 10 RREO &middot; Jan&ndash;Dez 2026 (acumulado até 01/06/2026)</div>
+      <div style="position:relative;height:280px;">
+        <canvas id="chExec" role="img" aria-label="Receita orçada versus arrecadada por categoria">Correntes: 679,9M orçado, 255,6M arrecadado. Tributárias: 96,6M e 49,1M. Transferências: 512,9M e 187,1M. Capital: 101,1M e 0,16M.</canvas>
+      </div>
+    </div>
+    <div class="cc">
+      <div class="ct">Execução das Principais Rubricas Tributárias</div>
+      <div class="cs">% realizado &middot; Meta temporal: 50%</div>
+      <div class="pr"><div class="prl">IPTU</div><div class="prw"><div class="prb" style="width:82%;background:var(--gn);"></div></div><div class="prp">82,0%</div></div>
+      <div class="pr"><div class="prl">IPVA (estadual)</div><div class="prw"><div class="prb" style="width:71%;background:var(--gn);"></div></div><div class="prp">70,7%</div></div>
+      <div class="pr"><div class="prl">IRRF</div><div class="prw"><div class="prb" style="width:49%;background:var(--am);"></div></div><div class="prp">49,1%</div></div>
+      <div class="pr"><div class="prl">COSIP</div><div class="prw"><div class="prb" style="width:48%;background:var(--am);"></div></div><div class="prp">48,1%</div></div>
+      <div class="pr"><div class="prl">FPM</div><div class="prw"><div class="prb" style="width:37%;background:var(--am);"></div></div><div class="prp">37,0%</div></div>
+      <div class="pr"><div class="prl">ICMS (estadual)</div><div class="prw"><div class="prb" style="width:32%;background:var(--rd);"></div></div><div class="prp">32,3%</div></div>
+      <div class="pr"><div class="prl">ITBI</div><div class="prw"><div class="prb" style="width:31%;background:var(--rd);"></div></div><div class="prp">31,3%</div></div>
+      <div class="pr"><div class="prl">ISSQN</div><div class="prw"><div class="prb" style="width:30%;background:var(--rd);"></div></div><div class="prp">30,2%</div></div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--br);display:flex;gap:12px;flex-wrap:wrap;font-size:9px;">
+        <span style="display:flex;align-items:center;gap:4px;color:var(--tm);"><span style="width:9px;height:9px;border-radius:2px;background:var(--gn);display:inline-block;"></span>Adequado (&ge;50%)</span>
+        <span style="display:flex;align-items:center;gap:4px;color:var(--tm);"><span style="width:9px;height:9px;border-radius:2px;background:var(--am);display:inline-block;"></span>Atenção (35&ndash;50%)</span>
+        <span style="display:flex;align-items:center;gap:4px;color:var(--tm);"><span style="width:9px;height:9px;border-radius:2px;background:var(--rd);display:inline-block;"></span>Crítico (&lt;35%)</span>
+      </div>
+    </div>
+    <div class="cc">
+      <div class="ct">Transferências Correntes &mdash; Composição</div>
+      <div class="cs">Por origem &middot; Total realizado: R$ 187,1 M</div>
+      <div style="position:relative;height:240px;">
+        <canvas id="chTransf" role="img" aria-label="Composição das transferências correntes por origem">FPM 55,3M; União demais 33,8M; ICMS Est 24,4M; IPVA Est 23,9M; Outras Est 22,2M; Outras 27,4M.</canvas>
+      </div>
+    </div>
   </div>
-  <div class="kpi-card amber">
-    <div class="kpi-label">Despesa Total com Pessoal (DTP)</div>
-    <div class="kpi-value">R$ 275,1 M</div>
-    <div class="kpi-meta">42,88% da RCL Ajustada &middot; Limite máx: 60%</div>
-    <div class="kpi-pill pill-ok">REGULAR &mdash; Dentro dos limites LRF</div>
+
+  <div class="stitle">Fluxo de Caixa Consolidado &mdash; Visão Executiva</div>
+  <div class="fgrid">
+    <div class="fc"><div class="ft">Ingresso Operacional</div><div class="fv pos">+R$325,2M</div><div class="fs">Atividades operacionais</div></div>
+    <div class="fc"><div class="ft">Desembolso Operacional</div><div class="fv neg">&minus;R$299,3M</div><div class="fs">Saídas operacionais</div></div>
+    <div class="fc"><div class="ft">Fluxo Operacional Líq.</div><div class="fv pos">+R$26,0M</div><div class="fs">Resultado operacional</div></div>
+    <div class="fc"><div class="ft">Fluxo de Investimento</div><div class="fv neg">&minus;R$7,6M</div><div class="fs">Aquisições e ativos</div></div>
+    <div class="fc"><div class="ft">Fluxo de Financiamento</div><div class="fv neg">&minus;R$6,1M</div><div class="fs">Amortização dívida</div></div>
+    <div class="fc"><div class="ft">Geração Líquida de Caixa</div><div class="fv pos">+R$12,2M</div><div class="fs">Variação do período</div></div>
+    <div class="fc"><div class="ft">Caixa Inicial</div><div class="fv neu">R$604,9M</div><div class="fs">Saldo inicial</div></div>
+    <div class="fc"><div class="ft">Caixa Final</div><div class="fv neu">R$617,2M</div><div class="fs">Saldo final do período</div></div>
   </div>
-  <div class="kpi-card green">
-    <div class="kpi-label">ASPS &mdash; Saúde Liquidada</div>
-    <div class="kpi-value">R$ 41,4 M</div>
-    <div class="kpi-meta">24,96% da base &middot; Mínimo legal: 15%</div>
-    <div class="kpi-pill pill-ok">CUMPRIDO &mdash; LC 141/2012</div>
-  </div>
-  <div class="kpi-card accent">
-    <div class="kpi-label">Geração Líquida de Caixa</div>
-    <div class="kpi-value">R$ 12,5 M</div>
-    <div class="kpi-meta">Caixa final: R$ 617,4 M</div>
-    <div class="kpi-pill pill-ok">POSITIVA &mdash; Operacionalmente saudável</div>
-  </div>
-  <div class="kpi-card blue">
-    <div class="kpi-label">Fluxo Operacional Líquido</div>
-    <div class="kpi-value">R$ 26,0 M</div>
-    <div class="kpi-meta">Ingressos R$ 325,2 M &minus; Desembolsos R$ 299,2 M</div>
-    <div class="kpi-pill pill-ok">SUPERÁVIT OPERACIONAL</div>
-  </div>
-  <div class="kpi-card red">
-    <div class="kpi-label">Receitas de Capital Realizadas</div>
-    <div class="kpi-value">R$ 159,5 K</div>
-    <div class="kpi-meta">Orçada: R$ 101,1 M &middot; 0,16% executado</div>
-    <div class="kpi-pill pill-crit">CRÍTICO &mdash; Convênios e crédito pendentes</div>
-  </div>
-  <div class="kpi-card amber">
-    <div class="kpi-label">RCL Ajustada (Base LRF)</div>
-    <div class="kpi-value">R$ 641,6 M</div>
-    <div class="kpi-meta">RCL bruta: R$ 666,1 M &middot; Deduções: R$ 24,6 M</div>
-    <div class="kpi-pill pill-info">Referência 12 meses</div>
-  </div>
+
+</div>
 </div>
 
-<div class="section-title">Execução da Receita &mdash; Anexo 10 RREO</div>
-<div class="chart-grid">
-  <div class="chart-card full">
-    <div class="chart-title">Receita Orçada &times; Arrecadada por Categoria</div>
-    <div class="chart-sub">Valores em R$ milhões &middot; Fonte: Anexo 10 RREO &middot; Período: Jan&ndash;Jun 2026</div>
-    <div style="position:relative;height:300px;">
-      <canvas id="chartReceita" role="img" aria-label="Comparativo de receita orçada versus arrecadada por categoria principal">Receita Correntes: orçada 679,9M, arrecadada 255,6M. Tributárias: 96,6M e 49,1M. Transferências: 512,9M e 187,1M. Capital: 101,1M e 0,16M.</canvas>
-    </div>
+<!-- ========== PÁGINA 2: RECEITA DETALHADA ========== -->
+<div id="p-receita" class="page">
+<div class="container">
+  <div class="stitle">Tabela de Receita Detalhada &mdash; Anexo 10 RREO</div>
+  <div style="background:var(--amd);border:1px solid rgba(245,166,35,.2);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--ts);margin-bottom:14px;">
+    <strong style="color:var(--am);">Fonte:</strong> Anexo 10 &mdash; Comparativo da Receita Orçada com Arrecadada &middot; Emissão 01/06/2026 às 09:54:49 &middot; Betha Sistemas &middot; Exercício 2026
   </div>
-  <div class="chart-card">
-    <div class="chart-title">Execução das Principais Rubricas Tributárias</div>
-    <div class="chart-sub">% realizado sobre orçado &middot; Meta temporal: 50%</div>
-    <div style="margin-top:8px;">
-      <div class="progress-row"><div class="progress-label">IPTU</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:82%;background:var(--green);"></div></div><div class="progress-pct">82,0%</div></div>
-      <div class="progress-row"><div class="progress-label">IPVA (estadual)</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:70%;background:var(--green);"></div></div><div class="progress-pct">70,7%</div></div>
-      <div class="progress-row"><div class="progress-label">IRRF</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:49%;background:var(--amber);"></div></div><div class="progress-pct">49,1%</div></div>
-      <div class="progress-row"><div class="progress-label">COSIP</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:48%;background:var(--amber);"></div></div><div class="progress-pct">48,1%</div></div>
-      <div class="progress-row"><div class="progress-label">FPM</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:37%;background:var(--amber);"></div></div><div class="progress-pct">37,0%</div></div>
-      <div class="progress-row"><div class="progress-label">ICMS (estadual)</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:32%;background:var(--red);"></div></div><div class="progress-pct">32,3%</div></div>
-      <div class="progress-row"><div class="progress-label">ITBI</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:31%;background:var(--red);"></div></div><div class="progress-pct">31,3%</div></div>
-      <div class="progress-row"><div class="progress-label">ISSQN</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:30%;background:var(--red);"></div></div><div class="progress-pct">30,2%</div></div>
-    </div>
-    <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;gap:14px;flex-wrap:wrap;font-size:11px;">
-      <span style="display:flex;align-items:center;gap:5px;color:var(--text-muted);"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--green);"></span>Adequado (&ge;50%)</span>
-      <span style="display:flex;align-items:center;gap:5px;color:var(--text-muted);"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--amber);"></span>Atenção (35&ndash;50%)</span>
-      <span style="display:flex;align-items:center;gap:5px;color:var(--text-muted);"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--red);"></span>Crítico (&lt;35%)</span>
-    </div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Categoria / Rubrica</th>
+          <th style="text-align:right;">Orçada (R$)</th>
+          <th style="text-align:right;">Arrecadada (R$)</th>
+          <th style="text-align:right;">Saldo (R$)</th>
+          <th style="text-align:right;">% Realizado</th>
+          <th>Situação</th>
+          <th>Observação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">TOTAL</td><td class="nm">Total Geral Consolidado</td><td class="mono" style="text-align:right;">781.079.201,73</td><td class="mono" style="text-align:right;">266.641.406,22</td><td class="mono neg" style="text-align:right;">(514.437.795,51)</td><td class="mono warn" style="text-align:right;">34,14%</td><td><span class="badge badge-wn">Atenção</span></td><td style="font-size:10px;color:var(--tm);">Acumulado até 01/06/2026</td></tr>
+        <tr><td class="mono">1.0.0.0</td><td class="nm">Receitas Correntes</td><td class="mono" style="text-align:right;">679.943.546,73</td><td class="mono" style="text-align:right;">255.596.367,33</td><td class="mono neg" style="text-align:right;">(424.347.179,40)</td><td class="mono warn" style="text-align:right;">37,59%</td><td><span class="badge badge-wn">Atenção</span></td><td style="font-size:10px;color:var(--tm);">Principal bloco de arrecadação</td></tr>
+        <tr><td class="mono">1.1.0.0</td><td class="nm">&nbsp;&nbsp;Impostos, Taxas e Contribuições de Melhoria</td><td class="mono" style="text-align:right;">96.609.746,35</td><td class="mono" style="text-align:right;">49.123.569,65</td><td class="mono neg" style="text-align:right;">(47.486.176,70)</td><td class="mono" style="text-align:right;color:var(--gn);">50,85%</td><td><span class="badge badge-ok">Adequado</span></td><td style="font-size:10px;color:var(--tm);">Receita tributária ampla</td></tr>
+        <tr><td class="mono">1.1.1.2.50</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;IPTU</td><td class="mono" style="text-align:right;">32.964.183,92</td><td class="mono" style="text-align:right;">27.043.317,86</td><td class="mono neg" style="text-align:right;">(5.920.866,06)</td><td class="mono" style="text-align:right;color:var(--gn);">82,04%</td><td><span class="badge badge-ok">Adequado</span></td><td style="font-size:10px;color:var(--tm);">Boa execução no período</td></tr>
+        <tr><td class="mono">1.1.1.2.53</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;ITBI</td><td class="mono" style="text-align:right;">4.165.839,08</td><td class="mono" style="text-align:right;">1.305.518,13</td><td class="mono neg" style="text-align:right;">(2.860.320,95)</td><td class="mono warn" style="text-align:right;">31,34%</td><td><span class="badge badge-cr">Crítico</span></td><td style="font-size:10px;color:var(--tm);">Sensível ao mercado imobiliário</td></tr>
+        <tr><td class="mono">1.1.1.3.03</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;IRRF</td><td class="mono" style="text-align:right;">11.940.531,21</td><td class="mono" style="text-align:right;">5.868.533,47</td><td class="mono neg" style="text-align:right;">(6.071.997,74)</td><td class="mono warn" style="text-align:right;">49,15%</td><td><span class="badge badge-wn">Atenção</span></td><td style="font-size:10px;color:var(--tm);">Acompanhar folha e retenções</td></tr>
+        <tr><td class="mono">1.1.1.4.51</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;ISSQN</td><td class="mono" style="text-align:right;">26.000.923,71</td><td class="mono" style="text-align:right;">7.846.728,38</td><td class="mono neg" style="text-align:right;">(18.154.195,33)</td><td class="mono warn" style="text-align:right;">30,18%</td><td><span class="badge badge-cr">Crítico</span></td><td style="font-size:10px;color:var(--tm);">Requer plano de fiscalização</td></tr>
+        <tr><td class="mono">1.1.2.0</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;Taxas</td><td class="mono" style="text-align:right;">21.538.268,43</td><td class="mono" style="text-align:right;">7.055.434,50</td><td class="mono neg" style="text-align:right;">(14.482.833,93)</td><td class="mono warn" style="text-align:right;">32,76%</td><td><span class="badge badge-cr">Crítico</span></td><td style="font-size:10px;color:var(--tm);">Acompanhar cadastro e licenças</td></tr>
+        <tr><td class="mono">1.1.2.2.53</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Taxa Limpeza Pública (TLP)</td><td class="mono" style="text-align:right;">11.282.615,59</td><td class="mono" style="text-align:right;">5.472.786,97</td><td class="mono neg" style="text-align:right;">(5.809.828,62)</td><td class="mono warn" style="text-align:right;">48,51%</td><td><span class="badge badge-wn">Atenção</span></td><td style="font-size:10px;color:var(--tm);">RSU &mdash; Vinculada ao serviço</td></tr>
+        <tr><td class="mono">1.2.0.0</td><td class="nm">&nbsp;&nbsp;Contribuições</td><td class="mono" style="text-align:right;">57.134.400,00</td><td class="mono" style="text-align:right;">12.153.690,05</td><td class="mono neg" style="text-align:right;">(44.980.709,95)</td><td class="mono warn" style="text-align:right;">21,27%</td><td><span class="badge badge-cr">Crítico</span></td><td style="font-size:10px;color:var(--tm);">RPPS + COSIP</td></tr>
+        <tr><td class="mono">1.2.4.1.50</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;COSIP</td><td class="mono" style="text-align:right;">10.722.400,00</td><td class="mono" style="text-align:right;">5.156.756,84</td><td class="mono neg" style="text-align:right;">(5.565.643,16)</td><td class="mono warn" style="text-align:right;">48,09%</td><td><span class="badge badge-wn">Atenção</span></td><td style="font-size:10px;color:var(--tm);">Iluminação pública vinculada</td></tr>
+        <tr><td class="mono">1.3.0.0</td><td class="nm">&nbsp;&nbsp;Receita Patrimonial</td><td class="mono" style="text-align:right;">11.877.709,53</td><td class="mono" style="text-align:right;">4.529.725,16</td><td class="mono neg" style="text-align:right;">(7.347.984,37)</td><td class="mono warn" style="text-align:right;">38,14%</td><td><span class="badge badge-wn">Atenção</span></td><td style="font-size:10px;color:var(--tm);">Rendimentos financeiros</td></tr>
+        <tr><td class="mono">1.7.0.0</td><td class="nm">&nbsp;&nbsp;Transferências Correntes</td><td class="mono" style="text-align:right;">512.867.790,85</td><td class="mono" style="text-align:right;">187.096.678,96</td><td class="mono neg" style="text-align:right;">(325.771.111,89)</td><td class="mono warn" style="text-align:right;">36,48%</td><td><span class="badge badge-wn">Atenção</span></td><td style="font-size:10px;color:var(--tm);">Maior componente corrente</td></tr>
+        <tr><td class="mono">1.7.1.1.51</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;FPM</td><td class="mono" style="text-align:right;">149.168.897,05</td><td class="mono" style="text-align:right;">55.260.811,36</td><td class="mono neg" style="text-align:right;">(93.908.085,69)</td><td class="mono warn" style="text-align:right;">37,05%</td><td><span class="badge badge-wn">Atenção</span></td><td style="font-size:10px;color:var(--tm);">Sensível à economia nacional</td></tr>
+        <tr><td class="mono">1.7.2.1.50</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;ICMS (cota estadual)</td><td class="mono" style="text-align:right;">75.433.548,21</td><td class="mono" style="text-align:right;">24.377.873,69</td><td class="mono neg" style="text-align:right;">(51.055.674,52)</td><td class="mono warn" style="text-align:right;">32,32%</td><td><span class="badge badge-cr">Crítico</span></td><td style="font-size:10px;color:var(--tm);">Cota estadual relevante</td></tr>
+        <tr><td class="mono">1.7.2.1.51</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;IPVA (cota estadual)</td><td class="mono" style="text-align:right;">27.013.769,11</td><td class="mono" style="text-align:right;">19.088.268,88</td><td class="mono neg" style="text-align:right;">(7.925.500,23)</td><td class="mono" style="text-align:right;color:var(--gn);">70,66%</div></td><td><span class="badge badge-ok">Adequado</span></td><td style="font-size:10px;color:var(--tm);">Boa execução IPVA</td></tr>
+        <tr><td class="mono">1.7.5.1.50</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;FUNDEB</td><td class="mono" style="text-align:right;">128.377.058,58</td><td class="mono" style="text-align:right;">50.945.823,67</td><td class="mono neg" style="text-align:right;">(77.431.234,91)</td><td class="mono warn" style="text-align:right;">39,68%</td><td><span class="badge badge-wn">Atenção</span></td><td style="font-size:10px;color:var(--tm);">Fundo de educação</td></tr>
+        <tr><td class="mono">1.7.1.3.50</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;SUS &mdash; Transferências Federais</td><td class="mono" style="text-align:right;">54.661.085,84</td><td class="mono" style="text-align:right;">24.075.737,21</td><td class="mono neg" style="text-align:right;">(30.585.348,63)</td><td class="mono warn" style="text-align:right;">44,05%</td><td><span class="badge badge-wn">Atenção</span></td><td style="font-size:10px;color:var(--tm);">Blocos SUS &mdash; MAC e APS</td></tr>
+        <tr><td class="mono">1.9.0.0</td><td class="nm">&nbsp;&nbsp;Outras Receitas Correntes</td><td class="mono" style="text-align:right;">1.453.900,00</td><td class="mono" style="text-align:right;">2.692.703,51</td><td class="mono" style="text-align:right;color:var(--gn);">+1.238.803,51</td><td class="mono" style="text-align:right;color:var(--gn);">185,2%</td><td><span class="badge badge-ok">Excedente</span></td><td style="font-size:10px;color:var(--tm);">Acima do previsto</td></tr>
+        <tr><td class="mono">2.0.0.0</td><td class="nm">Receitas de Capital</td><td class="mono" style="text-align:right;">101.135.655,00</td><td class="mono" style="text-align:right;">159.494,49</td><td class="mono neg" style="text-align:right;">(100.976.160,51)</td><td class="mono neg" style="text-align:right;">0,16%</td><td><span class="badge badge-cr">Crítico</span></td><td style="font-size:10px;color:var(--tm);">Conv. e crédito pendentes</td></tr>
+        <tr><td class="mono">2.1.1.0</td><td class="nm">&nbsp;&nbsp;Operações de Crédito</td><td class="mono" style="text-align:right;">70.000.000,00</td><td class="mono" style="text-align:right;">0,00</td><td class="mono neg" style="text-align:right;">(70.000.000,00)</td><td class="mono neg" style="text-align:right;">0,00%</td><td><span class="badge badge-cr">Crítico</span></td><td style="font-size:10px;color:var(--tm);">Sem ingresso no período</td></tr>
+        <tr><td class="mono">2.4.0.0</td><td class="nm">&nbsp;&nbsp;Transferências de Capital</td><td class="mono" style="text-align:right;">30.135.655,00</td><td class="mono" style="text-align:right;">159.494,49</td><td class="mono neg" style="text-align:right;">(29.976.160,51)</td><td class="mono neg" style="text-align:right;">0,53%</td><td><span class="badge badge-cr">Crítico</span></td><td style="font-size:10px;color:var(--tm);">Conv. e investimentos parados</td></tr>
+        <tr><td class="mono">7.0.0.0</td><td class="nm">Receitas Intraorçamentárias</td><td class="mono" style="text-align:right;">0,00</td><td class="mono" style="text-align:right;">10.885.544,40</td><td class="mono" style="text-align:right;color:var(--gn);">+10.885.544,40</td><td class="mono" style="text-align:right;color:var(--gn);">Sem previsão</td><td><span class="badge badge-ok">Excedente</span></td><td style="font-size:10px;color:var(--tm);">Contrib. patronal RPPS</td></tr>
+      </tbody>
+    </table>
   </div>
-  <div class="chart-card">
-    <div class="chart-title">Composição das Transferências Correntes</div>
-    <div class="chart-sub">Realizado por origem &middot; R$ milhões &middot; Total: R$ 187,1 M</div>
-    <div style="position:relative;height:240px;">
-      <canvas id="chartTransf" role="img" aria-label="Distribuição das transferências correntes recebidas por origem">FPM 55,3M; Demais União 33,8M; ICMS estadual 24,4M; IPVA estadual 23,9M; Outros estados 22,2M; Outras 27,4M.</canvas>
+
+  <div class="stitle" style="margin-top:1.5rem;">Gráfico de Execução &mdash; Receita por Categoria</div>
+  <div class="cgrid">
+    <div class="cc full">
+      <div class="ct">Orçado &times; Arrecadado &mdash; Visão Comparativa Detalhada</div>
+      <div class="cs">R$ milhões &middot; Categorias principais do Anexo 10</div>
+      <div style="position:relative;height:320px;">
+        <canvas id="chRecDet" role="img" aria-label="Receita orçada versus arrecadada por categoria detalhada">Gráfico comparativo de receita orçada e arrecadada por categoria.</canvas>
+      </div>
     </div>
   </div>
 </div>
-
-<div class="section-title">Despesa com Pessoal &mdash; RGF Anexo 1 / LRF</div>
-<div class="chart-grid">
-  <div class="chart-card">
-    <div class="chart-title">Posicionamento DTP &times; Limites da LRF</div>
-    <div class="chart-sub">% sobre RCL Ajustada de R$ 641,6 M &middot; Últimos 12 meses</div>
-    <div style="margin-top:12px;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-        <div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--green);">42,88%</div>
-          <div style="font-size:11px;color:var(--text-muted);">DTP / RCL Ajustada</div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-size:11px;color:var(--text-muted);">Margem até limite de alerta (54%)</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--amber);font-weight:600;">+ 11,12 pp</div>
-          <div style="font-size:11px;color:var(--text-muted);">R$ 71,3 M de folga</div>
-        </div>
-      </div>
-      <div style="width:100%;background:var(--surface);border-radius:8px;height:18px;overflow:hidden;position:relative;margin:8px 0;">
-        <div style="position:absolute;left:0;top:0;height:100%;width:42.88%;background:var(--green);border-radius:8px;opacity:0.9;"></div>
-        <div style="position:absolute;top:0;left:54%;width:2px;height:100%;background:var(--amber);"></div>
-        <div style="position:absolute;top:0;left:57%;width:2px;height:100%;background:orange;"></div>
-        <div style="position:absolute;top:0;left:60%;width:2px;height:100%;background:var(--red);"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);">
-        <span>0%</span><span style="color:var(--amber);">Alerta 54%</span><span style="color:orange;">Prudencial 57%</span><span style="color:var(--red);">Máx 60%</span>
-      </div>
-      <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-        <div style="background:var(--surface);border-radius:8px;padding:10px;text-align:center;">
-          <div style="font-size:10px;color:var(--text-muted);">DTP Apurada</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-primary);font-weight:600;">R$ 275,1 M</div>
-        </div>
-        <div style="background:var(--surface);border-radius:8px;padding:10px;text-align:center;">
-          <div style="font-size:10px;color:var(--text-muted);">Despesa Bruta</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-primary);font-weight:600;">R$ 332,8 M</div>
-        </div>
-        <div style="background:var(--surface);border-radius:8px;padding:10px;text-align:center;">
-          <div style="font-size:10px;color:var(--text-muted);">Deduções LRF</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-primary);font-weight:600;">R$ 57,6 M</div>
-        </div>
-      </div>
-      <div style="margin-top:12px;background:var(--green-dim);border:1px solid rgba(76,175,125,0.2);border-radius:8px;padding:10px;font-size:11px;color:var(--text-secondary);">
-        Ação recomendada: controle prévio de atos de pessoal antes de qualquer concessão de reajuste, contratação ou terceirização. Simular impacto sobre RCL projetada.
-      </div>
-    </div>
-  </div>
-  <div class="chart-card">
-    <div class="chart-title">Desembolsos Operacionais por Função de Governo</div>
-    <div class="chart-sub">Maiores pressões no caixa &middot; % sobre R$ 178 M (base funções listadas)</div>
-    <div style="position:relative;height:300px;">
-      <canvas id="chartFuncao" role="img" aria-label="Desembolsos operacionais por função, mostrando saúde e educação como maiores itens">Saúde R$51,8M (29,1%); Educação R$50,3M (28,2%); Administração R$18,9M; Urbanismo R$18M; Legislativa R$7,7M; Previdência R$11,3M.</canvas>
-    </div>
-  </div>
 </div>
 
-<div class="section-title">Saúde Pública &mdash; ASPS / LC 141/2012 &mdash; Anexo 12</div>
-<div class="chart-grid">
-  <div class="chart-card">
-    <div class="chart-title">Cumprimento do Mínimo Constitucional em Saúde</div>
-    <div class="chart-sub">Base ASPS realizada: R$ 165,9 M &middot; Mínimo 15%: R$ 24,9 M</div>
-    <div style="margin-top:12px;">
-      <div class="progress-row">
-        <div class="progress-label">Empenhado (30,65%)</div>
-        <div class="progress-bar-wrap"><div class="progress-bar" style="width:100%;background:var(--accent);"></div></div>
-        <div class="progress-pct">R$50,8M</div>
-      </div>
-      <div class="progress-row">
-        <div class="progress-label">Liquidado (24,96%)</div>
-        <div class="progress-bar-wrap"><div class="progress-bar" style="width:81%;background:var(--accent2);"></div></div>
-        <div class="progress-pct">R$41,4M</div>
-      </div>
-      <div class="progress-row">
-        <div class="progress-label">Pago (22,58%)</div>
-        <div class="progress-bar-wrap"><div class="progress-bar" style="width:74%;background:var(--green);"></div></div>
-        <div class="progress-pct">R$37,5M</div>
-      </div>
-      <div class="progress-row">
-        <div class="progress-label" style="color:var(--amber);">Mínimo Legal (15%)</div>
-        <div class="progress-bar-wrap" style="background:rgba(245,166,35,0.1);border:1px dashed var(--amber);">
-          <div class="progress-bar" style="width:49%;background:var(--amber);"></div>
+<!-- ========== PÁGINA 3: PESSOAL / LRF ========== -->
+<div id="p-pessoal" class="page">
+<div class="container">
+  <div class="stitle">Despesa com Pessoal &mdash; RGF Anexo 1 / LRF</div>
+  <div style="background:var(--a2d);border:1px solid rgba(58,155,220,.2);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--ts);margin-bottom:14px;">
+    <strong style="color:var(--a2);">Fonte:</strong> RGF &mdash; Demonstrativo da Despesa com Pessoal &middot; Período: Jun/2025 a Mai/2026 &middot; DTP apurada nos últimos 12 meses
+  </div>
+  <div class="cgrid">
+    <div class="cc">
+      <div class="ct">Posicionamento DTP &times; Limites da LRF</div>
+      <div class="cs">% sobre RCL Ajustada de R$ 641,6 M &middot; Últimos 12 meses</div>
+      <div class="lrfw">
+        <div class="lrfd">
+          <div><div class="lrfv">42,88%</div><div style="font-size:10px;color:var(--tm);">DTP / RCL Ajustada</div></div>
+          <div class="lrfm">
+            <div class="lrfml">Margem até alerta (54%)</div>
+            <div class="lrfmv">+ 11,12 pp</div>
+            <div class="lrfml">R$ 71,3 M de folga</div>
+          </div>
         </div>
-        <div class="progress-pct" style="color:var(--amber);">R$24,9M</div>
+        <div class="lrfbar">
+          <div class="lrffill" style="width:42.88%;"></div>
+          <div class="lrfmk" style="left:54%;background:var(--am);"></div>
+          <div class="lrfmk" style="left:57%;background:orange;"></div>
+          <div class="lrfmk" style="left:60%;background:var(--rd);"></div>
+        </div>
+        <div class="lrftk">
+          <span>0%</span>
+          <span style="color:var(--am);">Alerta 54%</span>
+          <span style="color:orange;">Prudencial 57%</span>
+          <span style="color:var(--rd);">Máx 60%</span>
+        </div>
+        <div class="lrfcards">
+          <div class="lrfcard"><div class="lrfcl">DTP Apurada</div><div class="lrfcv">R$275,1M</div></div>
+          <div class="lrfcard"><div class="lrfcl">Despesa Bruta</div><div class="lrfcv">R$332,8M</div></div>
+          <div class="lrfcard"><div class="lrfcl">Deduções LRF</div><div class="lrfcv">R$57,6M</div></div>
+        </div>
       </div>
     </div>
-    <div style="margin-top:14px;background:var(--green-dim);border:1px solid rgba(76,175,125,0.2);border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px;">
-      <span style="font-size:20px;color:var(--green);">&#10003;</span>
-      <div>
-        <div style="font-size:12px;font-weight:600;color:var(--green);">Mínimo Constitucional Cumprido</div>
-        <div style="font-size:11px;color:var(--text-muted);">Margem: R$ 16,5 M acima do piso legal (LC 141/2012)</div>
+    <div class="cc">
+      <div class="ct">DTP por Mês &mdash; Jan/2026 a Mai/2026</div>
+      <div class="cs">Despesa líquida mensal com pessoal (R$ milhões)</div>
+      <div style="position:relative;height:220px;">
+        <canvas id="chPes" role="img" aria-label="Despesa com pessoal por mês de janeiro a maio 2026">Jan 20,4M; Fev 21,4M; Mar 20,5M; Abr 17,2M; Mai 18,0M.</canvas>
       </div>
     </div>
   </div>
-  <div class="chart-card">
-    <div class="chart-title">ASPS por Subfunção &mdash; Dotação &times; Liquidado</div>
-    <div class="chart-sub">Valores em R$ milhões &middot; Fonte: Anexo 12 RREO</div>
+
+  <div class="stitle">Evolução Mensal da DTP &mdash; Jun/2025 a Mai/2026</div>
+  <div class="cc full" style="margin-top:0;">
+    <div class="ct">Despesa Bruta com Pessoal por Mês &mdash; 12 Meses</div>
+    <div class="cs">Valores em R$ milhões &middot; Inclui pessoal ativo, inativo e pensionistas</div>
     <div style="position:relative;height:280px;">
-      <canvas id="chartAsps" role="img" aria-label="Comparativo de dotação e liquidado por subfunção de saúde">Atenção básica: dotação 25,9M, liquidado 12,1M. Assistência hospitalar: 53,5M e 21,2M. Vigilância epidemiológica: 4,1M e 1,4M.</canvas>
+      <canvas id="chPes12" role="img" aria-label="Evolução da despesa com pessoal nos últimos 12 meses">Gráfico de linha com evolução mensal da despesa com pessoal.</canvas>
+    </div>
+  </div>
+
+  <div class="stitle">Composição da Despesa Bruta com Pessoal</div>
+  <div class="cgrid">
+    <div class="cc">
+      <div class="ct">Pessoal Ativo &times; Inativo (12 meses)</div>
+      <div class="cs">Distribuição por categoria &middot; Total: R$ 332,8 M</div>
+      <div style="position:relative;height:220px;">
+        <canvas id="chPesDist" role="img" aria-label="Composição da despesa com pessoal por categoria">Pessoal ativo 296M; Pessoal inativo 36,8M.</canvas>
+      </div>
+    </div>
+    <div class="cc">
+      <div class="ct">Limites LRF &mdash; Comparativo de Referências</div>
+      <div class="cs">Valores em R$ milhões &middot; Base: RCL Ajustada R$ 641,6 M</div>
+      <div style="position:relative;height:220px;">
+        <canvas id="chLRF" role="img" aria-label="Comparativo dos limites da LRF com a DTP atual">DTP 275M; Alerta 346M; Prudencial 366M; Máximo 385M.</canvas>
+      </div>
     </div>
   </div>
 </div>
-
-<div class="section-title">Fluxos de Caixa &mdash; Anexo 18 DFC</div>
-<div class="chart-card" style="margin-bottom:16px;">
-  <div class="chart-title">Demonstração dos Fluxos de Caixa por Atividade</div>
-  <div class="chart-sub">Valores em R$ &middot; Fonte: Demonstração dos Fluxos de Caixa &mdash; Betha Sistemas</div>
-  <div class="flow-grid" style="margin:1rem 0;">
-    <div class="flow-card"><div class="flow-type">Ingresso Operacional</div><div class="flow-val pos">+ R$325,2M</div><div class="flow-sub">Atividades operacionais</div></div>
-    <div class="flow-card"><div class="flow-type">Desembolso Operacional</div><div class="flow-val neg">&minus; R$299,2M</div><div class="flow-sub">Saídas operacionais</div></div>
-    <div class="flow-card"><div class="flow-type">Fluxo Operacional Líq.</div><div class="flow-val pos">+ R$26,0M</div><div class="flow-sub">Resultado operacional</div></div>
-    <div class="flow-card"><div class="flow-type">Fluxo de Investimento</div><div class="flow-val neg">&minus; R$7,4M</div><div class="flow-sub">Aquisições e ativos</div></div>
-    <div class="flow-card"><div class="flow-type">Fluxo de Financiamento</div><div class="flow-val neg">&minus; R$6,1M</div><div class="flow-sub">Amortização da dívida</div></div>
-    <div class="flow-card"><div class="flow-type">Geração Líquida</div><div class="flow-val pos">+ R$12,5M</div><div class="flow-sub">Variação do período</div></div>
-    <div class="flow-card"><div class="flow-type">Caixa Inicial</div><div class="flow-val neutral">R$604,9M</div><div class="flow-sub">Saldo inicial</div></div>
-    <div class="flow-card"><div class="flow-type">Caixa Final</div><div class="flow-val neutral">R$617,4M</div><div class="flow-sub">Saldo final do período</div></div>
-  </div>
-  <div style="background:var(--amber-dim);border:1px solid rgba(245,166,35,0.2);border-radius:8px;padding:12px;font-size:11px;color:var(--text-secondary);">
-    <strong style="color:var(--amber);">&#9888; Ação recomendada:</strong> Segregar caixa livre e vinculado (convênios, fundos, transferências) para suportar decisão executiva com lastro financeiro real. Prazo: 15 dias. Responsável: Tesouraria / Contabilidade.
-  </div>
 </div>
 
-<div class="chart-card">
-  <div class="chart-title">Desembolsos Operacionais por Função &mdash; Maiores Impactos no Caixa</div>
-  <div class="chart-sub">Saúde + Educação = 57,3% dos desembolsos operacionais por função listada</div>
-  <div style="position:relative;height:300px;">
-    <canvas id="chartCaixa" role="img" aria-label="Desembolsos operacionais por função de governo em ordem decrescente">Saúde R$51,8M; Educação R$50,3M; Administração R$18,9M; Urbanismo R$18M; Previdência R$11,3M.</canvas>
+<!-- ========== PÁGINA 4: SAÚDE / ASPS ========== -->
+<div id="p-saude" class="page">
+<div class="container">
+  <div class="stitle">Saúde Pública &mdash; ASPS / LC 141/2012 &mdash; Anexo 12</div>
+  <div class="cgrid">
+    <div class="cc">
+      <div class="ct">Cumprimento do Mínimo Constitucional em Saúde</div>
+      <div class="cs">Base ASPS realizada: R$ 165,9 M &middot; Mínimo 15% = R$ 24,9 M</div>
+      <div class="pr"><div class="prl">Empenhado (30,65%)</div><div class="prw"><div class="prb" style="width:100%;background:var(--ac);"></div></div><div class="prp">R$50,8M</div></div>
+      <div class="pr"><div class="prl">Liquidado (24,96%)</div><div class="prw"><div class="prb" style="width:81%;background:var(--a2);"></div></div><div class="prp">R$41,4M</div></div>
+      <div class="pr"><div class="prl">Pago (22,58%)</div><div class="prw"><div class="prb" style="width:74%;background:var(--gn);"></div></div><div class="prp">R$37,5M</div></div>
+      <div class="pr">
+        <div class="prl" style="color:var(--am);">Mínimo Legal (15%)</div>
+        <div class="prw" style="background:rgba(245,166,35,.1);border:1px dashed var(--am);"><div class="prb" style="width:49%;background:var(--am);"></div></div>
+        <div class="prp" style="color:var(--am);">R$24,9M</div>
+      </div>
+      <div style="margin-top:12px;background:var(--gnd);border:1px solid rgba(76,175,125,.2);border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:18px;color:var(--gn);">&#10003;</span>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--gn);">Mínimo Constitucional Cumprido</div>
+          <div style="font-size:10px;color:var(--tm);">Margem: R$ 16,5 M acima do piso legal (LC 141/2012) &middot; 24,96% sobre base</div>
+        </div>
+      </div>
+    </div>
+    <div class="cc">
+      <div class="ct">ASPS por Subfunção &mdash; Dotação &times; Liquidado</div>
+      <div class="cs">R$ milhões &middot; Fonte: Anexo 12 RREO</div>
+      <div style="position:relative;height:280px;">
+        <canvas id="chAsps" role="img" aria-label="ASPS por subfunção comparando dotação e liquidado">Atenção Básica: dot 25,9M, liq 12,1M. Assist Hospitalar: 53,5M e 21,2M.</canvas>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="section-title">Achados Gerenciais e Riscos Fiscais &mdash; Plano de Ação</div>
-<div class="risk-grid">
-  <div class="risk-card high">
-    <div class="risk-area">Receita &middot; Risco Alto</div>
-    <div class="risk-title">Execução total em 34,1% &mdash; abaixo da meta temporal de 50%</div>
-    <div class="risk-action">Revisar reestimativa de receita, contingenciamento e cronograma financeiro. Evitar empenhos sem lastro de arrecadação.</div>
-    <div class="risk-footer"><div class="risk-resp">Secretaria de Fazenda</div><div class="kpi-pill pill-crit">Prazo: 30 dias</div></div>
-  </div>
-  <div class="risk-card high">
-    <div class="risk-area">Receita de Capital &middot; Risco Alto</div>
-    <div class="risk-title">0,16% das receitas de capital realizadas (R$159K de R$101M orçado)</div>
-    <div class="risk-action">Reprogramar cronograma de investimentos e convênios. Operações de crédito sem qualquer ingresso no período.</div>
-    <div class="risk-footer"><div class="risk-resp">Fazenda / Planejamento</div><div class="kpi-pill pill-crit">Urgente</div></div>
-  </div>
-  <div class="risk-card high">
-    <div class="risk-area">ISSQN &middot; Risco Alto</div>
-    <div class="risk-title">ISS com apenas 30,2% de execução &mdash; muito abaixo da meta temporal</div>
-    <div class="risk-action">Ação fiscal segmentada: cruzamento de NFS-e, malha tributária, grandes contribuintes e cobranças em dívida ativa.</div>
-    <div class="risk-footer"><div class="risk-resp">Fiscalização Tributária</div><div class="kpi-pill pill-crit">Prazo: 60 dias</div></div>
-  </div>
-  <div class="risk-card medium">
-    <div class="risk-area">Pessoal &middot; Risco Médio</div>
-    <div class="risk-title">DTP em 42,88% &mdash; margem de 11 pp até o limite de alerta (54%)</div>
-    <div class="risk-action">Simular impactos de contratações, reajustes e terceirizações antes de autorizar. Atualizar após cada fechamento mensal.</div>
-    <div class="risk-footer"><div class="risk-resp">RH / Fazenda / Controle Interno</div><div class="kpi-pill pill-warn">Mensal</div></div>
-  </div>
-  <div class="risk-card medium">
-    <div class="risk-area">Caixa &middot; Risco Médio</div>
-    <div class="risk-title">Caixa de R$617M elevado, porém com vinculações legais e convênios</div>
-    <div class="risk-action">Criar relatório de disponibilidade por fonte e destinação: caixa livre &times; vinculado &times; restos a pagar &times; convênios.</div>
-    <div class="risk-footer"><div class="risk-resp">Tesouraria / Contabilidade</div><div class="kpi-pill pill-warn">Prazo: 15 dias</div></div>
-  </div>
-  <div class="risk-card low">
-    <div class="risk-area">Saúde / ASPS &middot; Situação Regular</div>
-    <div class="risk-title">ASPS liquidada em 24,96% &mdash; acima do mínimo de 15% (LC 141/2012)</div>
-    <div class="risk-action">Manter monitoramento mensal com fechamento comparando empenhado, liquidado e pago. Guardar memória de cálculo.</div>
-    <div class="risk-footer"><div class="risk-resp">Fazenda / Saúde</div><div class="kpi-pill pill-ok">Mensal</div></div>
-  </div>
-</div>
-
-<div class="section-title">Checklist de Controle Interno &mdash; FAZENDA</div>
-<div class="checklist-grid">
-  <div class="check-card">
-    <div class="check-icon ok">&#10003;</div>
-    <div>
-      <div class="check-title">LRF &mdash; Despesa com Pessoal</div>
-      <div class="check-detail">DTP 42,88% abaixo dos limites de alerta (54%), prudencial (57%) e máximo (60%). RGF Anexo 1.</div>
-      <div class="check-period">Quadrimestral &middot; Em acompanhamento</div>
-    </div>
-  </div>
-  <div class="check-card">
-    <div class="check-icon ok">&#10003;</div>
-    <div>
-      <div class="check-title">LC 141/2012 &mdash; Mínimo em Saúde</div>
-      <div class="check-detail">ASPS liquidada 24,96% &mdash; cumprido o mínimo de 15%. Margem: R$ 16,5 M acima do piso. RREO Anexo 12.</div>
-      <div class="check-period">Bimestral/Semestral &middot; Cumprido</div>
-    </div>
-  </div>
-  <div class="check-card">
-    <div class="check-icon warn">!</div>
-    <div>
-      <div class="check-title">Receita Orçamentária</div>
-      <div class="check-detail">Execução 34,1% abaixo da meta temporal de 50%. Frustração nas receitas de capital e tributárias. Anexo 10.</div>
-      <div class="check-period">Mensal &middot; Em acompanhamento</div>
-    </div>
-  </div>
-  <div class="check-card">
-    <div class="check-icon pending">&#9675;</div>
-    <div>
-      <div class="check-title">Caixa Livre &times; Vinculado</div>
-      <div class="check-detail">Saldo de R$617M sem segregação por destinação. DFC Anexo 18 + razão bancário. Estruturação pendente.</div>
-      <div class="check-period">Mensal &middot; A estruturar</div>
-    </div>
-  </div>
-  <div class="check-card">
-    <div class="check-icon warn">!</div>
-    <div>
-      <div class="check-title">Dívida e Financiamento</div>
-      <div class="check-detail">Amortizações: R$ 6,1M. Sem novas operações de crédito no período. Monitorar encargos. DFC Anexo 18.</div>
-      <div class="check-period">Mensal &middot; Em acompanhamento</div>
-    </div>
-  </div>
-  <div class="check-card">
-    <div class="check-icon pending">&#9675;</div>
-    <div>
-      <div class="check-title">Contingenciamento &mdash; Riscos de Frustração</div>
-      <div class="check-detail">Receita abaixo da meta exige elaboração de contingenciamento. LOA + Anexo 10. Avaliação pendente.</div>
-      <div class="check-period">Mensal &middot; A avaliar</div>
-    </div>
-  </div>
-  <div class="check-card">
-    <div class="check-icon pending">&#9675;</div>
-    <div>
-      <div class="check-title">Despesas Obrigatórias &mdash; Projeção de Impacto</div>
-      <div class="check-detail">Simular pessoal, saúde, educação e contratos continuados sobre RCL. RREO/RGF/Execução. A estruturar.</div>
-      <div class="check-period">Mensal &middot; A estruturar</div>
-    </div>
-  </div>
-  <div class="check-card">
-    <div class="check-icon ok">&#10003;</div>
-    <div>
-      <div class="check-title">Transparência e Prestação de Contas</div>
-      <div class="check-detail">Relatórios, memórias de cálculo e evidências das decisões sendo guardadas no processo administrativo.</div>
-      <div class="check-period">Contínua &middot; Em acompanhamento</div>
+  <div class="stitle">Base de Cálculo ASPS &mdash; Receitas de Impostos e Transferências</div>
+  <div class="cgrid">
+    <div class="cc full">
+      <div class="ct">Receitas que Compõem a Base ASPS &mdash; Realizado vs Previsto</div>
+      <div class="cs">Base total: R$ 391,0 M previsão &middot; R$ 165,9 M realizado (42,43%) &middot; Impostos + Transferências Constitucionais</div>
+      <div style="position:relative;height:260px;">
+        <canvas id="chAspsBase" role="img" aria-label="Base de cálculo ASPS por componente">Impostos: prev 75M, real 42M. Transf Constitucionais: prev 315,9M, real 123,8M.</canvas>
+      </div>
     </div>
   </div>
 </div>
-
-<div class="section-title">Base Legal e Fontes de Dados</div>
-<div class="chart-card">
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-    <div>
-      <div style="font-size:11px;font-weight:600;color:var(--accent);margin-bottom:8px;">Documentos Fonte</div>
-      <table class="data-table">
-        <tr><td class="name">Anexo 10</td><td>Receita Orçada &times; Arrecadada</td></tr>
-        <tr><td class="name">Anexo 01</td><td>DTP / RGF &mdash; Pessoal</td></tr>
-        <tr><td class="name">Anexo 12</td><td>ASPS &mdash; Saúde LC 141</td></tr>
-        <tr><td class="name">Anexo 18</td><td>DFC &mdash; Fluxos de Caixa</td></tr>
-      </table>
-    </div>
-    <div>
-      <div style="font-size:11px;font-weight:600;color:var(--accent2);margin-bottom:8px;">Legislação de Referência</div>
-      <table class="data-table">
-        <tr><td class="name">LRF</td><td>Lei Complementar nº 101/2000</td></tr>
-        <tr><td class="name">LC 141/2012</td><td>Saúde &mdash; mínimo constitucional 15%</td></tr>
-        <tr><td class="name">RREO</td><td>Relatório Resumido Exec. Orçamentária</td></tr>
-        <tr><td class="name">RGF</td><td>Relatório de Gestão Fiscal</td></tr>
-      </table>
-    </div>
-    <div>
-      <div style="font-size:11px;font-weight:600;color:var(--amber);margin-bottom:8px;">Sistema e Período</div>
-      <table class="data-table">
-        <tr><td class="name">Sistema</td><td>Betha Sistemas GRP</td></tr>
-        <tr><td class="name">Exercício</td><td>2026 &mdash; Jan a Jun</td></tr>
-        <tr><td class="name">Município</td><td>Ibirité / Minas Gerais</td></tr>
-        <tr><td class="name">Geração</td><td>01/06/2026 &middot; 11h56</td></tr>
-      </table>
-    </div>
-  </div>
-  <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);line-height:1.7;">
-    <strong style="color:var(--red);">&#9888; Aviso técnico:</strong> Os valores foram estruturados a partir dos demonstrativos contábeis (relatórios Betha) e devem ser conciliados com o sistema contábil (Betha Sistemas) antes de quaisquer atos formais. Este painel tem finalidade gerencial e não substitui os demonstrativos oficiais para fins de prestação de contas ao TCE-MG. Referências normativas: LRF, LC 141/2012, RREO, RGF.
-  </div>
 </div>
 
+<!-- ========== PÁGINA 5: FLUXO DE CAIXA ========== -->
+<div id="p-caixa" class="page">
+<div class="container">
+  <div class="stitle">Tabela de Fluxos de Caixa &mdash; Anexo 18 DFC</div>
+  <div style="background:var(--acd);border:1px solid rgba(0,201,167,.2);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--ts);margin-bottom:14px;">
+    <strong style="color:var(--ac);">Fonte:</strong> Demonstração dos Fluxos de Caixa &mdash; Anexo 18 &middot; Emissão 01/06/2026 às 09:56:20 &middot; Exercício 2026
+  </div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Atividade</th>
+          <th>Grupo</th>
+          <th>Descrição</th>
+          <th style="text-align:right;">Valor (R$)</th>
+          <th>Indicador</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(0,201,167,.04);">
+          <td class="nm">Atividades Operacionais</td><td>Ingressos</td><td class="nm">Total Ingressos Operacionais</td><td class="mono pos" style="text-align:right;">325.244.933,43</td><td><span class="badge badge-ok">Entrada</span></td>
+        </tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Impostos, Taxas e Contrib.</td><td></td><td class="mono" style="text-align:right;">49.123.569,65</td><td><span class="badge badge-if">Entrada</span></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Contribuições</td><td></td><td class="mono" style="text-align:right;">23.039.234,45</td><td><span class="badge badge-if">Entrada</span></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Remuneração Disponibilidades</td><td></td><td class="mono" style="text-align:right;">4.514.974,96</td><td><span class="badge badge-if">Entrada</span></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Outras Receitas / Ingressos</td><td></td><td class="mono" style="text-align:right;">61.296.230,72</td><td><span class="badge badge-if">Entrada</span></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Transferências Recebidas</td><td></td><td class="mono" style="text-align:right;">187.256.173,45</td><td><span class="badge badge-if">Entrada</span></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">&nbsp;&nbsp;da União</td><td></td><td class="mono" style="text-align:right;">89.113.197,37</td><td></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">&nbsp;&nbsp;dos Estados / DF</td><td></td><td class="mono" style="text-align:right;">46.295.204,10</td><td></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">&nbsp;&nbsp;Outras Transferências</td><td></td><td class="mono" style="text-align:right;">51.847.771,98</td><td></td></tr>
+        <tr style="background:rgba(224,82,82,.04);">
+          <td class="nm">Atividades Operacionais</td><td>Desembolsos</td><td class="nm">Total Desembolsos Operacionais</td><td class="mono neg" style="text-align:right;">(299.287.861,85)</td><td><span class="badge badge-cr">Saída</span></td>
+        </tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Pessoal e demais despesas</td><td></td><td class="mono neg" style="text-align:right;">(178.100.761,61)</td><td><span class="badge badge-cr">Saída</span></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Saúde</td><td></td><td class="mono neg" style="text-align:right;">(51.835.097,88)</td><td></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Educação</td><td></td><td class="mono neg" style="text-align:right;">(50.261.152,76)</td><td></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Administração</td><td></td><td class="mono neg" style="text-align:right;">(18.941.021,06)</td><td></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Urbanismo</td><td></td><td class="mono neg" style="text-align:right;">(18.042.994,19)</td><td></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Previdência Social</td><td></td><td class="mono neg" style="text-align:right;">(11.266.730,96)</td><td></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Legislativa</td><td></td><td class="mono neg" style="text-align:right;">(7.678.278,35)</td><td></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Transporte</td><td></td><td class="mono neg" style="text-align:right;">(6.620.254,55)</td><td></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Transferências Concedidas</td><td></td><td class="mono neg" style="text-align:right;">(40.295.992,24)</td><td><span class="badge badge-cr">Saída</span></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Juros e Encargos da Dívida</td><td></td><td class="mono neg" style="text-align:right;">(4.207.729,60)</td><td><span class="badge badge-cr">Saída</span></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Outros Desembolsos Operacionais</td><td></td><td class="mono neg" style="text-align:right;">(76.683.378,40)</td><td><span class="badge badge-cr">Saída</span></td></tr>
+        <tr style="background:rgba(76,175,125,.06);border-top:1px solid var(--br);">
+          <td class="nm">Atividades Operacionais</td><td>Resultado</td><td class="nm">Fluxo Operacional Líquido (I)</td><td class="mono pos" style="text-align:right;">25.957.071,58</td><td><span class="badge badge-ok">Superávit</span></td>
+        </tr>
+        <tr style="background:rgba(224,82,82,.04);">
+          <td class="nm">Atividades de Investimento</td><td>Desembolsos</td><td class="nm">Total Desembolsos de Investimento</td><td class="mono neg" style="text-align:right;">(7.567.816,68)</td><td><span class="badge badge-cr">Saída</span></td>
+        </tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Aquisição de ativo não circulante</td><td></td><td class="mono neg" style="text-align:right;">(5.562.641,78)</td><td></td></tr>
+        <tr><td></td><td style="font-size:10px;color:var(--tm);">Outros desembolsos de investimentos</td><td></td><td class="mono neg" style="text-align:right;">(2.005.174,90)</td><td></td></tr>
+        <tr style="background:rgba(224,82,82,.04);">
+          <td class="nm">Atividades de Investimento</td><td>Resultado</td><td class="nm">Fluxo de Investimento (II)</td><td class="mono neg" style="text-align:right;">(7.567.816,68)</td><td><span class="badge badge-cr">Déficit</span></td>
+        </tr>
+        <tr style="background:rgba(224,82,82,.04);">
+          <td class="nm">Atividades de Financiamento</td><td>Desembolsos</td><td class="nm">Amortização / Refinanciamento da Dívida</td><td class="mono neg" style="text-align:right;">(6.139.782,32)</td><td><span class="badge badge-cr">Saída</span></td>
+        </tr>
+        <tr style="background:rgba(224,82,82,.04);">
+          <td class="nm">Atividades de Financiamento</td><td>Resultado</td><td class="nm">Fluxo de Financiamento (III)</td><td class="mono neg" style="text-align:right;">(6.139.782,32)</td><td><span class="badge badge-cr">Déficit</span></td>
+        </tr>
+        <tr style="background:rgba(76,175,125,.08);border-top:1px solid var(--br);">
+          <td class="nm">Caixa</td><td>Resultado Consolidado</td><td class="nm">Geração Líquida (I + II + III)</td><td class="mono pos" style="text-align:right;">12.249.472,58</td><td><span class="badge badge-ok">Positivo</span></td>
+        </tr>
+        <tr>
+          <td class="nm">Caixa</td><td>Disponibilidade</td><td>Caixa Inicial</td><td class="mono" style="text-align:right;">604.926.428,83</td><td><span class="badge badge-if">Saldo</span></td>
+        </tr>
+        <tr style="background:rgba(58,155,220,.05);">
+          <td class="nm">Caixa</td><td>Disponibilidade</td><td class="nm">Caixa Final</td><td class="mono" style="text-align:right;color:var(--a2);">617.175.901,41</td><td><span class="badge badge-if">Saldo Final</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:12px;background:var(--amd);border:1px solid rgba(245,166,35,.2);border-radius:8px;padding:12px;font-size:11px;color:var(--ts);">
+    <strong style="color:var(--am);">&#9888; Ação prioritária:</strong> Segregar caixa livre e vinculado (convênios, fundos, SUS, FUNDEB) para suportar decisão executiva com lastro financeiro real. Prazo recomendado: 15 dias. Responsável: Tesouraria / Contabilidade.
+  </div>
+
+  <div class="stitle" style="margin-top:1.5rem;">Desembolsos Operacionais por Função</div>
+  <div class="cc full" style="margin-top:0;">
+    <div class="ct">Maiores Pressões no Caixa por Função de Governo</div>
+    <div class="cs">Saúde + Educação = 57,3% dos desembolsos por função &middot; R$ 178 M base</div>
+    <div style="position:relative;height:300px;">
+      <canvas id="chCaixa" role="img" aria-label="Desembolsos operacionais por função de governo">Saúde 51,8M; Educação 50,3M; Administração 18,9M; Urbanismo 18,0M; Previdência 11,3M.</canvas>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== PÁGINA 6: LIQUIDAÇÕES ========== -->
+<div id="p-liq" class="page">
+<div class="container">
+  <div class="stitle">Relação de Liquidações Emitidas &mdash; Jan a Jun/2026</div>
+  <div style="background:var(--a2d);border:1px solid rgba(58,155,220,.2);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--ts);margin-bottom:14px;">
+    <strong style="color:var(--a2);">Fonte:</strong> Relação de Liquidação Emitida &middot; Período: 01/01/2026 a 01/06/2026 &middot; Emissão 01/06/2026 às 09:59:41 &middot; 2.274 registros &middot; 213 credores distintos
+  </div>
+
+  <div class="liq-stats">
+    <div class="liq-card"><div class="liq-lbl">Quantidade de Liq.</div><div class="liq-val">2.274</div><div class="liq-sub">Volume operacional</div></div>
+    <div class="liq-card"><div class="liq-lbl">Valor Total Liquidado</div><div class="liq-val" style="font-size:12px;">R$139,9M</div><div class="liq-sub">Bruto do período</div></div>
+    <div class="liq-card"><div class="liq-lbl">Saldo Líquido</div><div class="liq-val" style="font-size:12px;">R$139,6M</div><div class="liq-sub">Após anulações</div></div>
+    <div class="liq-card"><div class="liq-lbl">Total Anulado</div><div class="liq-val" style="font-size:12px;">R$330K</div><div class="liq-sub">Cancelamentos</div></div>
+    <div class="liq-card"><div class="liq-lbl">Credores Distintos</div><div class="liq-val">213</div><div class="liq-sub">Fornecedores</div></div>
+    <div class="liq-card"><div class="liq-lbl">Recursos Distintos</div><div class="liq-val">15</div><div class="liq-sub">Fontes</div></div>
+    <div class="liq-card"><div class="liq-lbl">Org/Unid Distintos</div><div class="liq-val">18</div><div class="liq-sub">Secretarias</div></div>
+    <div class="liq-card"><div class="liq-lbl">Maior Org/Unid</div><div class="liq-val" style="font-size:12px;">R$71,3M</div><div class="liq-sub">14.009.001 &mdash; Educação</div></div>
+  </div>
+
+  <div class="cgrid">
+    <div class="cc">
+      <div class="ct">Liquidações por Mês &mdash; Quantidade</div>
+      <div class="cs">Distribuição mensal de liquidações emitidas</div>
+      <div style="position:relative;height:220px;">
+        <canvas id="chLiqMes" role="img" aria-label="Quantidade de liquidações por mês">Jan 280; Fev 477; Mar 469; Abr 674; Mai 360; Jun 14.</canvas>
+      </div>
+    </div>
+    <div class="cc">
+      <div class="ct">Liquidações por Mês &mdash; Valor (R$ M)</div>
+      <div class="cs">Volume financeiro mensal liquidado</div>
+      <div style="position:relative;height:220px;">
+        <canvas id="chLiqVal" role="img" aria-label="Valor das liquidações por mês">Jan 17,8M; Fev 27,3M; Mar 30,0M; Abr 36,2M; Mai 28,5M; Jun 0,03M.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Top Credores por Saldo Líquido</div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Credor</th>
+          <th style="text-align:right;">Qtd Liq.</th>
+          <th style="text-align:right;">Valor Liquidado (R$)</th>
+          <th style="text-align:right;">Anulação (R$)</th>
+          <th style="text-align:right;">Saldo Líquido (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">1</td><td class="nm">Secretaria Municipal de Educação</td><td class="mono" style="text-align:right;">214</td><td class="mono" style="text-align:right;">48.007.171,40</td><td class="mono warn" style="text-align:right;">36.914,80</td><td class="mono pos" style="text-align:right;">47.970.256,60</td></tr>
+        <tr><td class="mono">2</td><td class="nm">Prefeitura Municipal de Ibirité</td><td class="mono" style="text-align:right;">453</td><td class="mono" style="text-align:right;">20.090.849,91</td><td class="mono warn" style="text-align:right;">150.835,39</td><td class="mono pos" style="text-align:right;">19.940.014,52</td></tr>
+        <tr><td class="mono">3</td><td class="nm">Caixa Econômica Federal</td><td class="mono" style="text-align:right;">37</td><td class="mono" style="text-align:right;">7.967.379,83</td><td class="mono warn" style="text-align:right;">12.236,13</td><td class="mono pos" style="text-align:right;">7.955.143,70</td></tr>
+        <tr><td class="mono">4</td><td class="nm">IPASI &mdash; Instituto de Previdência Social de Ibirité</td><td class="mono" style="text-align:right;">103</td><td class="mono" style="text-align:right;">7.335.969,27</td><td class="mono warn" style="text-align:right;">518,87</td><td class="mono pos" style="text-align:right;">7.335.450,40</td></tr>
+        <tr><td class="mono">5</td><td class="nm">Viação Sidon S.A.</td><td class="mono" style="text-align:right;">10</td><td class="mono" style="text-align:right;">5.559.191,25</td><td class="mono" style="text-align:right;">0,00</td><td class="mono pos" style="text-align:right;">5.559.191,25</td></tr>
+        <tr><td class="mono">6</td><td class="nm">Câmara de Dirigentes Lojistas de Ibirité</td><td class="mono" style="text-align:right;">63</td><td class="mono" style="text-align:right;">5.431.692,61</td><td class="mono" style="text-align:right;">0,00</td><td class="mono pos" style="text-align:right;">5.431.692,61</td></tr>
+        <tr><td class="mono">7</td><td class="nm">Consórcio Infra-Norte</td><td class="mono" style="text-align:right;">19</td><td class="mono" style="text-align:right;">3.190.112,18</td><td class="mono" style="text-align:right;">0,00</td><td class="mono pos" style="text-align:right;">3.190.112,18</td></tr>
+        <tr><td class="mono">8</td><td class="nm">INSS &mdash; Instituto Nacional de Seguridade Social</td><td class="mono" style="text-align:right;">205</td><td class="mono" style="text-align:right;">3.172.568,69</td><td class="mono warn" style="text-align:right;">13.769,30</td><td class="mono pos" style="text-align:right;">3.158.799,39</td></tr>
+        <tr><td class="mono">9</td><td class="nm">Quantum &mdash; Engenharia e Consultoria Ltda</td><td class="mono" style="text-align:right;">20</td><td class="mono" style="text-align:right;">3.039.946,76</td><td class="mono warn" style="text-align:right;">49.064,97</td><td class="mono pos" style="text-align:right;">2.990.881,79</td></tr>
+        <tr><td class="mono">10</td><td class="nm">Liart Resíduos Ltda</td><td class="mono" style="text-align:right;">3</td><td class="mono" style="text-align:right;">2.818.128,92</td><td class="mono" style="text-align:right;">0,00</td><td class="mono pos" style="text-align:right;">2.818.128,92</td></tr>
+        <tr><td class="mono">11</td><td class="nm">Essencis MG Soluções Ambientais S/A</td><td class="mono" style="text-align:right;">4</td><td class="mono" style="text-align:right;">2.478.933,26</td><td class="mono" style="text-align:right;">0,00</td><td class="mono pos" style="text-align:right;">2.478.933,26</td></tr>
+        <tr><td class="mono">12</td><td class="nm">Coopertar &mdash; Cooperativa de Transporte</td><td class="mono" style="text-align:right;">5</td><td class="mono" style="text-align:right;">2.276.379,30</td><td class="mono" style="text-align:right;">0,00</td><td class="mono pos" style="text-align:right;">2.276.379,30</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="stitle" style="margin-top:1.5rem;">Top Recursos (Fontes) por Saldo</div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Recurso</th>
+          <th>Descrição</th>
+          <th style="text-align:right;">Qtd Liq.</th>
+          <th style="text-align:right;">Saldo Líquido (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">1.500.000.0000</td><td class="nm">Recursos Não Vinculados de Impostos</td><td class="mono" style="text-align:right;">1.612</td><td class="mono pos" style="text-align:right;">66.966.167,63</td></tr>
+        <tr><td class="mono">1.540.000.1070</td><td class="nm">FUNDEB &mdash; Impostos/Transferências (70%)</td><td class="mono" style="text-align:right;">147</td><td class="mono pos" style="text-align:right;">39.821.803,70</td></tr>
+        <tr><td class="mono">1.540.000.0000</td><td class="nm">FUNDEB &mdash; Impostos/Transferências (30%)</td><td class="mono" style="text-align:right;">184</td><td class="mono pos" style="text-align:right;">14.777.078,27</td></tr>
+        <tr><td class="mono">1.500.000.1001</td><td class="nm">Rec. Não Vinculados de Impostos (Educação)</td><td class="mono" style="text-align:right;">236</td><td class="mono pos" style="text-align:right;">6.462.397,80</td></tr>
+        <tr><td class="mono">1.501.000.0000</td><td class="nm">Outros Recursos Não Vinculados</td><td class="mono" style="text-align:right;">28</td><td class="mono pos" style="text-align:right;">4.024.492,59</td></tr>
+        <tr><td class="mono">1.751.000.0000</td><td class="nm">Recursos COSIP &mdash; Iluminação Pública</td><td class="mono" style="text-align:right;">8</td><td class="mono pos" style="text-align:right;">2.602.309,35</td></tr>
+        <tr><td class="mono">2.704.000.0000</td><td class="nm">Recursos de Convênios de Capital</td><td class="mono" style="text-align:right;">8</td><td class="mono pos" style="text-align:right;">1.164.730,31</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ========== PÁGINA 7: RISCOS & CHECKLIST ========== -->
+<div id="p-riscos" class="page">
+<div class="container">
+  <div class="stitle">Achados Gerenciais e Riscos Fiscais</div>
+  <div class="rgrid">
+    <div class="rc rh"><div class="ra">Receita &middot; Risco Alto</div><div class="rt">Execução total em 34,1% &mdash; abaixo da meta temporal de 50%</div><div class="rac">Revisar reestimativa, contingenciamento e cronograma financeiro. Evitar empenhos sem lastro.</div><div class="rf"><div class="rr">Secretaria de Fazenda</div><div class="kp p-cr">Prazo: 30 dias</div></div></div>
+    <div class="rc rh"><div class="ra">Receita de Capital &middot; Risco Alto</div><div class="rt">0,16% das receitas de capital realizadas (R$159K de R$101M orçado)</div><div class="rac">Reprogramar cronograma de investimentos e convênios. Operações de crédito: zero ingresso.</div><div class="rf"><div class="rr">Fazenda / Planejamento</div><div class="kp p-cr">Urgente</div></div></div>
+    <div class="rc rh"><div class="ra">ISSQN &middot; Risco Alto</div><div class="rt">ISS com apenas 30,2% de execução &mdash; muito abaixo da meta temporal</div><div class="rac">Ação fiscal: cruzamento de NFS-e, malha tributária, grandes contribuintes e dívida ativa.</div><div class="rf"><div class="rr">Fiscalização Tributária</div><div class="kp p-cr">60 dias</div></div></div>
+    <div class="rc rh"><div class="ra">Liquidações &middot; Monitorar</div><div class="rt">2.274 liquidações &mdash; concentração em poucos credores e fontes</div><div class="rac">Acompanhar top credores, anulações (R$330K) e concentração por Org/Unid e recurso.</div><div class="rf"><div class="rr">Controle Interno / Fazenda</div><div class="kp p-wn">Semanal</div></div></div>
+    <div class="rc rm"><div class="ra">Pessoal &middot; Risco Médio</div><div class="rt">DTP em 42,88% &mdash; margem de 11 pp até o limite de alerta (54%)</div><div class="rac">Simular impactos de contratações, reajustes e terceirizações antes de autorizar.</div><div class="rf"><div class="rr">RH / Fazenda / Controle Interno</div><div class="kp p-wn">Mensal</div></div></div>
+    <div class="rc rm"><div class="ra">Caixa &middot; Risco Médio</div><div class="rt">Caixa de R$617M elevado, porém com vinculações legais e convênios</div><div class="rac">Criar relatório de disponibilidade por fonte: caixa livre &times; vinculado &times; restos a pagar.</div><div class="rf"><div class="rr">Tesouraria / Contabilidade</div><div class="kp p-wn">15 dias</div></div></div>
+    <div class="rc rl"><div class="ra">Saúde / ASPS &middot; Situação Regular</div><div class="rt">ASPS liquidada em 24,96% &mdash; acima do mínimo de 15% (LC 141/2012)</div><div class="rac">Manter monitoramento mensal. Guardar memória de cálculo com empenhado, liquidado e pago.</div><div class="rf"><div class="rr">Fazenda / Saúde</div><div class="kp p-ok">Mensal</div></div></div>
+    <div class="rc rl"><div class="ra">Pessoal &middot; Pico Outubro/2025</div><div class="rt">Despesa bruta de R$32,6M em out/2025 e R$47,0M em dez/2025 (13º salário)</div><div class="rac">Impacto sazonal já absorvido. Monitorar recorrência e projetar impacto no fechamento anual.</div><div class="rf"><div class="rr">RH / Fazenda</div><div class="kp p-ok">Semestral</div></div></div>
+  </div>
+
+  <div class="stitle" style="margin-top:1.5rem;">Checklist de Controle Interno &mdash; Fazenda</div>
+  <div class="chkgrid">
+    <div class="chkc"><div class="chki ok">&#10003;</div><div><div class="chkt">LRF &mdash; Despesa com Pessoal</div><div class="chkd">DTP 42,88% abaixo dos limites de alerta (54%), prudencial (57%) e máximo (60%). RGF Anexo 1.</div><div class="chkp">Quadrimestral &middot; Em acompanhamento</div></div></div>
+    <div class="chkc"><div class="chki ok">&#10003;</div><div><div class="chkt">LC 141/2012 &mdash; Mínimo em Saúde</div><div class="chkd">ASPS liquidada 24,96% &mdash; mínimo 15% cumprido. Margem: R$ 16,5 M. RREO Anexo 12.</div><div class="chkp">Bimestral/Semestral &middot; Cumprido</div></div></div>
+    <div class="chkc"><div class="chki wn">!</div><div><div class="chkt">Receita Orçamentária</div><div class="chkd">Execução 34,1% abaixo da meta de 50%. Frustração nas receitas de capital e tributárias. Anexo 10.</div><div class="chkp">Mensal &middot; Em acompanhamento</div></div></div>
+    <div class="chkc"><div class="chki pd">&#9675;</div><div><div class="chkt">Caixa Livre &times; Vinculado</div><div class="chkd">R$617M sem segregação por destinação. DFC Anexo 18 + razão bancário. Pendente.</div><div class="chkp">Mensal &middot; A estruturar (15 dias)</div></div></div>
+    <div class="chkc"><div class="chki wn">!</div><div><div class="chkt">Dívida e Financiamento</div><div class="chkd">Amortizações: R$ 6,1M. Juros: R$ 4,2M. Sem novas operações. Monitorar encargos. DFC Anexo 18.</div><div class="chkp">Mensal &middot; Em acompanhamento</div></div></div>
+    <div class="chkc"><div class="chki pd">&#9675;</div><div><div class="chkt">Contingenciamento</div><div class="chkd">Receita abaixo da meta exige elaboração de contingenciamento. LOA + Anexo 10. Avaliação pendente.</div><div class="chkp">Mensal &middot; A avaliar</div></div></div>
+    <div class="chkc"><div class="chki pd">&#9675;</div><div><div class="chkt">Despesas Obrigatórias &mdash; Projeção</div><div class="chkd">Simular pessoal, saúde, educação e contratos continuados sobre RCL. RREO/RGF. Pendente.</div><div class="chkp">Mensal &middot; A estruturar</div></div></div>
+    <div class="chkc"><div class="chki ok">&#10003;</div><div><div class="chkt">Liquidações &mdash; Controle Interno</div><div class="chkd">2.274 liquidações analisadas com identificação de credores, fontes e anulações. R$330K anulado.</div><div class="chkp">Semanal &middot; Monitorado</div></div></div>
+    <div class="chkc"><div class="chki ok">&#10003;</div><div><div class="chkt">Transparência e Prestação de Contas</div><div class="chkd">Relatórios, memórias de cálculo e evidências das decisões sendo guardadas no processo administrativo.</div><div class="chkp">Contínua &middot; Em acompanhamento</div></div></div>
+  </div>
+
+  <div class="stitle" style="margin-top:1.5rem;">Base Legal e Fontes de Dados</div>
+  <div class="cc full" style="margin-top:0;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
+      <div>
+        <div style="font-size:10px;font-weight:600;color:var(--ac);margin-bottom:8px;">Documentos Fonte</div>
+        <table class="tbl"><tr><td class="nm">Anexo 10</td><td style="font-size:10px;">Receita Orçada &times; Arrecadada</td></tr><tr><td class="nm">Anexo 01</td><td style="font-size:10px;">DTP / RGF &mdash; Pessoal</td></tr><tr><td class="nm">Anexo 12</td><td style="font-size:10px;">ASPS &mdash; Saúde LC 141</td></tr><tr><td class="nm">Anexo 18</td><td style="font-size:10px;">DFC &mdash; Fluxos de Caixa</td></tr><tr><td class="nm">Rel. Liquidação</td><td style="font-size:10px;">Execução da Despesa 2026</td></tr></table>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;color:var(--a2);margin-bottom:8px;">Legislação</div>
+        <table class="tbl"><tr><td class="nm">LRF</td><td style="font-size:10px;">LC nº 101/2000</td></tr><tr><td class="nm">LC 141/2012</td><td style="font-size:10px;">Mínimo saúde 15%</td></tr><t
+        <table class="tbl"><tr><td class="nm">RREO</td><td style="font-size:10px;">Relatório Resumido</td></tr><tr><td class="nm">RGF</td><td style="font-size:10px;">Relatório Gestão Fiscal</td></tr></table>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;color:var(--am);margin-bottom:8px;">Sistema e Período</div>
+        <table class="tbl"><tr><td class="nm">Sistema</td><td style="font-size:10px;">Betha Sistemas GRP</td></tr><tr><td class="nm">Exercício</td><td style="font-size:10px;">2026 &mdash; Jan a Jun</td></tr><tr><td class="nm">Município</td><td style="font-size:10px;">Ibirité / MG</td></tr><tr><td class="nm">Geração</td><td style="font-size:10px;">01/06/2026 &middot; 09h59</td></tr></table>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--br);font-size:10px;color:var(--tm);line-height:1.6;">
+      <strong style="color:var(--rd);">&#9888; Aviso técnico:</strong> Os valores foram estruturados a partir dos demonstrativos contábeis (Relatórios) e devem ser conciliados com o sistema contábil (Betha Sistemas) antes de quaisquer atos formais. Este painel tem finalidade gerencial e não substitui os demonstrativos oficiais para fins de prestação de contas ao TCE-MG.
+    </div>
+  </div>
+</div>
 </div>
 
 <footer>
-  <div><strong style="color:var(--text-secondary);">Prefeitura Municipal de Ibirité / MG</strong> &nbsp;&middot;&nbsp; Departamento de Tecnologia da Informação &nbsp;&middot;&nbsp; Secretaria Municipal de Planejamento</div>
-  <div>Painel Fiscal Gerencial 2026 &nbsp;&middot;&nbsp; Gerado em 01/06/2026 &nbsp;&middot;&nbsp; <span style="color:var(--accent);">LRF &middot; LC 141 &middot; TCE-MG</span></div>
+  <div><strong style="color:var(--ts);">Prefeitura Municipal de Ibirité / MG</strong> &nbsp;&middot;&nbsp; Departamento de TI &nbsp;&middot;&nbsp; Secretaria Municipal de Planejamento</div>
+  <div>Painel Fiscal Gerencial 2026 &nbsp;&middot;&nbsp; 01/06/2026 &nbsp;&middot;&nbsp; <span style="color:var(--ac);">LRF &middot; LC 141 &middot; TCE-MG</span></div>
 </footer>
 
 <script>
-const GC='rgba(255,255,255,0.06)',TC='#526070';
-const baseOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:GC},ticks:{color:TC,font:{size:11}}},y:{grid:{color:GC},ticks:{color:TC,font:{size:11,family:"'JetBrains Mono',monospace"}}}}};
+(function(){
+var GC='rgba(255,255,255,.06)',TC='#526070',M='JetBrains Mono,monospace';
+var base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
+var gX={grid:{color:GC},ticks:{color:TC,font:{size:10}}};
+var gY={grid:{color:GC},ticks:{color:TC,font:{size:10,family:M}}};
 
-new Chart(document.getElementById('chartReceita'),{type:'bar',data:{labels:['Rec. Correntes','Tributárias','Transferências Correntes','Rec. de Capital','Intraorçamentárias'],datasets:[{label:'Orçada',data:[679.9,96.6,512.9,101.1,0],backgroundColor:'rgba(58,155,220,0.18)',borderColor:'rgba(58,155,220,0.5)',borderWidth:1,borderRadius:4},{label:'Arrecadada',data:[255.6,49.1,187.1,0.16,10.9],backgroundColor:'rgba(0,201,167,0.7)',borderColor:'#00C9A7',borderWidth:1,borderRadius:4}]},options:{...baseOpts,scales:{x:{grid:{color:GC},ticks:{color:TC,font:{size:11},maxRotation:15}},y:{grid:{color:GC},ticks:{color:TC,font:{size:11,family:"'JetBrains Mono',monospace"},callback:v=>'R$'+v+'M'}}},plugins:{legend:{display:true,position:'top',labels:{color:TC,font:{size:11},boxWidth:12,boxHeight:12,useBorderRadius:true,borderRadius:2}},tooltip:{callbacks:{label:c=>c.dataset.label+': R$'+c.parsed.y.toFixed(1)+'M'}}}}});
+function mkY(cb){return {grid:{color:GC},ticks:{color:TC,font:{size:10,family:M},callback:cb||function(v){return 'R$'+v+'M';}}};}
 
-new Chart(document.getElementById('chartTransf'),{type:'doughnut',data:{labels:['FPM (Federal)','Demais União','ICMS (Estadual)','IPVA (Estadual)','Outros Estaduais','Outras'],datasets:[{data:[55.3,33.8,24.4,23.9,22.2,27.4],backgroundColor:['#00C9A7','#3A9BDC','#F5A623','#4CAF7D','#E05252','#526070'],borderColor:'transparent',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:true,position:'bottom',labels:{color:TC,font:{size:11},boxWidth:12,boxHeight:12,useBorderRadius:true,borderRadius:2,padding:8}},tooltip:{callbacks:{label:c=>c.label+': R$'+c.parsed.toFixed(1)+'M'}}}}});
+// --- EXEC: Orçado x Arrecadado
+if(document.getElementById('chExec')){
+  new Chart(document.getElementById('chExec'),{type:'bar',data:{labels:['Rec. Correntes','Tributárias','Transf. Correntes','Rec. Capital','Intraorç.'],datasets:[{label:'Orçada',data:[679.9,96.6,512.9,101.1,0],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.5)',borderWidth:1,borderRadius:4},{label:'Arrecadada',data:[255.6,49.1,187.1,0.16,10.9],backgroundColor:'rgba(0,201,167,.7)',borderColor:'#00C9A7',borderWidth:1,borderRadius:4}]},options:{...base,scales:{x:{...gX,ticks:{color:TC,font:{size:10},maxRotation:15}},y:mkY()},plugins:{legend:{display:true,position:'top',labels:{color:TC,font:{size:10},boxWidth:10,boxHeight:10,useBorderRadius:true,borderRadius:2}},tooltip:{callbacks:{label:function(c){return c.dataset.label+': R$'+c.parsed.y.toFixed(1)+'M';}}}}}});
+}
 
-new Chart(document.getElementById('chartFuncao'),{type:'bar',data:{labels:['Saúde','Educação','Administração','Urbanismo','Legislativa','Previdência','Enc. Especiais','Energia','Transporte','Ass. Social'],datasets:[{data:[51.8,50.3,18.9,18.0,7.7,11.3,3.8,3.3,6.6,4.5],backgroundColor:['rgba(224,82,82,0.8)','rgba(245,166,35,0.75)','rgba(58,155,220,0.65)','rgba(58,155,220,0.5)','rgba(82,96,112,0.55)','rgba(82,96,112,0.5)','rgba(82,96,112,0.45)','rgba(82,96,112,0.4)','rgba(82,96,112,0.38)','rgba(82,96,112,0.35)'],borderRadius:4}]},options:{...baseOpts,indexAxis:'y',scales:{x:{grid:{color:GC},ticks:{color:TC,font:{size:10,family:"'JetBrains Mono',monospace"},callback:v=>'R$'+v+'M'}},y:{grid:{display:false},ticks:{color:TC,font:{size:11},autoSkip:false}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'R$ '+c.parsed.x.toFixed(1)+'M desembolsado'}}}}});
+// --- EXEC: Transferências doughnut
+if(document.getElementById('chTransf')){
+  new Chart(document.getElementById('chTransf'),{type:'doughnut',data:{labels:['FPM (Fed)','Demais União','ICMS (Est)','IPVA (Est)','Outras Est.','Outras'],datasets:[{data:[55.3,33.8,24.4,23.9,22.2,27.4],backgroundColor:['#00C9A7','#3A9BDC','#F5A623','#4CAF7D','#E05252','#526070'],borderColor:'transparent',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:true,position:'bottom',labels:{color:TC,font:{size:10},boxWidth:10,boxHeight:10,useBorderRadius:true,borderRadius:2,padding:6}},tooltip:{callbacks:{label:function(c){return c.label+': R$'+c.parsed.toFixed(1)+'M';}}}}}});
+}
 
-new Chart(document.getElementById('chartAsps'),{type:'bar',data:{labels:['Atenção Básica','Assist. Hosp.','Sup. Profilático','Vig. Sanitária','Vig. Epidemiol.','Outras Subfunções'],datasets:[{label:'Dotação',data:[25.9,53.5,1.9,0.45,4.1,15.3],backgroundColor:'rgba(58,155,220,0.18)',borderColor:'rgba(58,155,220,0.4)',borderWidth:1,borderRadius:4},{label:'Liquidado',data:[12.1,21.2,0.09,0.21,1.41,6.45],backgroundColor:'rgba(0,201,167,0.7)',borderColor:'#00C9A7',borderWidth:1,borderRadius:4}]},options:{...baseOpts,scales:{x:{grid:{color:GC},ticks:{color:TC,font:{size:10},maxRotation:20}},y:{grid:{color:GC},ticks:{color:TC,font:{size:10,family:"'JetBrains Mono',monospace"},callback:v=>'R$'+v+'M'}}},plugins:{legend:{display:true,position:'top',labels:{color:TC,font:{size:11},boxWidth:12,boxHeight:12,useBorderRadius:true,borderRadius:2}},tooltip:{callbacks:{label:c=>c.dataset.label+': R$'+c.parsed.y.toFixed(2)+'M'}}}}});
+// --- RECEITA DETALHADA
+if(document.getElementById('chRecDet')){
+  new Chart(document.getElementById('chRecDet'),{type:'bar',data:{labels:['Rec. Correntes','IPTU','ITBI','IRRF','ISSQN','Taxas','COSIP','Patrimonial','Transf. Correntes','FPM','ICMS Est','FUNDEB','SUS Fed','Rec. Capital'],datasets:[{label:'Orçada',data:[679.9,33.0,4.2,11.9,26.0,21.5,10.7,11.9,512.9,149.2,75.4,128.4,54.7,101.1],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.4)',borderWidth:1,borderRadius:3},{label:'Arrecadada',data:[255.6,27.0,1.3,5.9,7.8,7.1,5.2,4.5,187.1,55.3,24.4,50.9,24.1,0.16],backgroundColor:'rgba(0,201,167,.65)',borderColor:'#00C9A7',borderWidth:1,borderRadius:3}]},options:{...base,scales:{x:{...gX,ticks:{color:TC,font:{size:9},maxRotation:35,autoSkip:false}},y:mkY()},plugins:{legend:{display:true,position:'top',labels:{color:TC,font:{size:10},boxWidth:10,boxHeight:10,useBorderRadius:true,borderRadius:2}},tooltip:{callbacks:{label:function(c){return c.dataset.label+': R$'+c.parsed.y.toFixed(1)+'M';}}}}}});
+}
 
-new Chart(document.getElementById('chartCaixa'),{type:'bar',data:{labels:['Saúde','Educação','Administração','Urbanismo','Previdência','Legislativa','Enc. Especiais','Transporte','Energia','Ass. Social'],datasets:[{data:[51.8,50.3,18.9,18.0,11.3,7.7,3.8,6.6,3.3,4.5],backgroundColor:['rgba(224,82,82,0.8)','rgba(245,166,35,0.75)','rgba(58,155,220,0.65)','rgba(58,155,220,0.5)','rgba(82,96,112,0.55)','rgba(82,96,112,0.5)','rgba(82,96,112,0.45)','rgba(82,96,112,0.42)','rgba(82,96,112,0.4)','rgba(82,96,112,0.38)'],borderRadius:4}]},options:{...baseOpts,scales:{x:{grid:{display:false},ticks:{color:TC,font:{size:11},maxRotation:30,autoSkip:false}},y:{grid:{color:GC},ticks:{color:TC,font:{size:10,family:"'JetBrains Mono',monospace"},callback:v=>'R$'+v+'M'}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'R$ '+c.parsed.y.toFixed(1)+'M desembolsado'}}}}});
+// --- PESSOAL mensal jan-mai
+if(document.getElementById('chPes')){
+  new Chart(document.getElementById('chPes'),{type:'bar',data:{labels:['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26'],datasets:[{label:'DTP Líquida',data:[20.4,21.4,20.5,17.2,18.0],backgroundColor:'rgba(0,201,167,.65)',borderColor:'#00C9A7',borderWidth:1,borderRadius:4}]},options:{...base,scales:{x:gX,y:mkY()},plugins:{tooltip:{callbacks:{label:function(c){return 'R$'+c.parsed.y.toFixed(1)+'M';}}}}}});
+}
+
+// --- PESSOAL 12 meses linha
+if(document.getElementById('chPes12')){
+  new Chart(document.getElementById('chPes12'),{type:'line',data:{labels:['Jun/25','Jul/25','Ago/25','Set/25','Out/25','Nov/25','Dez/25','Jan/26','Fev/26','Mar/26','Abr/26','Mai/26'],datasets:[{label:'Desp. Bruta Pessoal',data:[25.5,26.1,25.4,25.6,32.6,26.6,47.0,24.3,25.5,25.2,30.0,18.9],borderColor:'#3A9BDC',backgroundColor:'rgba(58,155,220,.1)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#3A9BDC',fill:true,tension:.3}]},options:{...base,scales:{x:gX,y:mkY()},plugins:{tooltip:{callbacks:{label:function(c){return 'R$'+c.parsed.y.toFixed(1)+'M';}}}}}});
+}
+
+// --- PESSOAL distribuição doughnut
+if(document.getElementById('chPesDist')){
+  new Chart(document.getElementById('chPesDist'),{type:'doughnut',data:{labels:['Pessoal Ativo','Pessoal Inativo/Pens.'],datasets:[{data:[296.0,36.8],backgroundColor:['rgba(0,201,167,.8)','rgba(58,155,220,.7)'],borderColor:'transparent',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{display:true,position:'bottom',labels:{color:TC,font:{size:10},boxWidth:10,boxHeight:10,useBorderRadius:true,borderRadius:2,padding:8}},tooltip:{callbacks:{label:function(c){return c.label+': R$'+c.parsed.toFixed(1)+'M';}}}}}});
+}
+
+// --- LRF comparativo barras
+if(document.getElementById('chLRF')){
+  new Chart(document.getElementById('chLRF'),{type:'bar',data:{labels:['DTP Atual','Limite Alerta','Lim. Prudencial','Lim. Máximo'],datasets:[{data:[275.1,346.4,365.7,384.9],backgroundColor:['rgba(0,201,167,.8)','rgba(245,166,35,.5)','rgba(255,100,35,.5)','rgba(224,82,82,.5)'],borderColor:['#00C9A7','#F5A623','orange','#E05252'],borderWidth:1,borderRadius:4}]},options:{...base,scales:{x:gX,y:mkY()},plugins:{tooltip:{callbacks:{label:function(c){return 'R$'+c.parsed.y.toFixed(1)+'M';}}}}}});
+}
+
+// --- SAÚDE ASPS subfunções
+if(document.getElementById('chAsps')){
+  new Chart(document.getElementById('chAsps'),{type:'bar',data:{labels:['At. Básica','Assist. Hosp.','Sup. Profilático','Vig. Sanitária','Vig. Epidemiol.','Outras'],datasets:[{label:'Dotação',data:[25.9,53.5,1.9,.45,4.1,15.3],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.4)',borderWidth:1,borderRadius:3},{label:'Liquidado',data:[12.1,21.2,.09,.21,1.41,6.45],backgroundColor:'rgba(0,201,167,.7)',borderColor:'#00C9A7',borderWidth:1,borderRadius:3}]},options:{...base,scales:{x:{...gX,ticks:{color:TC,font:{size:9},maxRotation:20}},y:mkY()},plugins:{legend:{display:true,position:'top',labels:{color:TC,font:{size:10},boxWidth:10,boxHeight:10,useBorderRadius:true,borderRadius:2}},tooltip:{callbacks:{label:function(c){return c.dataset.label+': R$'+c.parsed.y.toFixed(2)+'M';}}}}}});
+}
+
+// --- SAÚDE base de cálculo ASPS
+if(document.getElementById('chAspsBase')){
+  new Chart(document.getElementById('chAspsBase'),{type:'bar',data:{labels:['Impostos (Prev)','Impostos (Real)','Transf. Const. (Prev)','Transf. Const. (Real)'],datasets:[{label:'Previsão/Realizado',data:[75.1,42.1,315.9,123.8],backgroundColor:['rgba(58,155,220,.3)','rgba(0,201,167,.7)','rgba(58,155,220,.3)','rgba(0,201,167,.7)'],borderColor:['rgba(58,155,220,.6)','#00C9A7','rgba(58,155,220,.6)','#00C9A7'],borderWidth:1,borderRadius:4}]},options:{...base,scales:{x:gX,y:mkY()},plugins:{tooltip:{callbacks:{label:function(c){return 'R$'+c.parsed.y.toFixed(1)+'M';}}}}}});
+}
+
+// --- CAIXA desembolsos por função
+if(document.getElementById('chCaixa')){
+  new Chart(document.getElementById('chCaixa'),{type:'bar',data:{labels:['Saúde','Educação','Administração','Urbanismo','Previdência','Legislativa','Enc. Especiais','Transporte','Energia','Ass. Social'],datasets:[{data:[51.8,50.3,18.9,18.0,11.3,7.7,3.8,6.6,3.3,4.5],backgroundColor:['rgba(224,82,82,.8)','rgba(245,166,35,.75)','rgba(58,155,220,.65)','rgba(58,155,220,.5)','rgba(82,96,112,.55)','rgba(82,96,112,.5)','rgba(82,96,112,.45)','rgba(82,96,112,.42)','rgba(82,96,112,.4)','rgba(82,96,112,.38)'],borderRadius:4}]},options:{...base,scales:{x:{...gX,ticks:{color:TC,font:{size:10},maxRotation:30,autoSkip:false}},y:mkY()},plugins:{tooltip:{callbacks:{label:function(c){return 'R$'+c.parsed.y.toFixed(1)+'M';}}}}}});
+}
+
+// --- LIQUIDAÇÕES qtd por mês
+if(document.getElementById('chLiqMes')){
+  new Chart(document.getElementById('chLiqMes'),{type:'bar',data:{labels:['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],datasets:[{label:'Liquidações',data:[280,477,469,674,360,14],backgroundColor:['rgba(0,201,167,.6)','rgba(0,201,167,.65)','rgba(0,201,167,.7)','rgba(0,201,167,.85)','rgba(0,201,167,.6)','rgba(82,96,112,.4)'],borderRadius:4}]},options:{...base,scales:{x:gX,y:{...gX,ticks:{color:TC,font:{size:10}}}},plugins:{tooltip:{callbacks:{label:function(c){return c.parsed.y+' liquidações';}}}}}});
+}
+
+// --- LIQUIDAÇÕES valor por mês
+if(document.getElementById('chLiqVal')){
+  new Chart(document.getElementById('chLiqVal'),{type:'bar',data:{labels:['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],datasets:[{label:'Valor (R$M)',data:[17.8,27.3,30.0,36.2,28.5,.03],backgroundColor:['rgba(58,155,220,.55)','rgba(58,155,220,.6)','rgba(58,155,220,.65)','rgba(58,155,220,.8)','rgba(58,155,220,.6)','rgba(82,96,112,.4)'],borderRadius:4}]},options:{...base,scales:{x:gX,y:mkY()},plugins:{tooltip:{callbacks:{label:function(c){return 'R$'+c.parsed.y.toFixed(1)+'M';}}}}}});
+}
+
+})();
 </script>
 </body>
 </html>
