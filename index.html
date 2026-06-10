@@ -3,745 +3,292 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Painel Fiscal Gerencial — Ibirité/MG 2026</title>
+<title>Painel Fiscal Gerencial - Ibirité/MG 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 :root{--nv:#0D1B2A;--nl:#162233;--nm:#1E3048;--ac:#00C9A7;--acd:rgba(0,201,167,.13);--a2:#3A9BDC;--a2d:rgba(58,155,220,.13);--am:#F5A623;--amd:rgba(245,166,35,.13);--rd:#E05252;--rdd:rgba(224,82,82,.13);--gn:#4CAF7D;--gnd:rgba(76,175,125,.13);--tp:#E8EDF2;--ts:#8A9BB0;--tm:#526070;--br:rgba(255,255,255,.07);--bl:rgba(255,255,255,.04);--cb:#162233;--cb2:#1A2840;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:system-ui,sans-serif;background:var(--nv);color:var(--tp);font-size:14px;line-height:1.6;}
-header{background:var(--nl);border-bottom:1px solid var(--br);padding:8px 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100;}
-.lb{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--ac),var(--a2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;flex-shrink:0;}
-.hinfo{display:flex;align-items:center;gap:12px;}.htit{font-size:14px;font-weight:600;}.hsub{font-size:11px;color:var(--ts);}
-.hright{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.badge-lrf{display:flex;align-items:center;gap:5px;background:var(--gnd);border:1px solid rgba(76,175,125,.3);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:500;color:var(--gn);}
-.badge-lrf::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gn);}
-.bdt{font-size:10px;color:var(--tm);font-family:monospace;}
-.nav{background:var(--nl);border-bottom:1px solid var(--br);padding:0 1.5rem;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
-.nav::-webkit-scrollbar{display:none;}
-.nt{padding:10px 14px;font-size:12px;font-weight:500;color:var(--tm);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
-.nt:hover{color:var(--ts);}.nt.active{color:var(--ac);border-bottom-color:var(--ac);}
-.page{display:none;}.page.active{display:block;}
-.wrap{max-width:1400px;margin:0 auto;padding:1.5rem;}
-.sec{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--tm);margin:1.5rem 0 .75rem;display:flex;align-items:center;gap:8px;}
-.sec::after{content:'';flex:1;height:1px;background:var(--br);}
-.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;}
-.kc{background:var(--cb);border:1px solid var(--br);border-radius:10px;padding:1rem 1.25rem;position:relative;overflow:hidden;}
-.kc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.kc.ac::before{background:var(--ac);}.kc.a2::before{background:var(--a2);}
-.kc.am::before{background:var(--am);}.kc.rd::before{background:var(--rd);}.kc.gn::before{background:var(--gn);}
-.kl{font-size:10px;color:var(--ts);font-weight:500;margin-bottom:4px;}
-.kv{font-size:20px;font-weight:700;color:var(--tp);font-family:monospace;}
-.km{font-size:10px;color:var(--tm);margin-top:4px;}
-.kp{display:inline-block;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:600;margin-top:6px;}
-.ok{background:var(--gnd);color:var(--gn);border:1px solid rgba(76,175,125,.3);}
-.wn{background:var(--amd);color:var(--am);border:1px solid rgba(245,166,35,.3);}
-.cr{background:var(--rdd);color:var(--rd);border:1px solid rgba(224,82,82,.3);}
-.inf{background:var(--a2d);color:var(--a2);border:1px solid rgba(58,155,220,.3);}
-.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;}
-.cc{background:var(--cb);border:1px solid var(--br);border-radius:10px;padding:1.25rem;}
-.cc.full{grid-column:1/-1;}
-.ct{font-size:13px;font-weight:600;color:var(--tp);margin-bottom:3px;}
-.cs{font-size:11px;color:var(--tm);margin-bottom:1rem;}
-.pr{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.prl{font-size:11px;color:var(--ts);width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.prw{flex:1;height:7px;background:#1E3048;border-radius:4px;overflow:hidden;}
-.prb{height:100%;border-radius:4px;}
-.prp{font-family:monospace;font-size:10px;color:var(--ts);width:42px;text-align:right;flex-shrink:0;}
-.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;}
-.fc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem;text-align:center;}
-.ft{font-size:9px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);margin-bottom:3px;}
-.fv{font-family:monospace;font-size:13px;font-weight:700;}
-.fv.pos{color:var(--gn);}.fv.neg{color:var(--rd);}.fv.neu{color:var(--a2);}
-.fs{font-size:9px;color:var(--tm);margin-top:3px;}
-.tw{overflow-x:auto;border-radius:10px;border:1px solid var(--br);}
-table{width:100%;border-collapse:collapse;min-width:600px;}
-th{font-size:9px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--tm);padding:8px 12px;border-bottom:1px solid var(--br);text-align:left;white-space:nowrap;background:var(--cb2);}
-td{padding:9px 12px;font-size:11px;color:var(--ts);border-bottom:1px solid var(--bl);}
-tr:last-child td{border-bottom:none;}tr:hover td{background:rgba(255,255,255,.02);}
-td.nm{color:var(--tp);font-weight:500;}td.mn{font-family:monospace;color:var(--tp);font-size:11px;}
-td.pos{color:var(--gn);}td.neg{color:var(--rd);}td.wn{color:var(--am);}
-.bdg{display:inline-block;padding:1px 6px;border-radius:8px;font-size:9px;font-weight:600;}
-.bdg.ok{background:var(--gnd);color:var(--gn);}.bdg.wn{background:var(--amd);color:var(--am);}
-.bdg.cr{background:var(--rdd);color:var(--rd);}.bdg.if{background:var(--a2d);color:var(--a2);}
-.ib{border-radius:8px;padding:10px 14px;font-size:11px;margin-bottom:14px;}
-.ib.wn{background:var(--amd);border:1px solid rgba(245,166,35,.2);color:var(--ts);}
-.ib.inf{background:var(--a2d);border:1px solid rgba(58,155,220,.2);color:var(--ts);}
-.ib.ok{background:var(--gnd);border:1px solid rgba(76,175,125,.2);color:var(--ts);}
-.ib.cr{background:var(--rdd);border:1px solid rgba(224,82,82,.2);color:var(--ts);}
-.egrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:14px;}
-.eg{background:var(--cb2);border:1px solid var(--br);border-radius:10px;padding:1rem 1.25rem;}
-.egl{font-size:10px;color:var(--ts);font-weight:500;margin-bottom:4px;}
-.egv{font-family:monospace;font-size:22px;font-weight:700;margin-bottom:4px;}
-.egb{width:100%;height:10px;background:#1E3048;border-radius:6px;overflow:hidden;margin:6px 0;}
-.egf{height:100%;border-radius:6px;}
-.egm{font-size:10px;color:var(--tm);}
-.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;}
-.rc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:1rem 1.125rem;border-left:3px solid transparent;}
-.rc.rh{border-left-color:var(--rd);}.rc.rm{border-left-color:var(--am);}.rc.rl{border-left-color:var(--gn);}
-.ra{font-size:9px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);margin-bottom:3px;}
-.rt{font-size:12px;font-weight:600;color:var(--tp);margin-bottom:5px;}
-.rac{font-size:11px;color:var(--ts);line-height:1.5;}
-.rf{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
-.rr{font-size:9px;color:var(--tm);}
-.lbr{width:100%;background:#1E3048;border-radius:8px;height:18px;overflow:hidden;position:relative;margin:6px 0;}
-.lbrf{position:absolute;left:0;top:0;height:100%;border-radius:8px;}
-.lbrm{position:absolute;top:0;width:2px;height:100%;}
-.ltk{display:flex;justify-content:space-between;font-family:monospace;font-size:9px;color:var(--tm);}
-.lcs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
-.lc{background:#1E3048;border-radius:7px;padding:8px;text-align:center;}
-.lcl{font-size:9px;color:var(--tm);}.lcv{font-family:monospace;font-size:12px;color:var(--tp);font-weight:600;}
-.cks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;}
-.ck{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem 1.125rem;display:flex;gap:10px;align-items:flex-start;}
-.cki{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;}
-.cki.ok{background:var(--gnd);color:var(--gn);}.cki.wn{background:var(--amd);color:var(--am);}.cki.pd{background:var(--a2d);color:var(--a2);}
-.ckt{font-size:11px;font-weight:600;color:var(--tp);margin-bottom:2px;}.ckd{font-size:10px;color:var(--tm);line-height:1.5;}
-footer{border-top:1px solid var(--br);margin-top:2.5rem;padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:10px;color:var(--tm);}
-@media(max-width:768px){.kgrid{grid-template-columns:1fr 1fr;}.kv{font-size:16px;}.cgrid{grid-template-columns:1fr;}.fgrid{grid-template-columns:1fr 1fr;}.egrid{grid-template-columns:1fr 1fr;}}
-@media(max-width:480px){.kgrid{grid-template-columns:1fr 1fr;}.fgrid{grid-template-columns:1fr 1fr;}.egrid{grid-template-columns:1fr;}.prl{width:110px;}}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--nv);color:var(--tp);font-size:14px;line-height:1.55}header{background:var(--nl);border-bottom:1px solid var(--br);padding:8px 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100}.lb{width:48px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--ac),var(--a2));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;letter-spacing:.8px;flex-shrink:0}.hinfo{display:flex;align-items:center;gap:12px}.htit{font-size:14px;font-weight:650}.hsub{font-size:11px;color:var(--ts)}.hright{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.badge-lrf{display:flex;align-items:center;gap:5px;background:var(--gnd);border:1px solid rgba(76,175,125,.3);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;color:var(--gn)}.badge-lrf:before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gn)}.bdt{font-size:10px;color:var(--tm);font-family:monospace}.nav{background:var(--nl);border-bottom:1px solid var(--br);padding:0 1.5rem;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nt{padding:10px 14px;font-size:12px;font-weight:500;color:var(--tm);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}.nt:hover{color:var(--ts)}.nt.active{color:var(--ac);border-bottom-color:var(--ac)}.page{display:none}.page.active{display:block}.wrap{max-width:1400px;margin:0 auto;padding:1.5rem}.sec{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--tm);margin:1.5rem 0 .75rem;display:flex;align-items:center;gap:8px}.sec:after{content:'';flex:1;height:1px;background:var(--br)}.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px}.kc{background:var(--cb);border:1px solid var(--br);border-radius:10px;padding:1rem 1.2rem;position:relative;overflow:hidden}.kc:before{content:'';position:absolute;top:0;left:0;right:0;height:2px}.kc.ac:before{background:var(--ac)}.kc.a2:before{background:var(--a2)}.kc.am:before{background:var(--am)}.kc.rd:before{background:var(--rd)}.kc.gn:before{background:var(--gn)}.kl{font-size:10px;color:var(--ts);font-weight:600;margin-bottom:4px}.kv{font-size:20px;font-weight:800;color:var(--tp);font-family:monospace}.km{font-size:10px;color:var(--tm);margin-top:4px}.kp{display:inline-block;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;margin-top:6px}.ok{background:var(--gnd);color:var(--gn);border:1px solid rgba(76,175,125,.3)}.wn{background:var(--amd);color:var(--am);border:1px solid rgba(245,166,35,.3)}.cr{background:var(--rdd);color:var(--rd);border:1px solid rgba(224,82,82,.3)}.inf{background:var(--a2d);color:var(--a2);border:1px solid rgba(58,155,220,.3)}.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px}.cc{background:var(--cb);border:1px solid var(--br);border-radius:10px;padding:1.25rem}.cc.full{grid-column:1/-1}.ct{font-size:13px;font-weight:700;color:var(--tp);margin-bottom:3px}.cs{font-size:11px;color:var(--tm);margin-bottom:1rem}.pr{display:flex;align-items:center;gap:8px;margin-bottom:8px}.prl{font-size:11px;color:var(--ts);width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.prw{flex:1;height:7px;background:#1E3048;border-radius:4px;overflow:hidden}.prb{height:100%;border-radius:4px}.prp{font-family:monospace;font-size:10px;color:var(--ts);width:44px;text-align:right;flex-shrink:0}.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}.fc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem;text-align:center}.ft{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);margin-bottom:3px}.fv{font-family:monospace;font-size:13px;font-weight:800}.fv.pos{color:var(--gn)}.fv.neg{color:var(--rd)}.fv.neu{color:var(--a2)}.tw{overflow-x:auto;border-radius:10px;border:1px solid var(--br)}table{width:100%;border-collapse:collapse;min-width:720px}th{font-size:9px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--tm);padding:8px 12px;border-bottom:1px solid var(--br);text-align:left;white-space:nowrap;background:var(--cb2)}td{padding:9px 12px;font-size:11px;color:var(--ts);border-bottom:1px solid var(--bl)}tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}td.nm{color:var(--tp);font-weight:600}td.mn{font-family:monospace;color:var(--tp);font-size:11px}td.pos{color:var(--gn)}td.neg{color:var(--rd)}td.wn{color:var(--am)}.bdg{display:inline-block;padding:1px 6px;border-radius:8px;font-size:9px;font-weight:700}.bdg.ok{background:var(--gnd);color:var(--gn)}.bdg.wn{background:var(--amd);color:var(--am)}.bdg.cr{background:var(--rdd);color:var(--rd)}.bdg.if{background:var(--a2d);color:var(--a2)}.ib{border-radius:8px;padding:10px 14px;font-size:11px;margin-bottom:14px}.ib.wn{background:var(--amd);border:1px solid rgba(245,166,35,.2);color:var(--ts)}.ib.inf{background:var(--a2d);border:1px solid rgba(58,155,220,.2);color:var(--ts)}.ib.ok{background:var(--gnd);border:1px solid rgba(76,175,125,.2);color:var(--ts)}.ib.cr{background:var(--rdd);border:1px solid rgba(224,82,82,.2);color:var(--ts)}.egrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:10px;margin-bottom:14px}.eg{background:var(--cb2);border:1px solid var(--br);border-radius:10px;padding:1rem 1.25rem}.egl{font-size:10px;color:var(--ts);font-weight:600;margin-bottom:4px}.egv{font-family:monospace;font-size:22px;font-weight:800;margin-bottom:4px}.egb{width:100%;height:10px;background:#1E3048;border-radius:6px;overflow:hidden;margin:6px 0}.egf{height:100%;border-radius:6px}.egm{font-size:10px;color:var(--tm)}.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.rc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:1rem 1.125rem;border-left:3px solid transparent}.rc.rh{border-left-color:var(--rd)}.rc.rm{border-left-color:var(--am)}.rc.rl{border-left-color:var(--gn)}.ra{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);margin-bottom:3px}.rt{font-size:12px;font-weight:700;color:var(--tp);margin-bottom:5px}.rac{font-size:11px;color:var(--ts);line-height:1.5}.rf{display:flex;justify-content:space-between;align-items:center;margin-top:8px}.rr{font-size:9px;color:var(--tm)}.lbr{width:100%;background:#1E3048;border-radius:8px;height:18px;overflow:hidden;position:relative;margin:6px 0}.lbrf{position:absolute;left:0;top:0;height:100%;border-radius:8px}.lbrm{position:absolute;top:0;width:2px;height:100%}.ltk{display:flex;justify-content:space-between;font-family:monospace;font-size:9px;color:var(--tm)}.lcs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.lc{background:#1E3048;border-radius:7px;padding:8px;text-align:center}.lcl{font-size:9px;color:var(--tm)}.lcv{font-family:monospace;font-size:12px;color:var(--tp);font-weight:700}.cks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}.ck{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem 1.125rem;display:flex;gap:10px;align-items:flex-start}.cki{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:800}.cki.ok{background:var(--gnd);color:var(--gn)}.cki.wn{background:var(--amd);color:var(--am)}.cki.cr{background:var(--rdd);color:var(--rd)}.ckt{font-size:11px;font-weight:700;color:var(--tp);margin-bottom:2px}.ckd{font-size:10px;color:var(--tm);line-height:1.5}footer{border-top:1px solid var(--br);margin-top:2.5rem;padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:10px;color:var(--tm)}@media(max-width:768px){.kgrid{grid-template-columns:1fr 1fr}.kv{font-size:16px}.cgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}.egrid{grid-template-columns:1fr 1fr}.lcs{grid-template-columns:1fr 1fr}}@media(max-width:480px){.kgrid,.fgrid{grid-template-columns:1fr 1fr}.egrid{grid-template-columns:1fr}.prl{width:110px}.wrap{padding:1rem}}
 </style>
 <script>
+let charts=[];
 function showPage(id,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nt').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
+  setTimeout(()=>charts.forEach(c=>c.resize()),80);
 }
 </script>
 </head>
 <body>
-
 <header>
-  <div class="hinfo">
-    <img src="data:image/png;base64,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" alt="Prefeitura de Ibirité" style="height:44px;width:auto;object-fit:contain;">
-    <div>
-      <div class="htit">Painel Fiscal Gerencial — Prefeitura de Ibirité / MG</div>
-      <div class="hsub">Exercício 2026 · RREO Anexos 8/10/12/18 · RGF Anexo 1 · Liquidações · Betha Sistemas</div>
-    </div>
-  </div>
-  <div class="hright">
-    <div class="badge-lrf">LRF em conformidade</div>
-    <div class="bdt">01/06/2026 · 09h59</div>
-  </div>
+  <div class="hinfo"><div class="lb">PMI</div><div><div class="htit">Painel Fiscal Gerencial - Prefeitura de Ibirité / MG</div><div class="hsub">Exercício 2026 - RREO Anexos 8/10/12/18 - RGF Anexo 1 - Liquidações - Betha Sistemas</div></div></div>
+  <div class="hright"><div class="badge-lrf">LRF em conformidade</div><div class="bdt">10/06/2026 - 09h13</div></div>
 </header>
-
 <nav class="nav">
-  <button class="nt active" onclick="showPage('p1',this)">&#127775; Visão Executiva</button>
-  <button class="nt" onclick="showPage('p2',this)">&#128200; Receita Detalhada</button>
-  <button class="nt" onclick="showPage('p3',this)">&#128101; Pessoal / LRF</button>
-  <button class="nt" onclick="showPage('p4',this)">&#10084;&#65039; Saúde / ASPS</button>
-  <button class="nt" onclick="showPage('p5',this)">&#127979; Educação / MDE</button>
-  <button class="nt" onclick="showPage('p6',this)">&#128181; Fluxo de Caixa</button>
-  <button class="nt" onclick="showPage('p7',this)">&#128203; Liquidações</button>
-  <button class="nt" onclick="showPage('p8',this)">&#9888;&#65039; Riscos &amp; Checklist</button>
+  <button class="nt active" onclick="showPage('p1',this)">⭐ Visão Executiva</button>
+  <button class="nt" onclick="showPage('p2',this)">📈 Receita Detalhada</button>
+  <button class="nt" onclick="showPage('p3',this)">👥 Pessoal / LRF</button>
+  <button class="nt" onclick="showPage('p4',this)">❤️ Saúde / ASPS</button>
+  <button class="nt" onclick="showPage('p5',this)">🏫 Educação / MDE</button>
+  <button class="nt" onclick="showPage('p6',this)">💵 Fluxo de Caixa</button>
+  <button class="nt" onclick="showPage('p7',this)">📋 Liquidações</button>
+  <button class="nt" onclick="showPage('p8',this)">⚠️ Riscos & Checklist</button>
 </nav>
 
-<!-- ===== P1 EXECUTIVO ===== -->
 <div id="p1" class="page active"><div class="wrap">
-<div class="sec">Indicadores Executivos</div>
+<div class="sec">Indicadores Executivos Atualizados</div>
 <div class="kgrid">
-  <div class="kc ac"><div class="kl">Receita Total Arrecadada</div><div class="kv">R$266,6M</div><div class="km">Orçada R$781,1M · 34,14%</div><div class="kp cr">CRÍTICO · Meta temporal: 50%</div></div>
-  <div class="kc a2"><div class="kl">Caixa Final</div><div class="kv">R$617,2M</div><div class="km">Geração líquida +R$12,2M</div><div class="kp ok">POSITIVO · Liquidez preservada</div></div>
-  <div class="kc am"><div class="kl">Pessoal / LRF</div><div class="kv">42,88%</div><div class="km">RCL Ajustada R$641,6M · DTP R$275,1M</div><div class="kp ok">REGULAR · Dentro da LRF</div></div>
-  <div class="kc gn"><div class="kl">ASPS — Saúde Liquidada</div><div class="kv">24,96%</div><div class="km">Mínimo 15% · Base R$165,9M</div><div class="kp ok">CUMPRIDO · LC 141/2012</div></div>
-  <div class="kc rd"><div class="kl">MDE — Educação</div><div class="kv">18,85%</div><div class="km">Mínimo 25% · Déficit R$11,2M</div><div class="kp wn">ATENÇÃO · Abaixo do mínimo</div></div>
-  <div class="kc am"><div class="kl">FUNDEB 70% Profissionais</div><div class="kv">65,10%</div><div class="km">Exigido 70% · Déficit R$2,9M</div><div class="kp wn">ATENÇÃO · Abaixo de 70%</div></div>
-  <div class="kc ac"><div class="kl">Fluxo Operacional Líquido</div><div class="kv">R$26,0M</div><div class="km">Ing. R$325,2M · Des. R$299,3M</div><div class="kp ok">SUPERÁVIT OPERACIONAL</div></div>
-  <div class="kc rd"><div class="kl">Receitas de Capital</div><div class="kv">R$159,5K</div><div class="km">Orçada R$101,1M · 0,16%</div><div class="kp cr">CRÍTICO · Convênios pendentes</div></div>
-  <div class="kc a2"><div class="kl">Liquidações — Saldo Líquido</div><div class="kv">R$139,6M</div><div class="km">2.274 registros · 213 credores</div><div class="kp inf">Jan–Jun 2026</div></div>
-  <div class="kc am"><div class="kl">ISSQN</div><div class="kv">30,2%</div><div class="km">Arrecadado R$7,8M de R$26,0M</div><div class="kp cr">CRÍTICO · Fiscalização</div></div>
-  <div class="kc gn"><div class="kl">FUNDEB Recebido</div><div class="kv">R$59,8M</div><div class="km">Saldo conciliado R$26,6M</div><div class="kp inf">Informativo</div></div>
-  <div class="kc ac"><div class="kl">VAAT Disponível</div><div class="kv">R$1,44M</div><div class="km">Zero aplicado em educ. infantil</div><div class="kp cr">CRÍTICO · Ação urgente</div></div>
+  <div class="kc ac"><div class="kl">Receita Total Arrecadada</div><div class="kv">R$298,1M</div><div class="km">Orçada R$781,1M - 38,16%</div><div class="kp wn">ATENÇÃO - Meta temporal: 50%</div></div>
+  <div class="kc a2"><div class="kl">Caixa Final</div><div class="kv">R$635,1M</div><div class="km">Geração líquida +R$30,2M</div><div class="kp ok">POSITIVO - Liquidez preservada</div></div>
+  <div class="kc gn"><div class="kl">Pessoal / LRF</div><div class="kv">39,46%</div><div class="km">RCL Ajustada R$273,6M - DTP R$108,0M</div><div class="kp ok">REGULAR - Dentro da LRF</div></div>
+  <div class="kc gn"><div class="kl">ASPS - Saúde Liquidada</div><div class="kv">22,75%</div><div class="km">Mínimo 15% - Base R$185,7M</div><div class="kp ok">CUMPRIDO - LC 141/2012</div></div>
+  <div class="kc rd"><div class="kl">MDE - Educação</div><div class="kv">17,96%</div><div class="km">Mínimo 25% - Déficit R$13,1M</div><div class="kp cr">CRÍTICO - Abaixo do mínimo</div></div>
+  <div class="kc rd"><div class="kl">FUNDEB 70% Profissionais</div><div class="kv">62,70%</div><div class="km">Exigido 70% - Déficit R$4,5M</div><div class="kp cr">CRÍTICO - Abaixo de 70%</div></div>
+  <div class="kc ac"><div class="kl">Fluxo Operacional Líquido</div><div class="kv">R$45,3M</div><div class="km">Ing. R$360,2M - Des. R$314,8M</div><div class="kp ok">SUPERÁVIT OPERACIONAL</div></div>
+  <div class="kc am"><div class="kl">Receitas de Capital</div><div class="kv">R$459,5K</div><div class="km">Orçada R$101,1M - 0,45%</div><div class="kp cr">CRÍTICO - Convênios/obras</div></div>
+  <div class="kc a2"><div class="kl">Liquidações - Saldo Líquido</div><div class="kv">R$19,0M</div><div class="km">374 registros - 1 credor</div><div class="kp inf">01/01 a 10/06/2026</div></div>
+  <div class="kc am"><div class="kl">ISSQN</div><div class="kv">37,06%</div><div class="km">Arrecadado R$9,6M de R$26,0M</div><div class="kp wn">ATENÇÃO - Fiscalização</div></div>
+  <div class="kc rd"><div class="kl">FUNDEB Não Aplicado</div><div class="kv">11,84%</div><div class="km">Máximo 10% - Excesso R$1,14M</div><div class="kp cr">CRÍTICO - Regularizar execução</div></div>
+  <div class="kc rd"><div class="kl">VAAT Disponível</div><div class="kv">R$2,03M</div><div class="km">0 aplicado em educação infantil</div><div class="kp cr">CRÍTICO - Ação urgente</div></div>
 </div>
-<div class="sec">Execução de Receitas por Categoria</div>
+<div class="sec">Execução de Receitas e Transferências</div>
 <div class="cgrid">
-  <div class="cc full"><div class="ct">Receita Orçada × Arrecadada — Categorias Principais</div><div class="cs">R$ milhões · Anexo 10 RREO</div><div style="height:280px"><canvas id="c1"></canvas></div></div>
-  <div class="cc"><div class="ct">% de Execução — Rubricas Tributárias</div><div class="cs">Meta temporal: ~50%</div>
-    <div class="pr"><div class="prl">IPTU</div><div class="prw"><div class="prb" style="width:82%;background:var(--gn)"></div></div><div class="prp">82,0%</div></div>
-    <div class="pr"><div class="prl">IPVA (Est.)</div><div class="prw"><div class="prb" style="width:71%;background:var(--gn)"></div></div><div class="prp">70,7%</div></div>
-    <div class="pr"><div class="prl">IRRF</div><div class="prw"><div class="prb" style="width:49%;background:var(--am)"></div></div><div class="prp">49,2%</div></div>
-    <div class="pr"><div class="prl">COSIP</div><div class="prw"><div class="prb" style="width:48%;background:var(--am)"></div></div><div class="prp">48,1%</div></div>
-    <div class="pr"><div class="prl">FPM</div><div class="prw"><div class="prb" style="width:41%;background:var(--am)"></div></div><div class="prp">41,2%</div></div>
-    <div class="pr"><div class="prl">ICMS (Est.)</div><div class="prw"><div class="prb" style="width:40%;background:var(--am)"></div></div><div class="prp">39,6%</div></div>
-    <div class="pr"><div class="prl">ITBI</div><div class="prw"><div class="prb" style="width:31%;background:var(--rd)"></div></div><div class="prp">31,5%</div></div>
-    <div class="pr"><div class="prl">ISSQN</div><div class="prw"><div class="prb" style="width:30%;background:var(--rd)"></div></div><div class="prp">30,2%</div></div>
+  <div class="cc full"><div class="ct">Receita Orçada x Arrecadada - Categorias Principais</div><div class="cs">R$ milhões - Anexo 10 RREO atualizado em 10/06/2026</div><div style="height:280px"><canvas id="c1"></canvas></div></div>
+  <div class="cc"><div class="ct">% de Execução - Rubricas Selecionadas</div><div class="cs">Meta temporal aproximada: 50%</div>
+    <div class="pr"><div class="prl">IPTU</div><div class="prw"><div class="prb" style="width:86.5%;background:var(--gn)"></div></div><div class="prp">86,5%</div></div>
+    <div class="pr"><div class="prl">IPVA</div><div class="prw"><div class="prb" style="width:74.3%;background:var(--gn)"></div></div><div class="prp">74,3%</div></div>
+    <div class="pr"><div class="prl">COSIP</div><div class="prw"><div class="prb" style="width:56.7%;background:var(--gn)"></div></div><div class="prp">56,7%</div></div>
+    <div class="pr"><div class="prl">IRRF</div><div class="prw"><div class="prb" style="width:50.8%;background:var(--gn)"></div></div><div class="prp">50,8%</div></div>
+    <div class="pr"><div class="prl">ITBI</div><div class="prw"><div class="prb" style="width:44.6%;background:var(--am)"></div></div><div class="prp">44,6%</div></div>
+    <div class="pr"><div class="prl">FPM</div><div class="prw"><div class="prb" style="width:41.2%;background:var(--am)"></div></div><div class="prp">41,2%</div></div>
+    <div class="pr"><div class="prl">ICMS</div><div class="prw"><div class="prb" style="width:39.6%;background:var(--am)"></div></div><div class="prp">39,6%</div></div>
+    <div class="pr"><div class="prl">ISSQN</div><div class="prw"><div class="prb" style="width:37.1%;background:var(--rd)"></div></div><div class="prp">37,1%</div></div>
   </div>
-  <div class="cc"><div class="ct">Transferências Correntes — Composição (R$187,1M)</div><div class="cs">Por origem</div><div style="height:240px"><canvas id="c2"></canvas></div></div>
+  <div class="cc"><div class="ct">Transferências Recebidas - DFC</div><div class="cs">Composição dos R$211,3M recebidos</div><div style="height:240px"><canvas id="c2"></canvas></div></div>
 </div>
-<div class="sec">Fluxo de Caixa — Visão Executiva</div>
+<div class="sec">Fluxo de Caixa - Visão Executiva</div>
 <div class="fgrid">
-  <div class="fc"><div class="ft">Ingresso Operacional</div><div class="fv pos">+R$325,2M</div></div>
-  <div class="fc"><div class="ft">Desembolso Operacional</div><div class="fv neg">−R$299,3M</div></div>
-  <div class="fc"><div class="ft">Fluxo Operacional</div><div class="fv pos">+R$26,0M</div></div>
-  <div class="fc"><div class="ft">Investimento</div><div class="fv neg">−R$7,6M</div></div>
-  <div class="fc"><div class="ft">Financiamento</div><div class="fv neg">−R$6,1M</div></div>
-  <div class="fc"><div class="ft">Geração Líquida</div><div class="fv pos">+R$12,2M</div></div>
+  <div class="fc"><div class="ft">Ingresso Operacional</div><div class="fv pos">+R$360,2M</div></div>
+  <div class="fc"><div class="ft">Desembolso Operacional</div><div class="fv neg">-R$314,8M</div></div>
+  <div class="fc"><div class="ft">Fluxo Operacional</div><div class="fv pos">+R$45,3M</div></div>
+  <div class="fc"><div class="ft">Investimento</div><div class="fv neg">-R$8,6M</div></div>
+  <div class="fc"><div class="ft">Financiamento</div><div class="fv neg">-R$6,6M</div></div>
+  <div class="fc"><div class="ft">Geração Líquida</div><div class="fv pos">+R$30,2M</div></div>
   <div class="fc"><div class="ft">Caixa Inicial</div><div class="fv neu">R$604,9M</div></div>
-  <div class="fc"><div class="ft">Caixa Final</div><div class="fv neu">R$617,2M</div></div>
+  <div class="fc"><div class="ft">Caixa Final</div><div class="fv neu">R$635,1M</div></div>
 </div>
 </div></div>
 
-<!-- ===== P2 RECEITA ===== -->
 <div id="p2" class="page"><div class="wrap">
-<div class="sec">Tabela de Receitas — Anexo 10 RREO</div>
-<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> Anexo 10 — Comparativo da Receita Orçada × Arrecadada · Emissão 01/06/2026 09:54:49</div>
-<div class="tw"><table>
-<thead><tr><th>Código</th><th>Categoria / Rubrica</th><th style="text-align:right">Orçada (R$)</th><th style="text-align:right">Arrecadada (R$)</th><th style="text-align:right">Saldo (R$)</th><th style="text-align:right">%</th><th>Situação</th></tr></thead>
-<tbody>
-<tr><td class="mn">TOTAL</td><td class="nm">Total Geral Consolidado</td><td class="mn" style="text-align:right">781.079.201,73</td><td class="mn" style="text-align:right">266.641.406,22</td><td class="mn neg" style="text-align:right">(514.437.795,51)</td><td class="mn wn" style="text-align:right">34,14%</td><td><span class="bdg wn">Atenção</span></td></tr>
-<tr><td class="mn">1.0</td><td class="nm">Receitas Correntes</td><td class="mn" style="text-align:right">679.943.546,73</td><td class="mn" style="text-align:right">255.596.367,33</td><td class="mn neg" style="text-align:right">(424.347.179,40)</td><td class="mn wn" style="text-align:right">37,59%</td><td><span class="bdg wn">Atenção</span></td></tr>
-<tr><td class="mn">1.1</td><td class="nm">&nbsp;&nbsp;Impostos, Taxas e Contrib.</td><td class="mn" style="text-align:right">96.609.746,35</td><td class="mn" style="text-align:right">49.123.569,65</td><td class="mn neg" style="text-align:right">(47.486.176,70)</td><td class="mn pos" style="text-align:right">50,85%</td><td><span class="bdg ok">Adequado</span></td></tr>
-<tr><td class="mn">1.1.1.2.50</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;IPTU</td><td class="mn" style="text-align:right">32.964.183,92</td><td class="mn" style="text-align:right">27.043.317,86</td><td class="mn neg" style="text-align:right">(5.920.866,06)</td><td class="mn pos" style="text-align:right">82,04%</td><td><span class="bdg ok">Adequado</span></td></tr>
-<tr><td class="mn">1.1.1.2.53</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;ITBI</td><td class="mn" style="text-align:right">4.165.839,08</td><td class="mn" style="text-align:right">1.305.518,13</td><td class="mn neg" style="text-align:right">(2.860.320,95)</td><td class="mn wn" style="text-align:right">31,34%</td><td><span class="bdg cr">Crítico</span></td></tr>
-<tr><td class="mn">1.1.1.3.03</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;IRRF</td><td class="mn" style="text-align:right">11.940.531,21</td><td class="mn" style="text-align:right">5.868.533,47</td><td class="mn neg" style="text-align:right">(6.071.997,74)</td><td class="mn wn" style="text-align:right">49,15%</td><td><span class="bdg wn">Atenção</span></td></tr>
-<tr><td class="mn">1.1.1.4.51</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;ISSQN</td><td class="mn" style="text-align:right">26.000.923,71</td><td class="mn" style="text-align:right">7.846.728,38</td><td class="mn neg" style="text-align:right">(18.154.195,33)</td><td class="mn wn" style="text-align:right">30,18%</td><td><span class="bdg cr">Crítico</span></td></tr>
-<tr><td class="mn">1.1.2</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;Taxas</td><td class="mn" style="text-align:right">21.538.268,43</td><td class="mn" style="text-align:right">7.055.434,50</td><td class="mn neg" style="text-align:right">(14.482.833,93)</td><td class="mn wn" style="text-align:right">32,76%</td><td><span class="bdg cr">Crítico</span></td></tr>
-<tr><td class="mn">1.2</td><td class="nm">&nbsp;&nbsp;Contribuições (RPPS+COSIP)</td><td class="mn" style="text-align:right">57.134.400,00</td><td class="mn" style="text-align:right">12.153.690,05</td><td class="mn neg" style="text-align:right">(44.980.709,95)</td><td class="mn wn" style="text-align:right">21,27%</td><td><span class="bdg cr">Crítico</span></td></tr>
-<tr><td class="mn">1.2.4</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;COSIP</td><td class="mn" style="text-align:right">10.722.400,00</td><td class="mn" style="text-align:right">5.156.756,84</td><td class="mn neg" style="text-align:right">(5.565.643,16)</td><td class="mn wn" style="text-align:right">48,09%</td><td><span class="bdg wn">Atenção</span></td></tr>
-<tr><td class="mn">1.3</td><td class="nm">&nbsp;&nbsp;Receita Patrimonial</td><td class="mn" style="text-align:right">11.877.709,53</td><td class="mn" style="text-align:right">4.529.725,16</td><td class="mn neg" style="text-align:right">(7.347.984,37)</td><td class="mn wn" style="text-align:right">38,14%</td><td><span class="bdg wn">Atenção</span></td></tr>
-<tr><td class="mn">1.7</td><td class="nm">&nbsp;&nbsp;Transferências Correntes</td><td class="mn" style="text-align:right">512.867.790,85</td><td class="mn" style="text-align:right">187.096.678,96</td><td class="mn neg" style="text-align:right">(325.771.111,89)</td><td class="mn wn" style="text-align:right">36,48%</td><td><span class="bdg wn">Atenção</span></td></tr>
-<tr><td class="mn">FPM</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;FPM</td><td class="mn" style="text-align:right">186.461.121,31</td><td class="mn" style="text-align:right">76.757.725,67</td><td class="mn neg" style="text-align:right">(109.703.395,64)</td><td class="mn wn" style="text-align:right">41,17%</td><td><span class="bdg wn">Atenção</span></td></tr>
-<tr><td class="mn">ICMS</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;ICMS Estadual</td><td class="mn" style="text-align:right">94.291.935,26</td><td class="mn" style="text-align:right">37.322.293,34</td><td class="mn neg" style="text-align:right">(56.969.641,92)</td><td class="mn wn" style="text-align:right">39,58%</td><td><span class="bdg wn">Atenção</span></td></tr>
-<tr><td class="mn">IPVA</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;IPVA Estadual</td><td class="mn" style="text-align:right">33.767.211,38</td><td class="mn" style="text-align:right">25.008.335,19</td><td class="mn neg" style="text-align:right">(8.758.876,19)</td><td class="mn pos" style="text-align:right">74,06%</td><td><span class="bdg ok">Adequado</span></td></tr>
-<tr><td class="mn">FUNDEB</td><td class="nm">&nbsp;&nbsp;&nbsp;&nbsp;FUNDEB</td><td class="mn" style="text-align:right">128.377.058,58</td><td class="mn" style="text-align:right">57.784.611,79</td><td class="mn neg" style="text-align:right">(70.592.446,79)</td><td class="mn wn" style="text-align:right">45,01%</td><td><span class="bdg wn">Atenção</span></td></tr>
-<tr><td class="mn">1.9</td><td class="nm">&nbsp;&nbsp;Outras Receitas Correntes</td><td class="mn" style="text-align:right">1.453.900,00</td><td class="mn pos" style="text-align:right">2.692.703,51</td><td class="mn pos" style="text-align:right">+1.238.803,51</td><td class="mn pos" style="text-align:right">185,2%</td><td><span class="bdg ok">Excedente</span></td></tr>
-<tr><td class="mn">2.0</td><td class="nm">Receitas de Capital</td><td class="mn" style="text-align:right">101.135.655,00</td><td class="mn" style="text-align:right">159.494,49</td><td class="mn neg" style="text-align:right">(100.976.160,51)</td><td class="mn neg" style="text-align:right">0,16%</td><td><span class="bdg cr">Crítico</span></td></tr>
+<div class="sec">Receita - Anexo 10 RREO</div>
+<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> Anexo 10 - Comparativo da Receita Orçada com Arrecadada - Emissão 10/06/2026 09:13:31.</div>
+<div class="tw"><table><thead><tr><th>Código</th><th>Categoria / Rubrica</th><th style="text-align:right">Orçada</th><th style="text-align:right">Arrecadada</th><th style="text-align:right">Saldo a Realizar</th><th style="text-align:right">%</th><th>Situação</th></tr></thead><tbody>
+<tr><td class="mn">TOTAL</td><td class="nm">Total Geral Consolidado</td><td class="mn" style="text-align:right">781.079.201,73</td><td class="mn" style="text-align:right">298.051.261,34</td><td class="mn neg" style="text-align:right">483.027.940,39</td><td class="mn wn" style="text-align:right">38,16%</td><td><span class="bdg wn">Atenção</span></td></tr>
+<tr><td class="mn">1.0</td><td class="nm">Receitas Correntes</td><td class="mn" style="text-align:right">679.943.546,73</td><td class="mn" style="text-align:right">286.706.222,45</td><td class="mn neg" style="text-align:right">393.237.324,28</td><td class="mn wn" style="text-align:right">42,17%</td><td><span class="bdg wn">Atenção</span></td></tr>
+<tr><td class="mn">1.1</td><td class="nm">Impostos, Taxas e Contribuições de Melhoria</td><td class="mn" style="text-align:right">96.609.746,35</td><td class="mn" style="text-align:right">54.396.412,40</td><td class="mn neg" style="text-align:right">42.213.333,95</td><td class="mn pos" style="text-align:right">56,31%</td><td><span class="bdg ok">Adequado</span></td></tr>
+<tr><td class="mn">IPTU</td><td class="nm">IPTU</td><td class="mn" style="text-align:right">32.964.183,92</td><td class="mn" style="text-align:right">28.527.739,70</td><td class="mn neg" style="text-align:right">4.436.444,22</td><td class="mn pos" style="text-align:right">86,54%</td><td><span class="bdg ok">Adequado</span></td></tr>
+<tr><td class="mn">ITBI</td><td class="nm">ITBI</td><td class="mn" style="text-align:right">4.165.839,08</td><td class="mn" style="text-align:right">1.855.804,48</td><td class="mn neg" style="text-align:right">2.310.034,60</td><td class="mn wn" style="text-align:right">44,55%</td><td><span class="bdg wn">Atenção</span></td></tr>
+<tr><td class="mn">IRRF</td><td class="nm">IRRF</td><td class="mn" style="text-align:right">11.940.531,21</td><td class="mn" style="text-align:right">6.062.511,85</td><td class="mn neg" style="text-align:right">5.878.019,36</td><td class="mn pos" style="text-align:right">50,77%</td><td><span class="bdg ok">Adequado</span></td></tr>
+<tr><td class="mn">ISSQN</td><td class="nm">ISSQN</td><td class="mn" style="text-align:right">26.000.923,71</td><td class="mn" style="text-align:right">9.635.075,06</td><td class="mn neg" style="text-align:right">16.365.848,65</td><td class="mn wn" style="text-align:right">37,06%</td><td><span class="bdg wn">Atenção</span></td></tr>
+<tr><td class="mn">Taxas</td><td class="nm">Taxas</td><td class="mn" style="text-align:right">21.538.268,43</td><td class="mn" style="text-align:right">8.306.902,05</td><td class="mn neg" style="text-align:right">13.231.366,38</td><td class="mn wn" style="text-align:right">38,57%</td><td><span class="bdg wn">Atenção</span></td></tr>
+<tr><td class="mn">1.2</td><td class="nm">Contribuições</td><td class="mn" style="text-align:right">57.134.400,00</td><td class="mn" style="text-align:right">13.091.719,13</td><td class="mn neg" style="text-align:right">44.042.680,87</td><td class="mn cr" style="text-align:right">22,91%</td><td><span class="bdg cr">Crítico</span></td></tr>
+<tr><td class="mn">COSIP</td><td class="nm">Contribuição de Iluminação Pública</td><td class="mn" style="text-align:right">10.722.400,00</td><td class="mn" style="text-align:right">6.078.642,97</td><td class="mn neg" style="text-align:right">4.643.757,03</td><td class="mn pos" style="text-align:right">56,69%</td><td><span class="bdg ok">Adequado</span></td></tr>
+<tr><td class="mn">1.3</td><td class="nm">Receita Patrimonial</td><td class="mn" style="text-align:right">11.877.709,53</td><td class="mn" style="text-align:right">5.429.734,23</td><td class="mn neg" style="text-align:right">6.447.975,30</td><td class="mn wn" style="text-align:right">45,71%</td><td><span class="bdg wn">Atenção</span></td></tr>
+<tr><td class="mn">1.7</td><td class="nm">Transferências Correntes</td><td class="mn" style="text-align:right">512.867.790,85</td><td class="mn" style="text-align:right">210.858.514,61</td><td class="mn neg" style="text-align:right">302.009.276,24</td><td class="mn wn" style="text-align:right">41,11%</td><td><span class="bdg wn">Atenção</span></td></tr>
+<tr><td class="mn">FPM</td><td class="nm">FPM - base MDE/ASPS</td><td class="mn" style="text-align:right">186.461.121,31</td><td class="mn" style="text-align:right">76.757.725,67</td><td class="mn neg" style="text-align:right">109.703.395,64</td><td class="mn wn" style="text-align:right">41,17%</td><td><span class="bdg wn">Atenção</span></td></tr>
+<tr><td class="mn">ICMS</td><td class="nm">ICMS - base MDE/ASPS</td><td class="mn" style="text-align:right">94.291.935,26</td><td class="mn" style="text-align:right">37.322.293,34</td><td class="mn neg" style="text-align:right">56.969.641,92</td><td class="mn wn" style="text-align:right">39,58%</td><td><span class="bdg wn">Atenção</span></td></tr>
+<tr><td class="mn">IPVA</td><td class="nm">IPVA - base MDE/ASPS</td><td class="mn" style="text-align:right">33.767.211,38</td><td class="mn" style="text-align:right">25.089.149,80</td><td class="mn neg" style="text-align:right">8.678.061,58</td><td class="mn pos" style="text-align:right">74,30%</td><td><span class="bdg ok">Adequado</span></td></tr>
+<tr><td class="mn">FUNDEB</td><td class="nm">Transferências do FUNDEB</td><td class="mn" style="text-align:right">128.377.058,58</td><td class="mn" style="text-align:right">59.407.068,33</td><td class="mn neg" style="text-align:right">68.969.990,25</td><td class="mn wn" style="text-align:right">46,28%</td><td><span class="bdg wn">Atenção</span></td></tr>
+<tr><td class="mn">1.9</td><td class="nm">Outras Receitas Correntes</td><td class="mn" style="text-align:right">1.453.900,00</td><td class="mn pos" style="text-align:right">2.929.842,08</td><td class="mn pos" style="text-align:right">+1.475.942,08</td><td class="mn pos" style="text-align:right">201,51%</td><td><span class="bdg ok">Excedente</span></td></tr>
+<tr><td class="mn">2.0</td><td class="nm">Receitas de Capital</td><td class="mn" style="text-align:right">101.135.655,00</td><td class="mn" style="text-align:right">459.494,49</td><td class="mn neg" style="text-align:right">100.676.160,51</td><td class="mn neg" style="text-align:right">0,45%</td><td><span class="bdg cr">Crítico</span></td></tr>
 <tr><td class="mn">7.0</td><td class="nm">Receitas Intraorçamentárias</td><td class="mn" style="text-align:right">0,00</td><td class="mn pos" style="text-align:right">10.885.544,40</td><td class="mn pos" style="text-align:right">+10.885.544,40</td><td class="mn pos" style="text-align:right">Sem previsão</td><td><span class="bdg ok">Excedente</span></td></tr>
 </tbody></table></div>
-<div class="sec" style="margin-top:1.5rem">Gráfico Comparativo</div>
-<div class="cc full" style="margin-top:0"><div class="ct">Orçado × Arrecadado por Categoria</div><div class="cs">R$ milhões</div><div style="height:320px"><canvas id="c3"></canvas></div></div>
+<div class="sec" style="margin-top:1.5rem">Gráfico Comparativo</div><div class="cc full"><div class="ct">Orçado x Arrecadado por Categoria</div><div class="cs">R$ milhões</div><div style="height:320px"><canvas id="c3"></canvas></div></div>
 </div></div>
 
-<!-- ===== P3 PESSOAL ===== -->
 <div id="p3" class="page"><div class="wrap">
-<div class="sec">Despesa com Pessoal — RGF Anexo 1 / LRF</div>
-<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> RGF — Demonstrativo da Despesa com Pessoal · Jun/2025–Mai/2026 · Betha Sistemas</div>
+<div class="sec">Despesa com Pessoal - RGF Anexo 1 / LRF</div>
+<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> RGF Anexo 1 - Demonstrativo da Despesa com Pessoal - Jan/2026 a Jun/2026.</div>
 <div class="cgrid">
-  <div class="cc"><div class="ct">Posicionamento DTP × Limites LRF</div><div class="cs">% sobre RCL Ajustada R$641,6M</div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px">
-      <div><div style="font-family:monospace;font-size:28px;font-weight:700;color:var(--gn)">42,88%</div><div style="font-size:10px;color:var(--tm)">DTP / RCL Ajustada</div></div>
-      <div style="text-align:right"><div style="font-size:10px;color:var(--tm)">Margem até alerta</div><div style="font-family:monospace;font-size:16px;color:var(--am);font-weight:600">+11,12 pp</div></div>
-    </div>
-    <div class="lbr"><div class="lbrf" style="width:42.88%;background:var(--gn)"></div><div class="lbrm" style="left:54%;background:var(--am)"></div><div class="lbrm" style="left:57%;background:orange"></div><div class="lbrm" style="left:60%;background:var(--rd)"></div></div>
+  <div class="cc"><div class="ct">Posicionamento DTP x Limites LRF</div><div class="cs">% sobre RCL Ajustada R$273,6M</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px"><div><div style="font-family:monospace;font-size:28px;font-weight:800;color:var(--gn)">39,46%</div><div style="font-size:10px;color:var(--tm)">DTP / RCL Ajustada</div></div><div style="text-align:right"><div style="font-size:10px;color:var(--tm)">Margem até alerta</div><div style="font-family:monospace;font-size:16px;color:var(--am);font-weight:700">+14,54 pp</div></div></div>
+    <div class="lbr"><div class="lbrf" style="width:39.46%;background:var(--gn)"></div><div class="lbrm" style="left:54%;background:var(--am)"></div><div class="lbrm" style="left:57%;background:orange"></div><div class="lbrm" style="left:60%;background:var(--rd)"></div></div>
     <div class="ltk"><span>0%</span><span style="color:var(--am)">Alerta 54%</span><span style="color:orange">Prudencial 57%</span><span style="color:var(--rd)">Máx 60%</span></div>
-    <div class="lcs">
-      <div class="lc"><div class="lcl">DTP Líquida</div><div class="lcv">R$275,1M</div></div>
-      <div class="lc"><div class="lcl">Desp. Bruta</div><div class="lcv">R$332,8M</div></div>
-      <div class="lc"><div class="lcl">Deduções</div><div class="lcv">R$57,6M</div></div>
-      <div class="lc"><div class="lcl">RCL Ajustada</div><div class="lcv">R$641,6M</div></div>
-      <div class="lc"><div class="lcl">Lim. Máximo</div><div class="lcv">R$384,9M</div></div>
-      <div class="lc"><div class="lcl">Margem Max</div><div class="lcv" style="color:var(--gn)">R$109,8M</div></div>
-    </div>
+    <div class="lcs"><div class="lc"><div class="lcl">DTP Líquida</div><div class="lcv">R$108,0M</div></div><div class="lc"><div class="lcl">Desp. Bruta</div><div class="lcv">R$128,9M</div></div><div class="lc"><div class="lcl">Deduções</div><div class="lcv">R$21,0M</div></div><div class="lc"><div class="lcl">RCL Ajustada</div><div class="lcv">R$273,6M</div></div><div class="lc"><div class="lcl">Lim. Máximo</div><div class="lcv">R$164,2M</div></div><div class="lc"><div class="lcl">Margem Máx</div><div class="lcv" style="color:var(--gn)">R$56,2M</div></div></div>
   </div>
-  <div class="cc"><div class="ct">DTP Mensal — Jan a Mai/2026</div><div class="cs">Despesa líquida mensal (R$ milhões)</div><div style="height:240px"><canvas id="c4"></canvas></div></div>
+  <div class="cc"><div class="ct">DTP Mensal - Jan a Jun/2026</div><div class="cs">Despesa líquida mensal (R$ milhões). Junho parcial conforme relatório.</div><div style="height:240px"><canvas id="c4"></canvas></div></div>
 </div>
-<div class="sec">Evolução 12 Meses — Jun/2025 a Mai/2026</div>
-<div class="cgrid">
-  <div class="cc full"><div class="ct">Despesa Bruta com Pessoal</div><div class="cs">R$ milhões · Ativo + Inativo/Pensionistas</div><div style="height:260px"><canvas id="c5"></canvas></div></div>
-  <div class="cc"><div class="ct">Composição — Ativo × Inativo</div><div class="cs">Total R$332,8M (12 meses)</div><div style="height:220px"><canvas id="c6"></canvas></div></div>
-  <div class="cc"><div class="ct">Limites LRF — Comparativo</div><div class="cs">R$ milhões · Base RCL Ajustada R$641,6M</div><div style="height:220px"><canvas id="c7"></canvas></div></div>
-</div>
-<div class="sec">Tabela Resumida — LRF</div>
-<div class="tw"><table>
-<thead><tr><th>Descrição</th><th style="text-align:right">Valor (R$)</th><th style="text-align:right">% RCL Ajustada</th><th>Situação</th></tr></thead>
-<tbody>
-<tr><td class="nm">Despesa Bruta com Pessoal (I)</td><td class="mn" style="text-align:right">332.754.239,43</td><td class="mn" style="text-align:right">51,87%</td><td><span class="bdg wn">Bruto</span></td></tr>
-<tr><td class="nm">&nbsp;&nbsp;Pessoal Ativo</td><td class="mn" style="text-align:right">295.978.594,14</td><td class="mn" style="text-align:right">46,13%</td><td></td></tr>
-<tr><td class="nm">&nbsp;&nbsp;Inativo / Pensionistas</td><td class="mn" style="text-align:right">36.775.645,29</td><td class="mn" style="text-align:right">5,73%</td><td></td></tr>
-<tr><td class="nm">Despesas Não Computadas (II)</td><td class="mn" style="text-align:right">57.624.530,73</td><td class="mn" style="text-align:right">8,98%</td><td></td></tr>
-<tr><td class="nm">Despesa Líquida — DTP (I - II)</td><td class="mn" style="text-align:right">275.129.708,70</td><td class="mn pos" style="text-align:right">42,88%</td><td><span class="bdg ok">Regular</span></td></tr>
-<tr><td class="nm">Limite de Alerta (54%)</td><td class="mn" style="text-align:right">346.442.839,68</td><td class="mn" style="text-align:right">54,00%</td><td><span class="bdg wn">Monitorar</span></td></tr>
-<tr><td class="nm">Limite Prudencial (57%)</td><td class="mn" style="text-align:right">365.689.664,10</td><td class="mn" style="text-align:right">57,00%</td><td></td></tr>
-<tr><td class="nm">Limite Máximo (60%)</td><td class="mn" style="text-align:right">384.936.488,53</td><td class="mn" style="text-align:right">60,00%</td><td></td></tr>
-<tr><td class="nm">RCL antes dos ajustes (IV)</td><td class="mn" style="text-align:right">666.125.974,21</td><td class="mn" style="text-align:right">—</td><td></td></tr>
-<tr><td class="nm">RCL Ajustada (V)</td><td class="mn" style="text-align:right">641.560.814,21</td><td class="mn" style="text-align:right">—</td><td></td></tr>
+<div class="sec">Tabela Resumida - LRF</div>
+<div class="tw"><table><thead><tr><th>Descrição</th><th style="text-align:right">Valor (R$)</th><th style="text-align:right">% RCL Ajustada</th><th>Situação</th></tr></thead><tbody>
+<tr><td class="nm">Despesa Bruta com Pessoal (I)</td><td class="mn" style="text-align:right">128.948.364,39</td><td class="mn" style="text-align:right">47,13%</td><td><span class="bdg wn">Bruto</span></td></tr>
+<tr><td class="nm">Pessoal Ativo</td><td class="mn" style="text-align:right">115.154.427,53</td><td class="mn" style="text-align:right">42,09%</td><td></td></tr>
+<tr><td class="nm">Pessoal Inativo / Pensionistas</td><td class="mn" style="text-align:right">13.793.936,86</td><td class="mn" style="text-align:right">5,04%</td><td></td></tr>
+<tr><td class="nm">Despesas Não Computadas (II)</td><td class="mn" style="text-align:right">20.994.127,67</td><td class="mn" style="text-align:right">7,67%</td><td></td></tr>
+<tr><td class="nm">Despesa Total com Pessoal - DTP (VI)</td><td class="mn pos" style="text-align:right">107.954.236,72</td><td class="mn pos" style="text-align:right">39,46%</td><td><span class="bdg ok">Regular</span></td></tr>
+<tr><td class="nm">Receita Corrente Líquida - RCL</td><td class="mn" style="text-align:right">278.069.717,07</td><td class="mn" style="text-align:right">-</td><td></td></tr>
+<tr><td class="nm">RCL Ajustada para cálculo dos limites</td><td class="mn" style="text-align:right">273.601.575,42</td><td class="mn" style="text-align:right">-</td><td></td></tr>
+<tr><td class="nm">Limite de Alerta (54%)</td><td class="mn" style="text-align:right">147.744.850,73</td><td class="mn" style="text-align:right">54,00%</td><td><span class="bdg wn">Monitorar</span></td></tr>
+<tr><td class="nm">Limite Prudencial (57%)</td><td class="mn" style="text-align:right">155.952.897,99</td><td class="mn" style="text-align:right">57,00%</td><td></td></tr>
+<tr><td class="nm">Limite Máximo (60%)</td><td class="mn" style="text-align:right">164.160.945,25</td><td class="mn" style="text-align:right">60,00%</td><td></td></tr>
 </tbody></table></div>
+<div class="sec">Composição e Limites</div><div class="cgrid"><div class="cc"><div class="ct">Composição da Despesa Bruta</div><div class="cs">R$ milhões</div><div style="height:230px"><canvas id="c6"></canvas></div></div><div class="cc"><div class="ct">Limites LRF</div><div class="cs">R$ milhões</div><div style="height:230px"><canvas id="c7"></canvas></div></div></div>
 </div></div>
 
-<!-- ===== P4 SAÚDE ===== -->
 <div id="p4" class="page"><div class="wrap">
-<div class="sec">Saúde — ASPS / LC 141/2012 — Anexo 12</div>
-<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> RREO Anexo 12 · Mantido da versão anterior por ausência de novo PDF neste lote</div>
+<div class="sec">Saúde - ASPS / LC 141/2012 - Anexo 12</div>
+<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> RREO Anexo 12 - Janeiro a Junho/2026 - Base de impostos e transferências R$185,7M.</div>
 <div class="cgrid">
-  <div class="cc"><div class="ct">Cumprimento do Mínimo Constitucional</div><div class="cs">Base ASPS R$165,9M · Mínimo 15% = R$24,9M</div>
-    <div class="pr"><div class="prl">Empenhado (30,65%)</div><div class="prw"><div class="prb" style="width:100%;background:var(--ac)"></div></div><div class="prp">R$50,8M</div></div>
-    <div class="pr"><div class="prl">Liquidado (24,96%)</div><div class="prw"><div class="prb" style="width:81%;background:var(--a2)"></div></div><div class="prp">R$41,4M</div></div>
-    <div class="pr"><div class="prl">Pago (22,58%)</div><div class="prw"><div class="prb" style="width:74%;background:var(--gn)"></div></div><div class="prp">R$37,5M</div></div>
-    <div class="pr"><div class="prl" style="color:var(--am)">Mínimo Legal (15%)</div><div class="prw" style="background:var(--amd)"><div class="prb" style="width:49%;background:var(--am)"></div></div><div class="prp" style="color:var(--am)">R$24,9M</div></div>
-    <div class="ib ok" style="margin-top:12px;margin-bottom:0;display:flex;gap:8px;align-items:center"><span style="color:var(--gn);font-size:16px">&#10003;</span><div><div style="font-size:11px;font-weight:600;color:var(--gn)">Mínimo Constitucional Cumprido</div><div style="font-size:10px;color:var(--tm)">Margem R$16,5M acima do piso · LC 141/2012</div></div></div>
+  <div class="cc"><div class="ct">Cumprimento do Mínimo Constitucional</div><div class="cs">Mínimo 15% = R$27,86M</div>
+    <div class="pr"><div class="prl">Empenhado (26,51%)</div><div class="prw"><div class="prb" style="width:100%;background:var(--ac)"></div></div><div class="prp">R$49,2M</div></div>
+    <div class="pr"><div class="prl">Liquidado (22,75%)</div><div class="prw"><div class="prb" style="width:85.8%;background:var(--a2)"></div></div><div class="prp">R$42,3M</div></div>
+    <div class="pr"><div class="prl">Pago (20,20%)</div><div class="prw"><div class="prb" style="width:76.2%;background:var(--gn)"></div></div><div class="prp">R$37,5M</div></div>
+    <div class="pr"><div class="prl" style="color:var(--am)">Mínimo Legal (15%)</div><div class="prw" style="background:var(--amd)"><div class="prb" style="width:56.6%;background:var(--am)"></div></div><div class="prp" style="color:var(--am)">R$27,9M</div></div>
+    <div class="ib ok" style="margin-top:12px;margin-bottom:0;display:flex;gap:8px;align-items:center"><span style="color:var(--gn);font-size:16px">✓</span><div><div style="font-size:11px;font-weight:700;color:var(--gn)">Mínimo Constitucional Cumprido</div><div style="font-size:10px;color:var(--tm)">Margem liquidada R$14,39M acima do piso.</div></div></div>
   </div>
-  <div class="cc"><div class="ct">Subfunções — Dotação × Liquidado</div><div class="cs">R$ milhões</div><div style="height:280px"><canvas id="c8"></canvas></div></div>
+  <div class="cc"><div class="ct">Subfunções ASPS - Dotação x Liquidado</div><div class="cs">R$ milhões</div><div style="height:280px"><canvas id="c8"></canvas></div></div>
 </div>
+<div class="sec">Tabela ASPS por Subfunção</div><div class="tw"><table><thead><tr><th>Subfunção</th><th style="text-align:right">Dotação Atualizada</th><th style="text-align:right">Empenhado</th><th style="text-align:right">Liquidado</th><th style="text-align:right">Pago</th><th style="text-align:right">% Liq/Dot</th></tr></thead><tbody>
+<tr><td class="nm">Atenção Básica</td><td class="mn" style="text-align:right">25.946.599,97</td><td class="mn" style="text-align:right">14.677.118,22</td><td class="mn" style="text-align:right">12.280.235,90</td><td class="mn" style="text-align:right">10.455.453,50</td><td class="mn pos" style="text-align:right">47,33%</td></tr>
+<tr><td class="nm">Assistência Hospitalar e Ambulatorial</td><td class="mn" style="text-align:right">53.464.888,79</td><td class="mn" style="text-align:right">23.288.694,41</td><td class="mn" style="text-align:right">21.452.091,69</td><td class="mn" style="text-align:right">19.824.650,31</td><td class="mn wn" style="text-align:right">40,12%</td></tr>
+<tr><td class="nm">Suporte Profilático e Terapêutico</td><td class="mn" style="text-align:right">1.860.000,00</td><td class="mn" style="text-align:right">756.369,19</td><td class="mn" style="text-align:right">89.988,99</td><td class="mn" style="text-align:right">74.575,88</td><td class="mn neg" style="text-align:right">4,84%</td></tr>
+<tr><td class="nm">Vigilância Sanitária</td><td class="mn" style="text-align:right">452.000,00</td><td class="mn" style="text-align:right">345.068,26</td><td class="mn" style="text-align:right">222.190,65</td><td class="mn" style="text-align:right">188.237,37</td><td class="mn pos" style="text-align:right">49,16%</td></tr>
+<tr><td class="nm">Vigilância Epidemiológica</td><td class="mn" style="text-align:right">4.107.000,00</td><td class="mn" style="text-align:right">1.552.129,27</td><td class="mn" style="text-align:right">1.419.213,88</td><td class="mn" style="text-align:right">1.365.002,39</td><td class="mn wn" style="text-align:right">34,56%</td></tr>
+<tr><td class="nm">Outras Subfunções</td><td class="mn" style="text-align:right">15.308.715,68</td><td class="mn" style="text-align:right">8.620.232,40</td><td class="mn" style="text-align:right">6.788.170,64</td><td class="mn" style="text-align:right">5.602.263,07</td><td class="mn wn" style="text-align:right">44,34%</td></tr>
+<tr><td class="nm">Total ASPS</td><td class="mn" style="text-align:right">101.139.204,44</td><td class="mn" style="text-align:right">49.239.611,75</td><td class="mn" style="text-align:right">42.251.891,75</td><td class="mn" style="text-align:right">37.510.182,52</td><td class="mn wn" style="text-align:right">41,78%</td></tr>
+</tbody></table></div>
 </div></div>
 
-<!-- ===== P5 EDUCAÇÃO ===== -->
 <div id="p5" class="page"><div class="wrap">
-<div class="sec">Educação — MDE / FUNDEB — RREO Anexo 8</div>
-<div class="ib wn"><strong style="color:var(--am)">&#9888; Fonte:</strong> Anexo 8 — MDE · Emissão 01/06/2026 11:20:29 · Jan–Jun/2026 · Betha Sistemas</div>
+<div class="sec">Educação - MDE / FUNDEB - RREO Anexo 8</div>
+<div class="ib cr"><strong style="color:var(--rd)">⚠ Fonte:</strong> Anexo 8 - MDE - Jan-Jun/2026. Indicadores MDE, FUNDEB 70%, FUNDEB não aplicado e VAAT exigem providências.</div>
 <div class="egrid">
-  <div class="eg">
-    <div class="egl">MDE — % Aplicado (mín. 25%)</div>
-    <div class="egv" style="color:var(--am)">18,85%</div>
-    <div class="egb"><div class="egf" style="width:75.4%;background:var(--am)"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:9px;font-family:monospace;color:var(--tm)"><span>0%</span><span style="color:var(--am)">Mín 25%</span><span>100%</span></div>
-    <div class="egm" style="margin-top:6px">Aplicado R$34,4M · Exigido R$45,6M</div>
-    <div class="egm" style="color:var(--rd);font-weight:600">Déficit R$11,2M</div>
-    <div class="kp wn" style="margin-top:8px">ATENÇÃO — Monitorar até encerramento</div>
-  </div>
-  <div class="eg">
-    <div class="egl">FUNDEB — Profissionais EB (mín. 70%)</div>
-    <div class="egv" style="color:var(--am)">65,10%</div>
-    <div class="egb"><div class="egf" style="width:65.1%;background:var(--am)"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:9px;font-family:monospace;color:var(--tm)"><span>0%</span><span style="color:var(--am)">Mín 70%</span><span>100%</span></div>
-    <div class="egm" style="margin-top:6px">Aplicado R$38,9M · Exigido R$41,8M</div>
-    <div class="egm" style="color:var(--rd);font-weight:600">Déficit R$2,9M</div>
-    <div class="kp wn" style="margin-top:8px">ATENÇÃO — Acompanhar folha FUNDEB</div>
-  </div>
-  <div class="eg">
-    <div class="egl">FUNDEB Não Aplicado (máx. 10%)</div>
-    <div class="egv" style="color:var(--gn)">8,62%</div>
-    <div class="egb"><div class="egf" style="width:86.2%;background:var(--gn)"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:9px;font-family:monospace;color:var(--tm)"><span>0%</span><span style="color:var(--am)">Máx 10%</span><span>100%</span></div>
-    <div class="egm" style="margin-top:6px">Não aplicado R$5,15M · Teto R$5,98M</div>
-    <div class="kp ok" style="margin-top:8px">REGULAR — Abaixo do limite</div>
-  </div>
-  <div class="eg">
-    <div class="egl">VAAT — Educação Infantil</div>
-    <div class="egv" style="color:var(--rd)">0,00%</div>
-    <div class="egb"><div class="egf" style="width:0%;background:var(--rd)"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:9px;font-family:monospace;color:var(--tm)"><span>Disponível R$1,44M</span><span style="color:var(--rd)">0 aplicado</span></div>
-    <div class="egm" style="margin-top:6px">Complementação VAAT: R$1.440.501,71</div>
-    <div class="egm" style="color:var(--rd);font-weight:600">VAAF: R$99.561,48 recebido</div>
-    <div class="kp cr" style="margin-top:8px">CRÍTICO — Planejar aplicação urgente</div>
-  </div>
+  <div class="eg"><div class="egl">MDE - % Aplicado (mín. 25%)</div><div class="egv" style="color:var(--rd)">17,96%</div><div class="egb"><div class="egf" style="width:71.84%;background:var(--rd)"></div></div><div class="egm">Aplicado R$33,36M - Exigido R$46,43M</div><div class="egm" style="color:var(--rd);font-weight:700">Déficit R$13,07M</div><div class="kp cr">CRÍTICO</div></div>
+  <div class="eg"><div class="egl">FUNDEB - Profissionais EB (mín. 70%)</div><div class="egv" style="color:var(--rd)">62,70%</div><div class="egb"><div class="egf" style="width:62.7%;background:var(--rd)"></div></div><div class="egm">Aplicado R$38,85M - Exigido R$43,37M</div><div class="egm" style="color:var(--rd);font-weight:700">Déficit R$4,52M</div><div class="kp cr">CRÍTICO</div></div>
+  <div class="eg"><div class="egl">FUNDEB Não Aplicado (máx. 10%)</div><div class="egv" style="color:var(--rd)">11,84%</div><div class="egb"><div class="egf" style="width:100%;background:var(--rd)"></div></div><div class="egm">Não aplicado R$7,34M - Máx. R$6,20M</div><div class="egm" style="color:var(--rd);font-weight:700">Excesso R$1,14M</div><div class="kp cr">CRÍTICO</div></div>
+  <div class="eg"><div class="egl">VAAT - Educação Infantil</div><div class="egv" style="color:var(--rd)">0,00%</div><div class="egb"><div class="egf" style="width:0%;background:var(--rd)"></div></div><div class="egm">Disponível R$2.025.738,13 - 0 aplicado</div><div class="egm" style="color:var(--rd);font-weight:700">Capital mínimo R$303.860,72</div><div class="kp cr">URGENTE</div></div>
 </div>
-
-<div class="sec">Indicadores MDE / FUNDEB — Tabela Completa</div>
-<div class="tw"><table>
-<thead><tr><th>Indicador</th><th style="text-align:right">Valor Exigido</th><th style="text-align:right">Valor Apurado</th><th style="text-align:right">%</th><th>Situação</th><th>Providência</th></tr></thead>
-<tbody>
-<tr><td class="nm">Receita Resultante de Impostos (base MDE)</td><td class="mn" style="text-align:right">—</td><td class="mn" style="text-align:right">182.289.680,06</td><td class="mn" style="text-align:right">—</td><td><span class="bdg if">Informativo</span></td><td style="font-size:10px;color:var(--tm)">Base constitucional</td></tr>
-<tr><td class="nm">Valor Exigido Mínimo MDE (25%)</td><td class="mn" style="text-align:right">45.572.420,02</td><td class="mn wn" style="text-align:right">34.356.348,13</td><td class="mn wn" style="text-align:right">18,85%</td><td><span class="bdg wn">Atenção</span></td><td style="font-size:10px;color:var(--tm)">Monitorar bimestralmente</td></tr>
-<tr><td class="nm">Total FUNDEB Recebido</td><td class="mn" style="text-align:right">—</td><td class="mn" style="text-align:right">59.750.392,24</td><td class="mn" style="text-align:right">44,23%</td><td><span class="bdg if">Informativo</span></td><td style="font-size:10px;color:var(--tm)">Da previsão de R$135,1M</td></tr>
-<tr><td class="nm">FUNDEB — Complementação VAAF recebida</td><td class="mn" style="text-align:right">—</td><td class="mn" style="text-align:right">99.561,48</td><td class="mn" style="text-align:right">—</td><td><span class="bdg if">Informativo</span></td><td style="font-size:10px;color:var(--tm)">Complementação VAAF</td></tr>
-<tr><td class="nm">FUNDEB — Complementação VAAT recebida</td><td class="mn" style="text-align:right">6.209.388,77</td><td class="mn wn" style="text-align:right">1.440.501,71</td><td class="mn wn" style="text-align:right">23,20%</td><td><span class="bdg wn">Atenção</span></td><td style="font-size:10px;color:var(--tm)">Planejar aplicação</td></tr>
-<tr><td class="nm">FUNDEB Liquidado (total)</td><td class="mn" style="text-align:right">—</td><td class="mn" style="text-align:right">54.598.881,97</td><td class="mn" style="text-align:right">—</td><td><span class="bdg if">Executado</span></td><td style="font-size:10px;color:var(--tm)">Execução liquidada</td></tr>
-<tr><td class="nm">Mínimo 70% FUNDEB — Profissionais EB</td><td class="mn" style="text-align:right">41.825.274,57</td><td class="mn wn" style="text-align:right">38.896.899,00</td><td class="mn wn" style="text-align:right">65,10%</td><td><span class="bdg wn">Atenção</span></td><td style="font-size:10px;color:var(--tm)">Acompanhar folha FUNDEB</td></tr>
-<tr><td class="nm">FUNDEB Não Aplicado (máx. 10%)</td><td class="mn" style="text-align:right">5.975.039,22</td><td class="mn pos" style="text-align:right">5.151.510,27</td><td class="mn pos" style="text-align:right">8,62%</td><td><span class="bdg ok">Regular</span></td><td style="font-size:10px;color:var(--tm)">Abaixo do teto</td></tr>
-<tr><td class="nm">Saldo Financeiro Conciliado FUNDEB</td><td class="mn" style="text-align:right">—</td><td class="mn" style="text-align:right">26.558.076,07</td><td class="mn" style="text-align:right">—</td><td><span class="bdg if">Informativo</span></td><td style="font-size:10px;color:var(--tm)">Controle bancário conciliado</td></tr>
-<tr><td class="nm">VAAT Aplicado — Educação Infantil</td><td class="mn" style="text-align:right">1.440.501,71</td><td class="mn neg" style="text-align:right">0,00</td><td class="mn neg" style="text-align:right">0,00%</td><td><span class="bdg cr">Crítico</span></td><td style="font-size:10px;color:var(--tm)">Planejar aplicação urgente</td></tr>
-<tr><td class="nm">VAAT Aplicado — Despesas de Capital</td><td class="mn" style="text-align:right">216.075,26</td><td class="mn neg" style="text-align:right">0,00</td><td class="mn neg" style="text-align:right">0,00%</td><td><span class="bdg cr">Crítico</span></td><td style="font-size:10px;color:var(--tm)">Planejar despesa de capital</td></tr>
-<tr><td class="nm">Salário-Educação Realizado</td><td class="mn" style="text-align:right">9.614.397,61</td><td class="mn" style="text-align:right">2.986.484,54</td><td class="mn" style="text-align:right">31,06%</td><td><span class="bdg if">Informativo</span></td><td style="font-size:10px;color:var(--tm)">Saldo financeiro R$4,16M</td></tr>
-<tr><td class="nm">Total Despesas Educação (liquidado)</td><td class="mn" style="text-align:right">216.126.717,03</td><td class="mn" style="text-align:right">71.388.346,68</td><td class="mn" style="text-align:right">33,03%</td><td><span class="bdg if">Informativo</span></td><td style="font-size:10px;color:var(--tm)">Dotação total educação</td></tr>
+<div class="sec">Indicadores MDE / FUNDEB - Tabela Completa</div>
+<div class="tw"><table><thead><tr><th>Indicador</th><th style="text-align:right">Valor Exigido</th><th style="text-align:right">Valor Apurado</th><th style="text-align:right">%</th><th>Situação</th><th>Providência</th></tr></thead><tbody>
+<tr><td class="nm">Receita Resultante de Impostos (base MDE)</td><td class="mn" style="text-align:right">-</td><td class="mn" style="text-align:right">185.714.145,37</td><td class="mn" style="text-align:right">-</td><td><span class="bdg if">Informativo</span></td><td>Base constitucional</td></tr>
+<tr><td class="nm">Valor Exigido Mínimo MDE (25%)</td><td class="mn" style="text-align:right">46.428.536,34</td><td class="mn neg" style="text-align:right">33.357.013,90</td><td class="mn neg" style="text-align:right">17,96%</td><td><span class="bdg cr">Crítico</span></td><td>Ampliar liquidação de despesas típicas</td></tr>
+<tr><td class="nm">Total FUNDEB Recebido</td><td class="mn" style="text-align:right">-</td><td class="mn" style="text-align:right">61.958.085,20</td><td class="mn" style="text-align:right">45,86%</td><td><span class="bdg if">Informativo</span></td><td>Da previsão de R$135,1M</td></tr>
+<tr><td class="nm">FUNDEB - Complementação VAAF recebida</td><td class="mn" style="text-align:right">-</td><td class="mn" style="text-align:right">99.561,48</td><td class="mn" style="text-align:right">-</td><td><span class="bdg if">Informativo</span></td><td>Complementação VAAF</td></tr>
+<tr><td class="nm">FUNDEB - Complementação VAAT recebida</td><td class="mn" style="text-align:right">6.209.388,77</td><td class="mn wn" style="text-align:right">2.025.738,13</td><td class="mn wn" style="text-align:right">32,62%</td><td><span class="bdg wn">Atenção</span></td><td>Planejar aplicação vinculada</td></tr>
+<tr><td class="nm">FUNDEB Liquidado (total)</td><td class="mn" style="text-align:right">-</td><td class="mn" style="text-align:right">53.695.936,91</td><td class="mn" style="text-align:right">-</td><td><span class="bdg if">Executado</span></td><td>Execução liquidada</td></tr>
+<tr><td class="nm">Mínimo 70% FUNDEB - Profissionais EB</td><td class="mn" style="text-align:right">43.370.659,64</td><td class="mn neg" style="text-align:right">38.850.734,88</td><td class="mn neg" style="text-align:right">62,70%</td><td><span class="bdg cr">Crítico</span></td><td>Acompanhar folha FUNDEB</td></tr>
+<tr><td class="nm">FUNDEB Não Aplicado (máx. 10%)</td><td class="mn" style="text-align:right">6.195.808,52</td><td class="mn neg" style="text-align:right">7.337.243,59</td><td class="mn neg" style="text-align:right">11,84%</td><td><span class="bdg cr">Crítico</span></td><td>Excesso de R$1,14M</td></tr>
+<tr><td class="nm">Saldo Financeiro Conciliado FUNDEB</td><td class="mn" style="text-align:right">-</td><td class="mn" style="text-align:right">28.115.425,51</td><td class="mn" style="text-align:right">-</td><td><span class="bdg if">Informativo</span></td><td>Controle bancário conciliado</td></tr>
+<tr><td class="nm">VAAT Aplicado - Educação Infantil</td><td class="mn" style="text-align:right">2.025.738,13</td><td class="mn neg" style="text-align:right">0,00</td><td class="mn neg" style="text-align:right">0,00%</td><td><span class="bdg cr">Crítico</span></td><td>Planejar aplicação urgente</td></tr>
+<tr><td class="nm">VAAT Aplicado - Despesas de Capital</td><td class="mn" style="text-align:right">303.860,72</td><td class="mn neg" style="text-align:right">0,00</td><td class="mn neg" style="text-align:right">0,00%</td><td><span class="bdg cr">Crítico</span></td><td>Planejar despesa de capital</td></tr>
+<tr><td class="nm">Total Despesas Educação (liquidado)</td><td class="mn" style="text-align:right">-</td><td class="mn" style="text-align:right">72.905.107,96</td><td class="mn" style="text-align:right">33,73% da dotação</td><td><span class="bdg if">Informativo</span></td><td>Dotação total educação</td></tr>
 </tbody></table></div>
-
-<div class="sec" style="margin-top:1.5rem">Receita Resultante de Impostos — Base MDE (Anexo 8)</div>
-<div class="tw"><table>
-<thead><tr><th>Cód.</th><th>Descrição</th><th style="text-align:right">Previsão Atualizada</th><th style="text-align:right">Realizado Jun/26</th><th style="text-align:right">%</th><th>Obs.</th></tr></thead>
-<tbody>
-<tr><td class="mn">1</td><td class="nm">Receita de Impostos</td><td class="mn" style="text-align:right">75.071.477,92</td><td class="mn" style="text-align:right">42.759.383,44</td><td class="mn pos" style="text-align:right">56,96%</td><td style="font-size:10px;color:var(--tm)">IPTU, ITBI, ISS, IRRF</td></tr>
-<tr><td class="mn">1.1</td><td class="nm">&nbsp;&nbsp;IPTU</td><td class="mn" style="text-align:right">32.964.183,92</td><td class="mn" style="text-align:right">27.115.969,50</td><td class="mn pos" style="text-align:right">82,26%</td><td style="font-size:10px;color:var(--tm)">Boa execução</td></tr>
-<tr><td class="mn">1.2</td><td class="nm">&nbsp;&nbsp;ITBI</td><td class="mn" style="text-align:right">4.165.839,08</td><td class="mn" style="text-align:right">1.310.918,13</td><td class="mn wn" style="text-align:right">31,47%</td><td style="font-size:10px;color:var(--tm)">Mercado imobiliário</td></tr>
-<tr><td class="mn">1.3</td><td class="nm">&nbsp;&nbsp;ISS</td><td class="mn" style="text-align:right">26.000.923,71</td><td class="mn" style="text-align:right">8.460.029,70</td><td class="mn wn" style="text-align:right">32,54%</td><td style="font-size:10px;color:var(--tm)">Requer fiscalização</td></tr>
-<tr><td class="mn">1.4</td><td class="nm">&nbsp;&nbsp;IRRF</td><td class="mn" style="text-align:right">11.940.531,21</td><td class="mn" style="text-align:right">5.872.466,11</td><td class="mn wn" style="text-align:right">49,18%</td><td style="font-size:10px;color:var(--tm)">Acompanhar retenções</td></tr>
-<tr><td class="mn">2</td><td class="nm">Transferências Constitucionais e Legais</td><td class="mn" style="text-align:right">315.936.579,92</td><td class="mn" style="text-align:right">139.530.296,62</td><td class="mn wn" style="text-align:right">44,16%</td><td style="font-size:10px;color:var(--tm)">FPM, ICMS, IPVA, ITR, IPI</td></tr>
-<tr><td class="mn">2.1</td><td class="nm">&nbsp;&nbsp;FPM</td><td class="mn" style="text-align:right">186.461.121,31</td><td class="mn" style="text-align:right">76.757.725,67</td><td class="mn wn" style="text-align:right">41,17%</td><td></td></tr>
-<tr><td class="mn">2.2</td><td class="nm">&nbsp;&nbsp;ICMS</td><td class="mn" style="text-align:right">94.291.935,26</td><td class="mn" style="text-align:right">37.322.293,34</td><td class="mn wn" style="text-align:right">39,58%</td><td></td></tr>
-<tr><td class="mn">2.3</td><td class="nm">&nbsp;&nbsp;IPI-Exportação</td><td class="mn" style="text-align:right">1.401.209,25</td><td class="mn" style="text-align:right">439.507,03</td><td class="mn wn" style="text-align:right">31,37%</td><td></td></tr>
-<tr><td class="mn">2.4</td><td class="nm">&nbsp;&nbsp;ITR</td><td class="mn" style="text-align:right">15.102,72</td><td class="mn" style="text-align:right">2.435,39</td><td class="mn wn" style="text-align:right">16,13%</td><td></td></tr>
-<tr><td class="mn">2.5</td><td class="nm">&nbsp;&nbsp;IPVA</td><td class="mn" style="text-align:right">33.767.211,38</td><td class="mn" style="text-align:right">25.008.335,19</td><td class="mn pos" style="text-align:right">74,06%</td><td></td></tr>
-<tr style="background:rgba(0,201,167,.04)"><td class="mn">3</td><td class="nm">Total Receita Resultante de Impostos</td><td class="mn" style="text-align:right">391.008.057,84</td><td class="mn" style="text-align:right">182.289.680,06</td><td class="mn wn" style="text-align:right">46,62%</td><td style="font-size:10px;color:var(--tm)">Base para o mínimo 25%</td></tr>
-<tr><td class="mn">4</td><td class="nm">Total destinado ao FUNDEB (20%)</td><td class="mn" style="text-align:right">63.187.315,98</td><td class="mn" style="text-align:right">27.906.059,32</td><td class="mn wn" style="text-align:right">44,16%</td><td></td></tr>
-<tr><td class="mn">5</td><td class="nm">Valor mínimo a aplicar além FUNDEB</td><td class="mn" style="text-align:right">34.564.698,48</td><td class="mn" style="text-align:right">17.666.360,69</td><td class="mn pos" style="text-align:right">51,11%</td><td></td></tr>
+<div class="sec" style="margin-top:1.5rem">Despesas com Educação - MDE / FUNDEB</div>
+<div class="tw"><table><thead><tr><th>Grupo</th><th>Descrição</th><th style="text-align:right">Dotação</th><th style="text-align:right">Empenhado</th><th style="text-align:right">Liquidado</th><th style="text-align:right">Pago</th><th style="text-align:right">% Liq/Dot</th></tr></thead><tbody>
+<tr><td class="nm">FUNDEB</td><td class="nm">Total despesas FUNDEB</td><td class="mn" style="text-align:right">121.938.885,98</td><td class="mn" style="text-align:right">53.701.327,73</td><td class="mn" style="text-align:right">53.695.936,91</td><td class="mn" style="text-align:right">36.942.507,69</td><td class="mn wn" style="text-align:right">44,04%</td></tr>
+<tr><td></td><td class="nm">Profissionais Educação Básica</td><td class="mn" style="text-align:right">94.151.618,12</td><td class="mn" style="text-align:right">38.854.622,91</td><td class="mn" style="text-align:right">38.850.734,88</td><td class="mn" style="text-align:right">26.897.563,24</td><td class="mn wn" style="text-align:right">41,26%</td></tr>
+<tr><td></td><td class="nm">Outras despesas FUNDEB</td><td class="mn" style="text-align:right">27.787.267,86</td><td class="mn" style="text-align:right">14.846.704,82</td><td class="mn" style="text-align:right">14.845.202,03</td><td class="mn" style="text-align:right">10.044.944,45</td><td class="mn pos" style="text-align:right">53,42%</td></tr>
+<tr><td class="nm">MDE</td><td class="nm">Ações típicas MDE com impostos</td><td class="mn" style="text-align:right">26.747.772,94</td><td class="mn" style="text-align:right">15.335.153,49</td><td class="mn" style="text-align:right">6.583.955,10</td><td class="mn" style="text-align:right">5.353.019,43</td><td class="mn neg" style="text-align:right">24,62%</td></tr>
+<tr><td class="nm">Outras</td><td class="nm">Outras despesas com educação</td><td class="mn" style="text-align:right">54.308.496,74</td><td class="mn" style="text-align:right">17.036.148,47</td><td class="mn" style="text-align:right">11.700.311,25</td><td class="mn" style="text-align:right">10.435.298,96</td><td class="mn wn" style="text-align:right">21,54%</td></tr>
+<tr><td class="nm">TOTAL</td><td class="nm">Total geral das despesas com educação</td><td class="mn" style="text-align:right">216.142.717,03</td><td class="mn" style="text-align:right">86.997.534,39</td><td class="mn" style="text-align:right">72.905.107,96</td><td class="mn" style="text-align:right">52.514.001,22</td><td class="mn wn" style="text-align:right">33,73%</td></tr>
 </tbody></table></div>
-
-<div class="sec" style="margin-top:1.5rem">Despesas com Educação — MDE / FUNDEB</div>
-<div class="tw"><table>
-<thead><tr><th>Grupo</th><th>Descrição</th><th style="text-align:right">Dotação</th><th style="text-align:right">Empenhado</th><th style="text-align:right">Liquidado</th><th style="text-align:right">Pago</th><th style="text-align:right">% Liq/Dot</th></tr></thead>
-<tbody>
-<tr><td class="nm">FUNDEB</td><td class="nm">Total despesas FUNDEB</td><td class="mn" style="text-align:right">121.922.885,98</td><td class="mn" style="text-align:right">53.679.368,09</td><td class="mn" style="text-align:right">53.673.977,27</td><td class="mn" style="text-align:right">36.942.673,52</td><td class="mn wn" style="text-align:right">44,02%</td></tr>
-<tr><td></td><td class="nm">&nbsp;&nbsp;Profissionais Educ. Básica</td><td class="mn" style="text-align:right">95.995.618,12</td><td class="mn" style="text-align:right">38.900.787,03</td><td class="mn" style="text-align:right">38.896.899,00</td><td class="mn" style="text-align:right">26.906.539,27</td><td class="mn wn" style="text-align:right">40,52%</td></tr>
-<tr><td></td><td class="nm">&nbsp;&nbsp;Outras despesas FUNDEB</td><td class="mn" style="text-align:right">25.927.267,86</td><td class="mn" style="text-align:right">14.778.581,06</td><td class="mn" style="text-align:right">14.777.078,27</td><td class="mn" style="text-align:right">10.036.134,25</td><td class="mn wn" style="text-align:right">56,99%</td></tr>
-<tr><td></td><td class="nm">&nbsp;&nbsp;Custeadas com FUNDEB recebido</td><td class="mn" style="text-align:right">—</td><td class="mn" style="text-align:right">54.604.272,79</td><td class="mn" style="text-align:right">54.598.881,97</td><td class="mn" style="text-align:right">37.755.704,01</td><td class="mn" style="text-align:right">—</td></tr>
-<tr><td class="nm">MDE</td><td class="nm">Ações típicas MDE (impostos)</td><td class="mn" style="text-align:right">27.257.772,94</td><td class="mn" style="text-align:right">15.297.354,61</td><td class="mn" style="text-align:right">6.462.397,80</td><td class="mn" style="text-align:right">4.984.662,92</td><td class="mn wn" style="text-align:right">23,71%</td></tr>
-<tr><td class="nm">MDE+FUND</td><td class="nm">Ações típicas MDE (impostos + FUNDEB)</td><td class="mn" style="text-align:right">145.320.307,53</td><td class="mn" style="text-align:right">62.027.623,26</td><td class="mn" style="text-align:right">54.016.557,99</td><td class="mn" style="text-align:right">38.019.821,82</td><td class="mn wn" style="text-align:right">37,17%</td></tr>
-<tr><td class="nm">Outras</td><td class="nm">Outras despesas com educação</td><td class="mn" style="text-align:right">53.798.496,74</td><td class="mn" style="text-align:right">15.405.733,13</td><td class="mn" style="text-align:right">10.327.066,91</td><td class="mn" style="text-align:right">9.278.087,15</td><td class="mn wn" style="text-align:right">19,20%</td></tr>
-<tr style="background:rgba(0,201,167,.04)"><td class="nm">TOTAL</td><td class="nm">Total geral das despesas com educação</td><td class="mn" style="text-align:right">216.126.717,03</td><td class="mn" style="text-align:right">85.307.360,53</td><td class="mn" style="text-align:right">71.388.346,68</td><td class="mn" style="text-align:right">52.018.454,08</td><td class="mn wn" style="text-align:right">33,03%</td></tr>
-</tbody></table></div>
-
-<div class="sec" style="margin-top:1.5rem">Disponibilidade Financeira</div>
-<div class="tw"><table>
-<thead><tr><th>Bloco</th><th>Descrição</th><th style="text-align:right">Valor (R$)</th><th>Obs.</th></tr></thead>
-<tbody>
-<tr><td class="nm">Adicionais</td><td class="nm">Total receitas adicionais para financ. ensino</td><td class="mn" style="text-align:right">5.240.220,88</td><td style="font-size:10px;color:var(--tm)">FNDE, convênios, royalties</td></tr>
-<tr><td></td><td class="nm">&nbsp;&nbsp;Transferências do FNDE</td><td class="mn" style="text-align:right">4.102.866,72</td><td style="font-size:10px;color:var(--tm)">Inclui rendimentos</td></tr>
-<tr><td></td><td class="nm">&nbsp;&nbsp;Salário-Educação</td><td class="mn" style="text-align:right">2.986.484,54</td><td style="font-size:10px;color:var(--tm)">Saldo financeiro R$4,16M</td></tr>
-<tr><td class="nm">FUNDEB</td><td class="nm">Disponibilidade financeira em 31/12/2025</td><td class="mn" style="text-align:right">2.834.345,00</td><td style="font-size:10px;color:var(--tm)">Saldo anterior</td></tr>
-<tr><td></td><td class="nm">Ingressos até o semestre — FUNDEB</td><td class="mn" style="text-align:right">59.750.392,24</td><td style="font-size:10px;color:var(--tm)">Orçamentário</td></tr>
-<tr><td></td><td class="nm">Pagamentos até o semestre — FUNDEB</td><td class="mn neg" style="text-align:right">(38.613.456,56)</td><td style="font-size:10px;color:var(--tm)">Orçamentário + RP</td></tr>
-<tr style="background:rgba(0,201,167,.04)"><td class="nm">FUNDEB</td><td class="nm">Saldo financeiro conciliado — FUNDEB</td><td class="mn pos" style="text-align:right">26.558.076,07</td><td style="font-size:10px;color:var(--tm)">Saldo bancário conciliado</td></tr>
-</tbody></table></div>
-
-<div class="cgrid" style="margin-top:14px">
-  <div class="cc"><div class="ct">Despesas por Grupo — Dotação × Liquidado</div><div class="cs">R$ milhões</div><div style="height:280px"><canvas id="c9"></canvas></div></div>
-  <div class="cc"><div class="ct">Limites MDE e FUNDEB 70% — Aplicado vs Exigido</div><div class="cs">R$ milhões</div><div style="height:280px"><canvas id="c10"></canvas></div></div>
-</div>
-<div class="ib wn" style="margin-top:14px"><strong style="color:var(--am)">&#9888; Ação prioritária:</strong> MDE em 18,85% — abaixo do mínimo constitucional de 25% (CF Art. 212). Déficit de R$11,2M. Ampliar empenho e liquidação de despesas típicas nos próximos bimestres. VAAT de R$1,44M disponível sem aplicação — risco de devolução ao FNDE. Responsáveis: Secretaria de Educação / Fazenda.</div>
+<div class="cgrid" style="margin-top:14px"><div class="cc"><div class="ct">Despesas por Grupo - Dotação x Liquidado</div><div class="cs">R$ milhões</div><div style="height:280px"><canvas id="c9"></canvas></div></div><div class="cc"><div class="ct">Limites MDE e FUNDEB 70%</div><div class="cs">Aplicado x Exigido - R$ milhões</div><div style="height:280px"><canvas id="c10"></canvas></div></div></div>
 </div></div>
 
-<!-- ===== P6 FLUXO CAIXA ===== -->
 <div id="p6" class="page"><div class="wrap">
-<div class="sec">Demonstração dos Fluxos de Caixa — Anexo 18</div>
-<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> Anexo 18 — DFC · Emissão 01/06/2026 09:56:20 · Exercício 2026</div>
-<div class="tw"><table>
-<thead><tr><th>Atividade</th><th>Grupo</th><th>Descrição</th><th style="text-align:right">Valor (R$)</th><th>Indicador</th></tr></thead>
-<tbody>
-<tr style="background:rgba(0,201,167,.04)"><td class="nm">Operacional</td><td>Ingressos</td><td class="nm">Total Ingressos Operacionais</td><td class="mn pos" style="text-align:right">325.244.933,43</td><td><span class="bdg ok">Entrada</span></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Impostos, Taxas e Contrib.</td><td></td><td class="mn" style="text-align:right">49.123.569,65</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Contribuições</td><td></td><td class="mn" style="text-align:right">23.039.234,45</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Remuneração Disponibilidades</td><td></td><td class="mn" style="text-align:right">4.514.974,96</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Outras Receitas / Ingressos</td><td></td><td class="mn" style="text-align:right">61.296.230,72</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Transferências da União</td><td></td><td class="mn" style="text-align:right">89.113.197,37</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Transferências dos Estados/DF</td><td></td><td class="mn" style="text-align:right">46.295.204,10</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Outras Transferências</td><td></td><td class="mn" style="text-align:right">51.847.771,98</td><td></td></tr>
-<tr style="background:rgba(224,82,82,.04)"><td class="nm">Operacional</td><td>Desembolsos</td><td class="nm">Total Desembolsos Operacionais</td><td class="mn neg" style="text-align:right">(299.287.861,85)</td><td><span class="bdg cr">Saída</span></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Pessoal e demais despesas</td><td></td><td class="mn neg" style="text-align:right">(178.100.761,61)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">&nbsp;&nbsp;Legislativa</td><td></td><td class="mn neg" style="text-align:right">(7.678.278,35)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">&nbsp;&nbsp;Administração</td><td></td><td class="mn neg" style="text-align:right">(18.941.021,06)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">&nbsp;&nbsp;Assistência Social</td><td></td><td class="mn neg" style="text-align:right">(4.541.489,84)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">&nbsp;&nbsp;Previdência Social</td><td></td><td class="mn neg" style="text-align:right">(11.266.730,96)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">&nbsp;&nbsp;Saúde</td><td></td><td class="mn neg" style="text-align:right">(51.835.097,88)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">&nbsp;&nbsp;Educação</td><td></td><td class="mn neg" style="text-align:right">(50.261.152,76)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">&nbsp;&nbsp;Urbanismo</td><td></td><td class="mn neg" style="text-align:right">(18.042.994,19)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">&nbsp;&nbsp;Transporte</td><td></td><td class="mn neg" style="text-align:right">(6.620.254,55)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">&nbsp;&nbsp;Energia</td><td></td><td class="mn neg" style="text-align:right">(3.250.431,24)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">&nbsp;&nbsp;Encargos Especiais</td><td></td><td class="mn neg" style="text-align:right">(3.758.876,93)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Juros e Encargos da Dívida</td><td></td><td class="mn neg" style="text-align:right">(4.207.729,60)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Transferências Concedidas</td><td></td><td class="mn neg" style="text-align:right">(40.295.992,24)</td><td></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Outros Desembolsos</td><td></td><td class="mn neg" style="text-align:right">(76.683.378,40)</td><td></td></tr>
-<tr style="background:rgba(76,175,125,.06)"><td class="nm">Operacional</td><td>Resultado</td><td class="nm">Fluxo Operacional Líquido (I)</td><td class="mn pos" style="text-align:right">25.957.071,58</td><td><span class="bdg ok">Superávit</span></td></tr>
-<tr style="background:rgba(224,82,82,.04)"><td class="nm">Investimento</td><td>Desembolsos</td><td class="nm">Aquisição Ativo Não Circulante</td><td class="mn neg" style="text-align:right">(5.562.641,78)</td><td><span class="bdg cr">Saída</span></td></tr>
-<tr><td></td><td style="font-size:10px;color:var(--tm)">Outros desembolsos investimento</td><td></td><td class="mn neg" style="text-align:right">(2.005.174,90)</td><td></td></tr>
-<tr style="background:rgba(224,82,82,.04)"><td class="nm">Investimento</td><td>Resultado</td><td class="nm">Fluxo de Investimento (II)</td><td class="mn neg" style="text-align:right">(7.567.816,68)</td><td><span class="bdg cr">Déficit</span></td></tr>
-<tr style="background:rgba(224,82,82,.04)"><td class="nm">Financiamento</td><td>Desembolsos</td><td class="nm">Amortização / Refinanciamento da Dívida</td><td class="mn neg" style="text-align:right">(6.139.782,32)</td><td><span class="bdg cr">Saída</span></td></tr>
-<tr style="background:rgba(224,82,82,.04)"><td class="nm">Financiamento</td><td>Resultado</td><td class="nm">Fluxo de Financiamento (III)</td><td class="mn neg" style="text-align:right">(6.139.782,32)</td><td><span class="bdg cr">Déficit</span></td></tr>
-<tr style="background:rgba(76,175,125,.08)"><td class="nm">Caixa</td><td>Consolidado</td><td class="nm">Geração Líquida (I+II+III)</td><td class="mn pos" style="text-align:right">12.249.472,58</td><td><span class="bdg ok">Positivo</span></td></tr>
+<div class="sec">Demonstração dos Fluxos de Caixa - Anexo 18</div>
+<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> Anexo 18 - DFC - Emissão 10/06/2026 09:11:22.</div>
+<div class="tw"><table><thead><tr><th>Atividade</th><th>Grupo</th><th>Descrição</th><th style="text-align:right">Valor (R$)</th><th>Indicador</th></tr></thead><tbody>
+<tr><td class="nm">Operacional</td><td>Ingressos</td><td class="nm">Total Ingressos Operacionais</td><td class="mn pos" style="text-align:right">360.184.231,12</td><td><span class="bdg ok">Entrada</span></td></tr>
+<tr><td></td><td>Impostos, Taxas e Contribuições</td><td></td><td class="mn" style="text-align:right">54.396.412,40</td><td></td></tr>
+<tr><td></td><td>Receita de Contribuições</td><td></td><td class="mn" style="text-align:right">23.977.263,53</td><td></td></tr>
+<tr><td></td><td>Remuneração Disponibilidades</td><td></td><td class="mn" style="text-align:right">5.410.528,28</td><td></td></tr>
+<tr><td></td><td>Outras Receitas / Ingressos</td><td></td><td class="mn" style="text-align:right">65.062.811,86</td><td></td></tr>
+<tr><td></td><td>Transferências recebidas</td><td></td><td class="mn" style="text-align:right">211.318.009,10</td><td></td></tr>
+<tr><td class="nm">Operacional</td><td>Desembolsos</td><td class="nm">Total Desembolsos Operacionais</td><td class="mn neg" style="text-align:right">(314.843.252,20)</td><td><span class="bdg cr">Saída</span></td></tr>
+<tr><td></td><td>Pessoal e demais despesas</td><td></td><td class="mn neg" style="text-align:right">(185.690.660,32)</td><td></td></tr>
+<tr><td></td><td>Juros e encargos da dívida</td><td></td><td class="mn neg" style="text-align:right">(4.393.047,39)</td><td></td></tr>
+<tr><td></td><td>Transferências concedidas</td><td></td><td class="mn neg" style="text-align:right">(43.119.503,08)</td><td></td></tr>
+<tr><td></td><td>Outros desembolsos operacionais</td><td></td><td class="mn neg" style="text-align:right">(81.640.041,41)</td><td></td></tr>
+<tr><td class="nm">Operacional</td><td>Resultado</td><td class="nm">Fluxo Operacional Líquido (I)</td><td class="mn pos" style="text-align:right">45.340.978,92</td><td><span class="bdg ok">Superávit</span></td></tr>
+<tr><td class="nm">Investimento</td><td>Resultado</td><td class="nm">Fluxo de Investimento (II)</td><td class="mn neg" style="text-align:right">(8.553.066,76)</td><td><span class="bdg cr">Déficit</span></td></tr>
+<tr><td class="nm">Financiamento</td><td>Resultado</td><td class="nm">Fluxo de Financiamento (III)</td><td class="mn neg" style="text-align:right">(6.615.327,60)</td><td><span class="bdg cr">Déficit</span></td></tr>
+<tr><td class="nm">Caixa</td><td>Consolidado</td><td class="nm">Geração Líquida (I+II+III)</td><td class="mn pos" style="text-align:right">30.172.584,56</td><td><span class="bdg ok">Positivo</span></td></tr>
 <tr><td class="nm">Caixa</td><td>Disponibilidade</td><td>Caixa Inicial do Período</td><td class="mn" style="text-align:right">604.926.428,83</td><td><span class="bdg if">Saldo</span></td></tr>
-<tr style="background:rgba(58,155,220,.05)"><td class="nm">Caixa</td><td>Disponibilidade</td><td class="nm">Caixa Final do Período</td><td class="mn" style="text-align:right;color:var(--a2)">617.175.901,41</td><td><span class="bdg if">Saldo Final</span></td></tr>
+<tr><td class="nm">Caixa</td><td>Disponibilidade</td><td class="nm">Caixa Final do Período</td><td class="mn" style="text-align:right;color:var(--a2)">635.099.013,39</td><td><span class="bdg if">Saldo Final</span></td></tr>
 </tbody></table></div>
-<div class="sec" style="margin-top:1.5rem">Desembolsos por Função</div>
-<div class="cc full" style="margin-top:0"><div class="ct">Maiores Pressões no Caixa — Por Função de Governo</div><div class="cs">R$ milhões · Saúde + Educação = 57% dos desembolsos funcionais</div><div style="height:300px"><canvas id="c11"></canvas></div></div>
+<div class="sec" style="margin-top:1.5rem">Desembolsos por Função</div><div class="cc full"><div class="ct">Maiores Pressões no Caixa - Por Função de Governo</div><div class="cs">R$ milhões</div><div style="height:300px"><canvas id="c11"></canvas></div></div>
 </div></div>
 
-<!-- ===== P7 LIQUIDAÇÕES ===== -->
 <div id="p7" class="page"><div class="wrap">
-<div class="sec">Liquidações Emitidas — Jan a Jun/2026</div>
-<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> Relação de Liquidação Emitida · 01/01–01/06/2026 · Emissão 09:59:41 · 2.274 registros</div>
+<div class="sec">Liquidações Emitidas - 01/01/2026 a 10/06/2026</div>
+<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> Relação de Liquidação Emitida - Emissão 10/06/2026 09:10:12 - 374 registros processados.</div>
 <div class="kgrid" style="margin-bottom:14px">
-  <div class="kc ac"><div class="kl">Quantidade</div><div class="kv">2.274</div><div class="km">Liquidações emitidas</div></div>
-  <div class="kc a2"><div class="kl">Total Liquidado</div><div class="kv">R$139,9M</div><div class="km">Valor bruto</div></div>
-  <div class="kc gn"><div class="kl">Saldo Líquido</div><div class="kv">R$139,6M</div><div class="km">Após anulações</div></div>
-  <div class="kc am"><div class="kl">Total Anulado</div><div class="kv">R$330K</div><div class="km">Cancelamentos</div></div>
-  <div class="kc ac"><div class="kl">Credores</div><div class="kv">213</div><div class="km">Distintos</div></div>
-  <div class="kc a2"><div class="kl">Fontes</div><div class="kv">15</div><div class="km">Recursos distintos</div></div>
-  <div class="kc gn"><div class="kl">Org/Unid</div><div class="kv">18</div><div class="km">Secretarias</div></div>
-  <div class="kc am"><div class="kl">Maior Org/Unid</div><div class="kv">R$71,3M</div><div class="km">Educação (14.009.001)</div></div>
+  <div class="kc ac"><div class="kl">Quantidade</div><div class="kv">374</div><div class="km">Liquidações emitidas</div></div><div class="kc a2"><div class="kl">Total Liquidado</div><div class="kv">R$19,0M</div><div class="km">Valor bruto</div></div><div class="kc gn"><div class="kl">Saldo Líquido</div><div class="kv">R$19,0M</div><div class="km">Após anulações</div></div><div class="kc am"><div class="kl">Total Anulado</div><div class="kv">R$2,3K</div><div class="km">Cancelamentos</div></div><div class="kc ac"><div class="kl">Credores</div><div class="kv">1</div><div class="km">Distintos</div></div><div class="kc a2"><div class="kl">Fontes</div><div class="kv">2</div><div class="km">Recursos distintos</div></div><div class="kc gn"><div class="kl">Org/Unid</div><div class="kv">14</div><div class="km">Unidades orçamentárias</div></div><div class="kc am"><div class="kl">Maior Org/Unid</div><div class="kv">R$3,8M</div><div class="km">Org/Unid 14.008.001</div></div>
 </div>
-<div class="cgrid">
-  <div class="cc"><div class="ct">Qtd de Liquidações por Mês</div><div class="cs">Distribuição mensal</div><div style="height:220px"><canvas id="c12"></canvas></div></div>
-  <div class="cc"><div class="ct">Valor Liquidado por Mês (R$M)</div><div class="cs">Volume financeiro</div><div style="height:220px"><canvas id="c13"></canvas></div></div>
-</div>
-<div class="sec" style="margin-top:1.5rem">Top Credores por Saldo Líquido</div>
-<div class="tw"><table>
-<thead><tr><th>#</th><th>Credor</th><th style="text-align:right">Qtd</th><th style="text-align:right">Liquidado (R$)</th><th style="text-align:right">Anulação (R$)</th><th style="text-align:right">Saldo (R$)</th></tr></thead>
-<tbody>
-<tr><td class="mn">1</td><td class="nm">Secretaria Municipal de Educação</td><td class="mn" style="text-align:right">214</td><td class="mn" style="text-align:right">48.007.171,40</td><td class="mn wn" style="text-align:right">36.914,80</td><td class="mn pos" style="text-align:right">47.970.256,60</td></tr>
-<tr><td class="mn">2</td><td class="nm">Prefeitura Municipal de Ibirité</td><td class="mn" style="text-align:right">453</td><td class="mn" style="text-align:right">20.090.849,91</td><td class="mn wn" style="text-align:right">150.835,39</td><td class="mn pos" style="text-align:right">19.940.014,52</td></tr>
-<tr><td class="mn">3</td><td class="nm">Caixa Econômica Federal</td><td class="mn" style="text-align:right">37</td><td class="mn" style="text-align:right">7.967.379,83</td><td class="mn wn" style="text-align:right">12.236,13</td><td class="mn pos" style="text-align:right">7.955.143,70</td></tr>
-<tr><td class="mn">4</td><td class="nm">IPASI — Previdência Social de Ibirité</td><td class="mn" style="text-align:right">103</td><td class="mn" style="text-align:right">7.335.969,27</td><td class="mn wn" style="text-align:right">518,87</td><td class="mn pos" style="text-align:right">7.335.450,40</td></tr>
-<tr><td class="mn">5</td><td class="nm">Viação Sidon S.A.</td><td class="mn" style="text-align:right">10</td><td class="mn" style="text-align:right">5.559.191,25</td><td class="mn" style="text-align:right">0,00</td><td class="mn pos" style="text-align:right">5.559.191,25</td></tr>
-<tr><td class="mn">6</td><td class="nm">CDL de Ibirité</td><td class="mn" style="text-align:right">63</td><td class="mn" style="text-align:right">5.431.692,61</td><td class="mn" style="text-align:right">0,00</td><td class="mn pos" style="text-align:right">5.431.692,61</td></tr>
-<tr><td class="mn">7</td><td class="nm">Consórcio Infra-Norte</td><td class="mn" style="text-align:right">19</td><td class="mn" style="text-align:right">3.190.112,18</td><td class="mn" style="text-align:right">0,00</td><td class="mn pos" style="text-align:right">3.190.112,18</td></tr>
-<tr><td class="mn">8</td><td class="nm">INSS</td><td class="mn" style="text-align:right">205</td><td class="mn" style="text-align:right">3.172.568,69</td><td class="mn wn" style="text-align:right">13.769,30</td><td class="mn pos" style="text-align:right">3.158.799,39</td></tr>
-<tr><td class="mn">9</td><td class="nm">Quantum — Engenharia e Consultoria</td><td class="mn" style="text-align:right">20</td><td class="mn" style="text-align:right">3.039.946,76</td><td class="mn wn" style="text-align:right">49.064,97</td><td class="mn pos" style="text-align:right">2.990.881,79</td></tr>
-<tr><td class="mn">10</td><td class="nm">Liart Resíduos Ltda</td><td class="mn" style="text-align:right">3</td><td class="mn" style="text-align:right">2.818.128,92</td><td class="mn" style="text-align:right">0,00</td><td class="mn pos" style="text-align:right">2.818.128,92</td></tr>
+<div class="cgrid"><div class="cc"><div class="ct">Qtd de Liquidações por Mês</div><div class="cs">Distribuição mensal</div><div style="height:220px"><canvas id="c12"></canvas></div></div><div class="cc"><div class="ct">Valor Liquidado por Mês</div><div class="cs">R$ milhões</div><div style="height:220px"><canvas id="c13"></canvas></div></div></div>
+<div class="sec" style="margin-top:1.5rem">Credores e Fontes</div>
+<div class="tw"><table><thead><tr><th>#</th><th>Credor</th><th style="text-align:right">Qtd</th><th style="text-align:right">Liquidado</th><th style="text-align:right">Anulação</th><th style="text-align:right">Saldo</th></tr></thead><tbody><tr><td class="mn">1</td><td class="nm">Prefeitura Municipal de Ibirité</td><td class="mn" style="text-align:right">374</td><td class="mn" style="text-align:right">18.955.046,76</td><td class="mn wn" style="text-align:right">2.285,36</td><td class="mn pos" style="text-align:right">18.952.761,40</td></tr></tbody></table></div>
+<div class="sec" style="margin-top:1.5rem">Top Org/Unid por Saldo</div>
+<div class="tw"><table><thead><tr><th>Org/Unid</th><th style="text-align:right">Qtd</th><th style="text-align:right">Saldo Líquido</th></tr></thead><tbody>
+<tr><td class="nm">14.008.001</td><td class="mn" style="text-align:right">38</td><td class="mn pos" style="text-align:right">3.847.581,70</td></tr>
+<tr><td class="nm">14.012.001</td><td class="mn" style="text-align:right">40</td><td class="mn pos" style="text-align:right">3.566.408,27</td></tr>
+<tr><td class="nm">14.011.001</td><td class="mn" style="text-align:right">35</td><td class="mn pos" style="text-align:right">2.492.206,23</td></tr>
+<tr><td class="nm">14.004.001</td><td class="mn" style="text-align:right">45</td><td class="mn pos" style="text-align:right">2.061.010,82</td></tr>
+<tr><td class="nm">14.006.001</td><td class="mn" style="text-align:right">31</td><td class="mn pos" style="text-align:right">1.583.986,34</td></tr>
 </tbody></table></div>
-<div class="sec" style="margin-top:1.5rem">Top Recursos (Fontes) por Saldo</div>
-<div class="tw"><table>
-<thead><tr><th>Recurso</th><th>Descrição</th><th style="text-align:right">Qtd</th><th style="text-align:right">Saldo Líquido (R$)</th></tr></thead>
-<tbody>
-<tr><td class="mn">1.500.000.0000</td><td class="nm">Recursos Não Vinculados de Impostos</td><td class="mn" style="text-align:right">1.612</td><td class="mn pos" style="text-align:right">66.966.167,63</td></tr>
-<tr><td class="mn">1.540.000.1070</td><td class="nm">FUNDEB — 70% (Profissionais)</td><td class="mn" style="text-align:right">147</td><td class="mn pos" style="text-align:right">39.821.803,70</td></tr>
-<tr><td class="mn">1.540.000.0000</td><td class="nm">FUNDEB — 30%</td><td class="mn" style="text-align:right">184</td><td class="mn pos" style="text-align:right">14.777.078,27</td></tr>
-<tr><td class="mn">1.500.000.1001</td><td class="nm">Recursos Não Vinculados (Educação)</td><td class="mn" style="text-align:right">236</td><td class="mn pos" style="text-align:right">6.462.397,80</td></tr>
-<tr><td class="mn">1.501.000.0000</td><td class="nm">Outros Recursos Não Vinculados</td><td class="mn" style="text-align:right">28</td><td class="mn pos" style="text-align:right">4.024.492,59</td></tr>
-<tr><td class="mn">1.751.000.0000</td><td class="nm">Recursos COSIP</td><td class="mn" style="text-align:right">8</td><td class="mn pos" style="text-align:right">2.602.309,35</td></tr>
-</tbody></table></div>
+<div class="sec" style="margin-top:1.5rem">Top Recursos</div>
+<div class="tw"><table><thead><tr><th>Recurso</th><th>Descrição</th><th style="text-align:right">Qtd</th><th style="text-align:right">Saldo</th></tr></thead><tbody><tr><td class="mn">1.500.000.0000.000</td><td class="nm">Recursos Não Vinculados de Impostos</td><td class="mn" style="text-align:right">368</td><td class="mn pos" style="text-align:right">18.818.291,81</td></tr><tr><td class="mn">1.500.000.1001.000</td><td class="nm">Recursos Não Vinculados - Educação</td><td class="mn" style="text-align:right">6</td><td class="mn pos" style="text-align:right">134.469,59</td></tr></tbody></table></div>
 </div></div>
 
-<!-- ===== P8 RISCOS ===== -->
 <div id="p8" class="page"><div class="wrap">
 <div class="sec">Achados Gerenciais e Riscos Fiscais</div>
 <div class="rgrid">
-  <div class="rc rh"><div class="ra">MDE · Risco Alto</div><div class="rt">18,85% aplicado — mínimo é 25% (CF Art. 212)</div><div class="rac">Déficit de R$11,2M. Ampliar empenho de despesas típicas de MDE nos próximos bimestres.</div><div class="rf"><div class="rr">Educ. / Fazenda</div><div class="kp cr">Urgente</div></div></div>
-  <div class="rc rh"><div class="ra">FUNDEB 70% · Risco Alto</div><div class="rt">65,1% em remuneração de profissionais — exigido 70%</div><div class="rac">Déficit de R$2,9M. Mapear folha vinculada ao FUNDEB. Art. 212-A, XI, CF.</div><div class="rf"><div class="rr">Educ. / RH / Fazenda</div><div class="kp cr">60 dias</div></div></div>
-  <div class="rc rh"><div class="ra">VAAT · Risco Alto</div><div class="rt">R$1,44M disponível — zero aplicado em educação infantil</div><div class="rac">Planejar aplicação. Risco de devolução ao FNDE. Também R$216K em capital sem aplicar.</div><div class="rf"><div class="rr">Secretaria de Educação</div><div class="kp cr">Urgente</div></div></div>
-  <div class="rc rh"><div class="ra">Receita de Capital · Risco Alto</div><div class="rt">0,16% realizado de R$101M previsto</div><div class="rac">Reprogramar convênios. Operações de crédito: zero ingresso no período. Ajustar reestimativa.</div><div class="rf"><div class="rr">Fazenda / Planejamento</div><div class="kp cr">Urgente</div></div></div>
-  <div class="rc rh"><div class="ra">Receita Total · Risco Alto</div><div class="rt">34,1% de execução — abaixo da meta temporal de 50%</div><div class="rac">Revisar reestimativa e contingenciamento. ISSQN em 30,2% exige plano de fiscalização.</div><div class="rf"><div class="rr">Secretaria de Fazenda</div><div class="kp cr">30 dias</div></div></div>
-  <div class="rc rm"><div class="ra">Pessoal · Risco Médio</div><div class="rt">DTP 42,88% — margem de 11 pp até o limite de alerta</div><div class="rac">Simular impacto de contratações e reajustes antes de autorizar novas despesas.</div><div class="rf"><div class="rr">RH / Fazenda</div><div class="kp wn">Mensal</div></div></div>
-  <div class="rc rl"><div class="ra">ASPS / Saúde · Regular</div><div class="rt">24,96% liquidado — acima do mínimo de 15%</div><div class="rac">Manter monitoramento mensal e memória de cálculo para TCE-MG.</div><div class="rf"><div class="rr">Fazenda / Saúde</div><div class="kp ok">Mensal</div></div></div>
-  <div class="rc rl"><div class="ra">FUNDEB Não Aplicado · Regular</div><div class="rt">8,62% — abaixo do teto de 10%</div><div class="rac">Monitorar para não ultrapassar o limite no encerramento do exercício.</div><div class="rf"><div class="rr">Fazenda / Educação</div><div class="kp ok">Bimestral</div></div></div>
-  <div class="rc rm"><div class="ra">Caixa · Monitorar</div><div class="rt">R$617M sem segregação formal por destinação</div><div class="rac">Estruturar relatório de disponibilidade por fonte (vinculada vs livre).</div><div class="rf"><div class="rr">Tesouraria / Contabilidade</div><div class="kp wn">15 dias</div></div></div>
+  <div class="rc rh"><div class="ra">MDE - Risco Alto</div><div class="rt">17,96% aplicado - mínimo é 25% (CF Art. 212)</div><div class="rac">Déficit de R$13,07M. Ampliar execução liquidada de despesas típicas de MDE nos próximos bimestres.</div><div class="rf"><div class="rr">Educação / Fazenda</div><div class="kp cr">Urgente</div></div></div>
+  <div class="rc rh"><div class="ra">FUNDEB 70% - Risco Alto</div><div class="rt">62,70% em remuneração de profissionais - exigido 70%</div><div class="rac">Déficit de R$4,52M. Mapear folha vinculada ao FUNDEB e reprogramar execução.</div><div class="rf"><div class="rr">Educação / RH / Fazenda</div><div class="kp cr">60 dias</div></div></div>
+  <div class="rc rh"><div class="ra">FUNDEB Não Aplicado - Risco Alto</div><div class="rt">11,84% não aplicado - máximo é 10%</div><div class="rac">Excesso de R$1,14M acima do teto. Necessário acelerar execução elegível.</div><div class="rf"><div class="rr">Educação / Fazenda</div><div class="kp cr">Urgente</div></div></div>
+  <div class="rc rh"><div class="ra">VAAT - Risco Alto</div><div class="rt">R$2,03M disponível - zero aplicado em educação infantil</div><div class="rac">Aplicação em educação infantil e despesas de capital deve ser planejada com urgência.</div><div class="rf"><div class="rr">Secretaria de Educação</div><div class="kp cr">Urgente</div></div></div>
+  <div class="rc rh"><div class="ra">Receita de Capital - Risco Alto</div><div class="rt">0,45% realizado de R$101,1M previsto</div><div class="rac">Reprogramar convênios, obras e operações de crédito. Avaliar frustração de receita.</div><div class="rf"><div class="rr">Fazenda / Planejamento</div><div class="kp cr">Urgente</div></div></div>
+  <div class="rc rm"><div class="ra">Receita Total - Risco Médio</div><div class="rt">38,16% de execução - abaixo da meta temporal de 50%</div><div class="rac">Revisar reestimativa, avaliar contingenciamento e intensificar cobrança/fiscalização do ISSQN.</div><div class="rf"><div class="rr">Secretaria de Fazenda</div><div class="kp wn">30 dias</div></div></div>
+  <div class="rc rl"><div class="ra">Pessoal - Regular</div><div class="rt">DTP 39,46% - margem de 14,54 pp até o alerta</div><div class="rac">Manter simulação prévia de reajustes, contratações e expansão de jornada.</div><div class="rf"><div class="rr">RH / Fazenda</div><div class="kp ok">Mensal</div></div></div>
+  <div class="rc rl"><div class="ra">ASPS / Saúde - Regular</div><div class="rt">22,75% liquidado - acima do mínimo de 15%</div><div class="rac">Manter memória de cálculo e controle de fontes para TCE-MG.</div><div class="rf"><div class="rr">Saúde / Fazenda</div><div class="kp ok">Mensal</div></div></div>
+  <div class="rc rm"><div class="ra">Caixa - Monitorar</div><div class="rt">R$635,1M em caixa final</div><div class="rac">Segregar disponibilidade por fonte: recursos livres, vinculados, FUNDEB, saúde, convênios e RPPS.</div><div class="rf"><div class="rr">Tesouraria / Contabilidade</div><div class="kp wn">15 dias</div></div></div>
 </div>
-<div class="sec" style="margin-top:1.5rem">Checklist de Controle Interno — TCE-MG</div>
+<div class="sec" style="margin-top:1.5rem">Checklist de Controle Interno - TCE-MG</div>
 <div class="cks">
-  <div class="ck"><div class="cki ok">&#10003;</div><div><div class="ckt">LRF — Despesa com Pessoal</div><div class="ckd">DTP 42,88% abaixo dos limites LRF (alerta 54%, prudencial 57%, máximo 60%). RGF Anexo 1.</div></div></div>
-  <div class="ck"><div class="cki ok">&#10003;</div><div><div class="ckt">LC 141/2012 — Mínimo em Saúde</div><div class="ckd">ASPS liquidada 24,96% — acima do mínimo de 15%. Margem R$16,5M. RREO Anexo 12.</div></div></div>
-  <div class="ck"><div class="cki ok">&#10003;</div><div><div class="ckt">FUNDEB Não Aplicado — Teto 10%</div><div class="ckd">8,62% não aplicado — abaixo do teto de 10%. Saldo bancário conciliado R$26,6M.</div></div></div>
-  <div class="ck"><div class="cki wn">!</div><div><div class="ckt">CF Art.212 — Mínimo MDE 25%</div><div class="ckd">18,85% aplicados. Déficit R$11,2M. Acompanhamento urgente. RREO Anexo 8.</div></div></div>
-  <div class="ck"><div class="cki wn">!</div><div><div class="ckt">CF Art.212-A — FUNDEB 70% Profissionais</div><div class="ckd">65,1% aplicados. Déficit R$2,9M. Mapear folha vinculada ao FUNDEB.</div></div></div>
-  <div class="ck"><div class="cki wn">!</div><div><div class="ckt">VAAT — Educação Infantil e Capital</div><div class="ckd">R$1,44M disponível, zero aplicado. R$216K em capital sem aplicar. Risco de devolução.</div></div></div>
-  <div class="ck"><div class="cki wn">!</div><div><div class="ckt">Receita de Capital — 0,16%</div><div class="ckd">R$101M previsto, R$159K realizado. Convênios e operações de crédito pendentes.</div></div></div>
-  <div class="ck"><div class="cki ok">&#10003;</div><div><div class="ckt">Liquidações — Controle Interno</div><div class="ckd">2.274 liquidações monitoradas. Anulações R$330K identificadas. Top credores e fontes mapeados.</div></div></div>
-  <div class="ck"><div class="cki wn">!</div><div><div class="ckt">Disponibilidade por Fonte</div><div class="ckd">Relatório de segregação caixa livre × vinculado pendente. Estruturar em 15 dias.</div></div></div>
+  <div class="ck"><div class="cki ok">✓</div><div><div class="ckt">LRF - Despesa com Pessoal</div><div class="ckd">DTP 39,46% abaixo dos limites LRF: alerta 54%, prudencial 57%, máximo 60%.</div></div></div>
+  <div class="ck"><div class="cki ok">✓</div><div><div class="ckt">LC 141/2012 - Mínimo em Saúde</div><div class="ckd">ASPS liquidada 22,75% - acima do mínimo de 15%.</div></div></div>
+  <div class="ck"><div class="cki cr">!</div><div><div class="ckt">CF Art. 212 - MDE 25%</div><div class="ckd">17,96% aplicados. Déficit R$13,07M. Acompanhamento urgente.</div></div></div>
+  <div class="ck"><div class="cki cr">!</div><div><div class="ckt">CF Art. 212-A - FUNDEB 70%</div><div class="ckd">62,70% aplicados. Déficit R$4,52M.</div></div></div>
+  <div class="ck"><div class="cki cr">!</div><div><div class="ckt">FUNDEB Não Aplicado</div><div class="ckd">11,84% não aplicado; excede o teto de 10% em R$1,14M.</div></div></div>
+  <div class="ck"><div class="cki cr">!</div><div><div class="ckt">VAAT - Educação Infantil e Capital</div><div class="ckd">R$2,03M recebido, zero aplicado; capital mínimo R$303,9K.</div></div></div>
+  <div class="ck"><div class="cki cr">!</div><div><div class="ckt">Receita de Capital</div><div class="ckd">R$101,1M previsto, apenas R$459,5K realizado.</div></div></div>
+  <div class="ck"><div class="cki ok">✓</div><div><div class="ckt">Fluxo de Caixa</div><div class="ckd">Geração líquida positiva de R$30,17M; caixa final R$635,10M.</div></div></div>
+  <div class="ck"><div class="cki wn">!</div><div><div class="ckt">Disponibilidade por Fonte</div><div class="ckd">Relatório de segregação caixa livre x vinculado deve ser mantido e conciliado.</div></div></div>
 </div>
-<div class="ib wn" style="margin-top:14px"><strong style="color:var(--am)">&#9888; Aviso técnico:</strong> Este painel tem finalidade gerencial e não substitui os demonstrativos oficiais para prestação de contas ao TCE-MG. Dados extraídos do Betha Sistemas — RREO Anexos 8, 10, 12, 18 · RGF Anexo 1 · Relação de Liquidação Emitida · Emissão 01/06/2026.</div>
+<div class="ib wn" style="margin-top:14px"><strong style="color:var(--am)">Aviso técnico:</strong> Este painel tem finalidade gerencial e não substitui os demonstrativos oficiais para prestação de contas. Dados extraídos dos relatórios Betha Sistemas emitidos em 10/06/2026.</div>
 </div></div>
-
-<footer>
-  <div><strong style="color:var(--ts)">Prefeitura Municipal de Ibirité / MG</strong> · Departamento de TI · Secretaria Municipal de Planejamento</div>
-  <div>Painel Fiscal Gerencial 2026 · 01/06/2026 · <span style="color:var(--ac)">LRF · CF Art.212/212-A · LC 141 · TCE-MG</span></div>
-</footer>
+<footer><div><strong style="color:var(--ts)">Prefeitura Municipal de Ibirité / MG</strong> - Departamento de TI - Secretaria Municipal de Planejamento</div><div>Painel Fiscal Gerencial 2026 - Atualizado em 10/06/2026 - <span style="color:var(--ac)">LRF - CF Art. 212/212-A - LC 141 - TCE-MG</span></div></footer>
 
 <script>
 (function(){
-  // helpers
-  var G = 'rgba(255,255,255,.06)', T = '#526070', MN = 'monospace';
-
-  function makeBar(id, labels, datasets, xCb, yCb, showLeg) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    new Chart(el, {
-      type: 'bar',
-      data: { labels: labels, datasets: datasets },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: showLeg || false,
-            position: 'top',
-            labels: { color: T, font: { size: 10 }, boxWidth: 10, boxHeight: 10, useBorderRadius: true, borderRadius: 2 }
-          },
-          tooltip: { callbacks: { label: yCb || function(c) { return 'R$' + c.parsed.y.toFixed(1) + 'M'; } } }
-        },
-        scales: {
-          x: { grid: { color: G }, ticks: { color: T, font: { size: xCb || 10 }, maxRotation: 30 } },
-          y: { grid: { color: G }, ticks: { color: T, font: { size: 10, family: MN }, callback: function(v) { return 'R$' + v + 'M'; } } }
-        }
-      }
-    });
-  }
-
-  function makeLine(id, labels, datasets) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    new Chart(el, {
-      type: 'line',
-      data: { labels: labels, datasets: datasets },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: function(c) { return 'R$' + c.parsed.y.toFixed(1) + 'M'; } } }
-        },
-        scales: {
-          x: { grid: { color: G }, ticks: { color: T, font: { size: 10 } } },
-          y: { grid: { color: G }, ticks: { color: T, font: { size: 10, family: MN }, callback: function(v) { return 'R$' + v + 'M'; } } }
-        }
-      }
-    });
-  }
-
-  function makeDonut(id, labels, data, colors) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    new Chart(el, {
-      type: 'doughnut',
-      data: {
-        labels: labels,
-        datasets: [{ data: data, backgroundColor: colors, borderColor: 'transparent' }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '60%',
-        plugins: {
-          legend: { display: true, position: 'bottom', labels: { color: T, font: { size: 10 }, boxWidth: 10, boxHeight: 10, padding: 8 } },
-          tooltip: { callbacks: { label: function(c) { return c.label + ': R$' + c.parsed.toFixed(1) + 'M'; } } }
-        }
-      }
-    });
-  }
-
-  // ── c1: Receita Orçada × Arrecadada por Categoria ──
-  makeBar('c1',
-    ['Rec. Correntes', 'Trib./Taxas', 'Transf. Correntes', 'Rec. Capital', 'Intraorç.'],
-    [
-      { label: 'Orçada', data: [679.9, 96.6, 512.9, 101.1, 0],
-        backgroundColor: 'rgba(58,155,220,.18)', borderColor: 'rgba(58,155,220,.5)', borderWidth: 1, borderRadius: 4 },
-      { label: 'Arrecadada', data: [255.6, 49.1, 187.1, 0.16, 10.9],
-        backgroundColor: 'rgba(0,201,167,.7)', borderColor: '#00C9A7', borderWidth: 1, borderRadius: 4 }
-    ], 10, null, true
-  );
-
-  // ── c2: Transferências Correntes — Composição ──
-  makeDonut('c2',
-    ['FPM', 'ICMS (Est)', 'IPVA (Est)', 'SUS Fed', 'FUNDEB', 'Outras'],
-    [76.8, 37.3, 25.0, 24.1, 57.8, 34.3],
-    ['#00C9A7', '#3A9BDC', '#F5A623', '#4CAF7D', '#E05252', '#526070']
-  );
-
-  // ── c3: Orçado × Arrecadado por Categoria (detalhado) ──
-  makeBar('c3',
-    ['Correntes', 'IPTU', 'ITBI', 'IRRF', 'ISSQN', 'Taxas', 'COSIP', 'Patrimonial', 'Transf.', 'FPM', 'ICMS', 'IPVA', 'FUNDEB', 'Capital'],
-    [
-      { label: 'Orçada', data: [679.9, 33.0, 4.2, 11.9, 26.0, 21.5, 10.7, 11.9, 512.9, 186.5, 94.3, 33.8, 128.4, 101.1],
-        backgroundColor: 'rgba(58,155,220,.18)', borderColor: 'rgba(58,155,220,.4)', borderWidth: 1, borderRadius: 3 },
-      { label: 'Arrecadada', data: [255.6, 27.0, 1.3, 5.9, 7.8, 7.1, 5.2, 4.5, 187.1, 76.8, 37.3, 25.0, 57.8, 0.16],
-        backgroundColor: 'rgba(0,201,167,.65)', borderColor: '#00C9A7', borderWidth: 1, borderRadius: 3 }
-    ], 9, null, true
-  );
-
-  // ── c4: DTP Mensal Jan–Mai/2026 ──
-  makeBar('c4',
-    ['Jan/26', 'Fev/26', 'Mar/26', 'Abr/26', 'Mai/26'],
-    [{ data: [20.4, 21.4, 20.5, 17.2, 18.0],
-       backgroundColor: 'rgba(0,201,167,.65)', borderColor: '#00C9A7', borderWidth: 1, borderRadius: 4 }]
-  );
-
-  // ── c5: Despesa Bruta — 12 meses ──
-  makeLine('c5',
-    ['Jun/25','Jul/25','Ago/25','Set/25','Out/25','Nov/25','Dez/25','Jan/26','Fev/26','Mar/26','Abr/26','Mai/26'],
-    [{ label: 'Desp. Bruta',
-       data: [25.5, 26.1, 25.4, 25.6, 32.6, 26.6, 47.0, 24.3, 25.5, 25.2, 30.0, 18.9],
-       borderColor: '#3A9BDC', backgroundColor: 'rgba(58,155,220,.1)',
-       borderWidth: 2, pointRadius: 4, pointBackgroundColor: '#3A9BDC', fill: true, tension: 0.3 }]
-  );
-
-  // ── c6: Composição Ativo × Inativo ──
-  makeDonut('c6',
-    ['Pessoal Ativo', 'Inativo/Pensionistas'],
-    [296.0, 36.8],
-    ['rgba(0,201,167,.8)', 'rgba(58,155,220,.7)']
-  );
-
-  // ── c7: Limites LRF ──
-  makeBar('c7',
-    ['DTP Atual', 'Lim. Alerta', 'Lim. Prudencial', 'Lim. Máximo'],
-    [{ data: [275.1, 346.4, 365.7, 384.9],
-       backgroundColor: ['rgba(0,201,167,.8)', 'rgba(245,166,35,.5)', 'rgba(255,130,30,.5)', 'rgba(224,82,82,.5)'],
-       borderColor: ['#00C9A7', '#F5A623', 'orange', '#E05252'],
-       borderWidth: 1, borderRadius: 4 }]
-  );
-
-  // ── c8: Saúde ASPS Subfunções ──
-  makeBar('c8',
-    ['At. Básica', 'Assist. Hosp.', 'Sup. Profilático', 'Vig. Sanitária', 'Vig. Epidemiol.', 'Outras'],
-    [
-      { label: 'Dotação', data: [25.9, 53.5, 1.9, 0.45, 4.1, 15.3],
-        backgroundColor: 'rgba(58,155,220,.18)', borderColor: 'rgba(58,155,220,.4)', borderWidth: 1, borderRadius: 3 },
-      { label: 'Liquidado', data: [12.1, 21.2, 0.09, 0.21, 1.41, 6.45],
-        backgroundColor: 'rgba(0,201,167,.7)', borderColor: '#00C9A7', borderWidth: 1, borderRadius: 3 }
-    ], 9, null, true
-  );
-
-  // ── c9: Educação — Despesas por Grupo ──
-  makeBar('c9',
-    ['FUNDEB Total', 'Prof. EB', 'FUNDEB Outras', 'MDE Impostos', 'Outras Educ.', 'Total Educ.'],
-    [
-      { label: 'Dotação', data: [121.9, 96.0, 25.9, 27.3, 53.8, 216.1],
-        backgroundColor: 'rgba(58,155,220,.18)', borderColor: 'rgba(58,155,220,.4)', borderWidth: 1, borderRadius: 3 },
-      { label: 'Liquidado', data: [53.7, 38.9, 14.8, 6.5, 10.3, 71.4],
-        backgroundColor: 'rgba(245,166,35,.65)', borderColor: '#F5A623', borderWidth: 1, borderRadius: 3 }
-    ], 9, null, true
-  );
-
-  // ── c10: Limites MDE e FUNDEB 70% ──
-  (function() {
-    var el = document.getElementById('c10');
-    if (!el) return;
-    new Chart(el, {
-      type: 'bar',
-      data: {
-        labels: ['MDE Exigido (25%)', 'MDE Aplicado (18,85%)', 'FUNDEB 70% Exigido', 'FUNDEB 70% Aplicado'],
-        datasets: [{
-          data: [45.6, 34.4, 41.8, 38.9],
-          backgroundColor: ['rgba(245,166,35,.3)', 'rgba(224,82,82,.75)', 'rgba(245,166,35,.3)', 'rgba(224,82,82,.65)'],
-          borderColor: ['#F5A623', '#E05252', '#F5A623', '#E05252'],
-          borderWidth: 1, borderRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: function(c) {
-            var lb = ['Exigido MDE','Aplicado MDE','Exigido FUNDEB70%','Aplicado FUNDEB70%'];
-            return lb[c.dataIndex] + ': R$' + c.parsed.y.toFixed(1) + 'M';
-          }}}
-        },
-        scales: {
-          x: { grid: { color: G }, ticks: { color: T, font: { size: 10 }, maxRotation: 15 } },
-          y: { grid: { color: G }, ticks: { color: T, font: { size: 10, family: MN }, callback: function(v) { return 'R$' + v + 'M'; } } }
-        }
-      }
-    });
-  })();
-
-  // ── c11: Maiores Pressões no Caixa por Função ──
-  makeBar('c11',
-    ['Saúde', 'Educação', 'Adm.', 'Urbanismo', 'Previdência', 'Legislativa', 'Transporte', 'Ass. Social', 'Enc. Esp.', 'Energia'],
-    [{ data: [51.8, 50.3, 18.9, 18.0, 11.3, 7.7, 6.6, 4.5, 3.8, 3.3],
-       backgroundColor: [
-         'rgba(224,82,82,.8)', 'rgba(245,166,35,.8)', 'rgba(58,155,220,.65)', 'rgba(58,155,220,.5)',
-         'rgba(82,96,112,.55)', 'rgba(82,96,112,.5)', 'rgba(82,96,112,.46)', 'rgba(82,96,112,.42)',
-         'rgba(82,96,112,.38)', 'rgba(82,96,112,.35)'
-       ], borderRadius: 4 }]
-  );
-
-  // ── c12: Liquidações — Qtd por Mês ──
-  (function() {
-    var el = document.getElementById('c12');
-    if (!el) return;
-    new Chart(el, {
-      type: 'bar',
-      data: {
-        labels: ['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],
-        datasets: [{ data: [280,477,469,674,360,14],
-          backgroundColor: ['rgba(0,201,167,.6)','rgba(0,201,167,.65)','rgba(0,201,167,.7)','rgba(0,201,167,.85)','rgba(0,201,167,.6)','rgba(82,96,112,.4)'],
-          borderRadius: 4 }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(c) { return c.parsed.y + ' liquidações'; } } } },
-        scales: {
-          x: { grid: { color: G }, ticks: { color: T, font: { size: 10 } } },
-          y: { grid: { color: G }, ticks: { color: T, font: { size: 10 } } }
-        }
-      }
-    });
-  })();
-
-  // ── c13: Liquidações — Valor por Mês ──
-  makeBar('c13',
-    ['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],
-    [{ data: [17.8, 27.3, 30.0, 36.2, 28.5, 0.03],
-       backgroundColor: ['rgba(58,155,220,.55)','rgba(58,155,220,.6)','rgba(58,155,220,.65)','rgba(58,155,220,.8)','rgba(58,155,220,.6)','rgba(82,96,112,.4)'],
-       borderRadius: 4 }]
-  );
-
+const G='rgba(255,255,255,.06)', T='#526070', MN='monospace';
+function add(c){charts.push(c);return c}
+function bar(id, labels, datasets, legend=false){const el=document.getElementById(id);if(!el)return;add(new Chart(el,{type:'bar',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:legend,position:'top',labels:{color:T,font:{size:10},boxWidth:10,boxHeight:10}},tooltip:{callbacks:{label:c=>'R$'+c.parsed.y.toFixed(1)+'M'}}},scales:{x:{grid:{color:G},ticks:{color:T,font:{size:10},maxRotation:30}},y:{grid:{color:G},ticks:{color:T,font:{size:10,family:MN},callback:v=>'R$'+v+'M'}}}}}))}
+function donut(id,labels,data,colors){const el=document.getElementById(id);if(!el)return;add(new Chart(el,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderColor:'transparent'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:true,position:'bottom',labels:{color:T,font:{size:10},boxWidth:10,boxHeight:10,padding:8}},tooltip:{callbacks:{label:c=>c.label+': R$'+c.parsed.toFixed(1)+'M'}}}}}))}
+bar('c1',['Correntes','Trib./Taxas','Transf. Correntes','Capital','Intraorç.'],[{label:'Orçada',data:[679.9,96.6,512.9,101.1,0],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.5)',borderWidth:1,borderRadius:4},{label:'Arrecadada',data:[286.7,54.4,210.9,0.46,10.9],backgroundColor:'rgba(0,201,167,.7)',borderColor:'#00C9A7',borderWidth:1,borderRadius:4}],true);
+donut('c2',['União','Estados/DF','Outras transferências'],[97.7,53.3,60.3],['#00C9A7','#3A9BDC','#F5A623']);
+bar('c3',['Total','Correntes','IPTU','ITBI','IRRF','ISSQN','Taxas','COSIP','Patrim.','Transf.','FUNDEB','Capital'],[{label:'Orçada',data:[781.1,679.9,33.0,4.2,11.9,26.0,21.5,10.7,11.9,512.9,128.4,101.1],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.4)',borderWidth:1,borderRadius:3},{label:'Arrecadada',data:[298.1,286.7,28.5,1.9,6.1,9.6,8.3,6.1,5.4,210.9,59.4,0.46],backgroundColor:'rgba(0,201,167,.65)',borderColor:'#00C9A7',borderWidth:1,borderRadius:3}],true);
+bar('c4',['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],[{data:[20.36,21.42,20.52,25.93,19.63,0.08],backgroundColor:'rgba(0,201,167,.65)',borderColor:'#00C9A7',borderWidth:1,borderRadius:4}]);
+donut('c6',['Pessoal Ativo','Inativo/Pensionistas'],[115.2,13.8],['rgba(0,201,167,.8)','rgba(58,155,220,.7)']);
+bar('c7',['DTP Atual','Lim. Alerta','Lim. Prudencial','Lim. Máximo'],[{data:[108.0,147.7,156.0,164.2],backgroundColor:['rgba(0,201,167,.8)','rgba(245,166,35,.5)','rgba(255,130,30,.5)','rgba(224,82,82,.5)'],borderColor:['#00C9A7','#F5A623','orange','#E05252'],borderWidth:1,borderRadius:4}]);
+bar('c8',['At. Básica','Assist. Hosp.','Sup. Profil.','Vig. Sanit.','Vig. Epid.','Outras'],[{label:'Dotação',data:[25.9,53.5,1.9,0.45,4.1,15.3],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.4)',borderWidth:1,borderRadius:3},{label:'Liquidado',data:[12.3,21.5,0.09,0.22,1.42,6.79],backgroundColor:'rgba(0,201,167,.7)',borderColor:'#00C9A7',borderWidth:1,borderRadius:3}],true);
+bar('c9',['FUNDEB Total','Prof. EB','FUNDEB Outras','MDE Impostos','Outras Educ.','Total Educ.'],[{label:'Dotação',data:[121.9,94.2,27.8,26.7,54.3,216.1],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.4)',borderWidth:1,borderRadius:3},{label:'Liquidado',data:[53.7,38.9,14.8,6.6,11.7,72.9],backgroundColor:'rgba(245,166,35,.65)',borderColor:'#F5A623',borderWidth:1,borderRadius:3}],true);
+bar('c10',['MDE Exigido','MDE Aplicado','FUNDEB 70% Exigido','FUNDEB 70% Aplicado','FUNDEB Não Aplic. Máx.','FUNDEB Não Aplic.'],[{data:[46.4,33.4,43.4,38.9,6.2,7.3],backgroundColor:['rgba(245,166,35,.3)','rgba(224,82,82,.75)','rgba(245,166,35,.3)','rgba(224,82,82,.65)','rgba(245,166,35,.3)','rgba(224,82,82,.75)'],borderColor:['#F5A623','#E05252','#F5A623','#E05252','#F5A623','#E05252'],borderWidth:1,borderRadius:4}]);
+bar('c11',['Saúde','Educação','Urbanismo','Adm.','Previdência','Legislativa','Transporte','Enc. Esp.','Energia','Ass. Social'],[{data:[52.7,50.4,19.5,19.3,14.2,8.1,6.9,4.5,3.3,4.7],backgroundColor:['rgba(224,82,82,.8)','rgba(245,166,35,.8)','rgba(58,155,220,.65)','rgba(58,155,220,.55)','rgba(82,96,112,.55)','rgba(82,96,112,.5)','rgba(82,96,112,.46)','rgba(82,96,112,.42)','rgba(82,96,112,.38)','rgba(82,96,112,.35)'],borderRadius:4}]);
+(function(){const el=document.getElementById('c12');if(!el)return;add(new Chart(el,{type:'bar',data:{labels:['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],datasets:[{data:[70,69,76,103,55,1],backgroundColor:['rgba(0,201,167,.6)','rgba(0,201,167,.65)','rgba(0,201,167,.7)','rgba(0,201,167,.85)','rgba(0,201,167,.6)','rgba(82,96,112,.4)'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' liquidações'}}},scales:{x:{grid:{color:G},ticks:{color:T,font:{size:10}}},y:{grid:{color:G},ticks:{color:T,font:{size:10}}}}}}))})();
+bar('c13',['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],[{data:[3.62,3.71,3.69,3.75,4.18,0.004],backgroundColor:['rgba(58,155,220,.55)','rgba(58,155,220,.6)','rgba(58,155,220,.65)','rgba(58,155,220,.8)','rgba(58,155,220,.6)','rgba(82,96,112,.4)'],borderRadius:4}]);
 })();
 </script>
-</body></html>
+</body>
+</html>
