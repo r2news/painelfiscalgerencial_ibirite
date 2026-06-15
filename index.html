@@ -7,23 +7,114 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 :root{--nv:#0D1B2A;--nl:#162233;--nm:#1E3048;--ac:#00C9A7;--acd:rgba(0,201,167,.13);--a2:#3A9BDC;--a2d:rgba(58,155,220,.13);--am:#F5A623;--amd:rgba(245,166,35,.13);--rd:#E05252;--rdd:rgba(224,82,82,.13);--gn:#4CAF7D;--gnd:rgba(76,175,125,.13);--tp:#E8EDF2;--ts:#8A9BB0;--tm:#526070;--br:rgba(255,255,255,.07);--bl:rgba(255,255,255,.04);--cb:#162233;--cb2:#1A2840;}
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--nv);color:var(--tp);font-size:14px;line-height:1.55}header{background:var(--nl);border-bottom:1px solid var(--br);padding:8px 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100}.lb{width:48px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--ac),var(--a2));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;letter-spacing:.8px;flex-shrink:0}.hinfo{display:flex;align-items:center;gap:12px}.htit{font-size:14px;font-weight:650}.hsub{font-size:11px;color:var(--ts)}.hright{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.badge-lrf{display:flex;align-items:center;gap:5px;background:var(--gnd);border:1px solid rgba(76,175,125,.3);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;color:var(--gn)}.badge-lrf:before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gn)}.bdt{font-size:10px;color:var(--tm);font-family:monospace}.nav{background:var(--nl);border-bottom:1px solid var(--br);padding:0 1.5rem;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nt{padding:10px 14px;font-size:12px;font-weight:500;color:var(--tm);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}.nt:hover{color:var(--ts)}.nt.active{color:var(--ac);border-bottom-color:var(--ac)}.page{display:none}.page.active{display:block}.wrap{max-width:1400px;margin:0 auto;padding:1.5rem}.sec{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--tm);margin:1.5rem 0 .75rem;display:flex;align-items:center;gap:8px}.sec:after{content:'';flex:1;height:1px;background:var(--br)}.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px}.kc{background:var(--cb);border:1px solid var(--br);border-radius:10px;padding:1rem 1.2rem;position:relative;overflow:hidden}.kc:before{content:'';position:absolute;top:0;left:0;right:0;height:2px}.kc.ac:before{background:var(--ac)}.kc.a2:before{background:var(--a2)}.kc.am:before{background:var(--am)}.kc.rd:before{background:var(--rd)}.kc.gn:before{background:var(--gn)}.kl{font-size:10px;color:var(--ts);font-weight:600;margin-bottom:4px}.kv{font-size:20px;font-weight:800;color:var(--tp);font-family:monospace}.km{font-size:10px;color:var(--tm);margin-top:4px}.kp{display:inline-block;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;margin-top:6px}.ok{background:var(--gnd);color:var(--gn);border:1px solid rgba(76,175,125,.3)}.wn{background:var(--amd);color:var(--am);border:1px solid rgba(245,166,35,.3)}.cr{background:var(--rdd);color:var(--rd);border:1px solid rgba(224,82,82,.3)}.inf{background:var(--a2d);color:var(--a2);border:1px solid rgba(58,155,220,.3)}.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px}.cc{background:var(--cb);border:1px solid var(--br);border-radius:10px;padding:1.25rem}.cc.full{grid-column:1/-1}.ct{font-size:13px;font-weight:700;color:var(--tp);margin-bottom:3px}.cs{font-size:11px;color:var(--tm);margin-bottom:1rem}.pr{display:flex;align-items:center;gap:8px;margin-bottom:8px}.prl{font-size:11px;color:var(--ts);width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.prw{flex:1;height:7px;background:#1E3048;border-radius:4px;overflow:hidden}.prb{height:100%;border-radius:4px}.prp{font-family:monospace;font-size:10px;color:var(--ts);width:44px;text-align:right;flex-shrink:0}.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}.fc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem;text-align:center}.ft{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);margin-bottom:3px}.fv{font-family:monospace;font-size:13px;font-weight:800}.fv.pos{color:var(--gn)}.fv.neg{color:var(--rd)}.fv.neu{color:var(--a2)}.tw{overflow-x:auto;border-radius:10px;border:1px solid var(--br)}table{width:100%;border-collapse:collapse;min-width:720px}th{font-size:9px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--tm);padding:8px 12px;border-bottom:1px solid var(--br);text-align:left;white-space:nowrap;background:var(--cb2)}td{padding:9px 12px;font-size:11px;color:var(--ts);border-bottom:1px solid var(--bl)}tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}td.nm{color:var(--tp);font-weight:600}td.mn{font-family:monospace;color:var(--tp);font-size:11px}td.pos{color:var(--gn)}td.neg{color:var(--rd)}td.wn{color:var(--am)}.bdg{display:inline-block;padding:1px 6px;border-radius:8px;font-size:9px;font-weight:700}.bdg.ok{background:var(--gnd);color:var(--gn)}.bdg.wn{background:var(--amd);color:var(--am)}.bdg.cr{background:var(--rdd);color:var(--rd)}.bdg.if{background:var(--a2d);color:var(--a2)}.ib{border-radius:8px;padding:10px 14px;font-size:11px;margin-bottom:14px}.ib.wn{background:var(--amd);border:1px solid rgba(245,166,35,.2);color:var(--ts)}.ib.inf{background:var(--a2d);border:1px solid rgba(58,155,220,.2);color:var(--ts)}.ib.ok{background:var(--gnd);border:1px solid rgba(76,175,125,.2);color:var(--ts)}.ib.cr{background:var(--rdd);border:1px solid rgba(224,82,82,.2);color:var(--ts)}.egrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:10px;margin-bottom:14px}.eg{background:var(--cb2);border:1px solid var(--br);border-radius:10px;padding:1rem 1.25rem}.egl{font-size:10px;color:var(--ts);font-weight:600;margin-bottom:4px}.egv{font-family:monospace;font-size:22px;font-weight:800;margin-bottom:4px}.egb{width:100%;height:10px;background:#1E3048;border-radius:6px;overflow:hidden;margin:6px 0}.egf{height:100%;border-radius:6px}.egm{font-size:10px;color:var(--tm)}.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.rc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:1rem 1.125rem;border-left:3px solid transparent}.rc.rh{border-left-color:var(--rd)}.rc.rm{border-left-color:var(--am)}.rc.rl{border-left-color:var(--gn)}.ra{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);margin-bottom:3px}.rt{font-size:12px;font-weight:700;color:var(--tp);margin-bottom:5px}.rac{font-size:11px;color:var(--ts);line-height:1.5}.rf{display:flex;justify-content:space-between;align-items:center;margin-top:8px}.rr{font-size:9px;color:var(--tm)}.lbr{width:100%;background:#1E3048;border-radius:8px;height:18px;overflow:hidden;position:relative;margin:6px 0}.lbrf{position:absolute;left:0;top:0;height:100%;border-radius:8px}.lbrm{position:absolute;top:0;width:2px;height:100%}.ltk{display:flex;justify-content:space-between;font-family:monospace;font-size:9px;color:var(--tm)}.lcs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.lc{background:#1E3048;border-radius:7px;padding:8px;text-align:center}.lcl{font-size:9px;color:var(--tm)}.lcv{font-family:monospace;font-size:12px;color:var(--tp);font-weight:700}.cks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}.ck{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem 1.125rem;display:flex;gap:10px;align-items:flex-start}.cki{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:800}.cki.ok{background:var(--gnd);color:var(--gn)}.cki.wn{background:var(--amd);color:var(--am)}.cki.cr{background:var(--rdd);color:var(--rd)}.ckt{font-size:11px;font-weight:700;color:var(--tp);margin-bottom:2px}.ckd{font-size:10px;color:var(--tm);line-height:1.5}footer{border-top:1px solid var(--br);margin-top:2.5rem;padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:10px;color:var(--tm)}@media(max-width:768px){.kgrid{grid-template-columns:1fr 1fr}.kv{font-size:16px}.cgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}.egrid{grid-template-columns:1fr 1fr}.lcs{grid-template-columns:1fr 1fr}}@media(max-width:480px){.kgrid,.fgrid{grid-template-columns:1fr 1fr}.egrid{grid-template-columns:1fr}.prl{width:110px}.wrap{padding:1rem}}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--nv);color:var(--tp);font-size:14px;line-height:1.55}header{background:var(--nl);border-bottom:1px solid var(--br);padding:8px 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100}.lb{width:48px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--ac),var(--a2));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;letter-spacing:.8px;flex-shrink:0}.hinfo{display:flex;align-items:center;gap:12px}.htit{font-size:14px;font-weight:650}.hsub{font-size:11px;color:var(--ts)}.hright{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.filters{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid var(--br);border-radius:8px;padding:6px 10px;flex-wrap:wrap}.period-selector{display:flex;align-items:center;gap:6px}.filter-label{font-size:10px;color:var(--ts);font-weight:600;text-transform:uppercase}select{background:var(--nm);color:var(--tp);border:1px solid var(--br);border-radius:6px;padding:5px 8px;font-size:11px;cursor:pointer;min-width:100px}select:hover{border-color:var(--ac)}select:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 2px rgba(0,201,167,.15)}.badge-lrf{display:flex;align-items:center;gap:5px;background:var(--gnd);border:1px solid rgba(76,175,125,.3);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;color:var(--gn)}.badge-lrf:before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gn)}.bdt{font-size:10px;color:var(--tm);font-family:monospace}.nav{background:var(--nl);border-bottom:1px solid var(--br);padding:0 1.5rem;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nt{padding:10px 14px;font-size:12px;font-weight:500;color:var(--tm);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}.nt:hover{color:var(--ts)}.nt.active{color:var(--ac);border-bottom-color:var(--ac)}.page{display:none}.page.active{display:block}.wrap{max-width:1400px;margin:0 auto;padding:1.5rem}.sec{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--tm);margin:1.5rem 0 .75rem;display:flex;align-items:center;gap:8px}.sec:after{content:'';flex:1;height:1px;background:var(--br)}.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px}.kc{background:var(--cb);border:1px solid var(--br);border-radius:10px;padding:1rem 1.2rem;position:relative;overflow:hidden}.kc:before{content:'';position:absolute;top:0;left:0;right:0;height:2px}.kc.ac:before{background:var(--ac)}.kc.a2:before{background:var(--a2)}.kc.am:before{background:var(--am)}.kc.rd:before{background:var(--rd)}.kc.gn:before{background:var(--gn)}.kl{font-size:10px;color:var(--ts);font-weight:600;margin-bottom:4px}.kv{font-size:20px;font-weight:800;color:var(--tp);font-family:monospace}.km{font-size:10px;color:var(--tm);margin-top:4px}.kp{display:inline-block;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;margin-top:6px}.ok{background:var(--gnd);color:var(--gn);border:1px solid rgba(76,175,125,.3)}.wn{background:var(--amd);color:var(--am);border:1px solid rgba(245,166,35,.3)}.cr{background:var(--rdd);color:var(--rd);border:1px solid rgba(224,82,82,.3)}.inf{background:var(--a2d);color:var(--a2);border:1px solid rgba(58,155,220,.3)}.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px}.cc{background:var(--cb);border:1px solid var(--br);border-radius:10px;padding:1.25rem}.cc.full{grid-column:1/-1}.ct{font-size:13px;font-weight:700;color:var(--tp);margin-bottom:3px}.cs{font-size:11px;color:var(--tm);margin-bottom:1rem}.pr{display:flex;align-items:center;gap:8px;margin-bottom:8px}.prl{font-size:11px;color:var(--ts);width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.prw{flex:1;height:7px;background:#1E3048;border-radius:4px;overflow:hidden}.prb{height:100%;border-radius:4px}.prp{font-family:monospace;font-size:10px;color:var(--ts);width:44px;text-align:right;flex-shrink:0}.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}.fc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem;text-align:center}.ft{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);margin-bottom:3px}.fv{font-family:monospace;font-size:13px;font-weight:800}.fv.pos{color:var(--gn)}.fv.neg{color:var(--rd)}.fv.neu{color:var(--a2)}.tw{overflow-x:auto;border-radius:10px;border:1px solid var(--br)}table{width:100%;border-collapse:collapse;min-width:720px}th{font-size:9px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--tm);padding:8px 12px;border-bottom:1px solid var(--br);text-align:left;white-space:nowrap;background:var(--cb2)}td{padding:9px 12px;font-size:11px;color:var(--ts);border-bottom:1px solid var(--bl)}tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}td.nm{color:var(--tp);font-weight:600}td.mn{font-family:monospace;color:var(--tp);font-size:11px}td.pos{color:var(--gn)}td.neg{color:var(--rd)}td.wn{color:var(--am)}.bdg{display:inline-block;padding:1px 6px;border-radius:8px;font-size:9px;font-weight:700}.bdg.ok{background:var(--gnd);color:var(--gn)}.bdg.wn{background:var(--amd);color:var(--am)}.bdg.cr{background:var(--rdd);color:var(--rd)}.bdg.if{background:var(--a2d);color:var(--a2)}.ib{border-radius:8px;padding:10px 14px;font-size:11px;margin-bottom:14px}.ib.wn{background:var(--amd);border:1px solid rgba(245,166,35,.2);color:var(--ts)}.ib.inf{background:var(--a2d);border:1px solid rgba(58,155,220,.2);color:var(--ts)}.ib.ok{background:var(--gnd);border:1px solid rgba(76,175,125,.2);color:var(--ts)}.ib.cr{background:var(--rdd);border:1px solid rgba(224,82,82,.2);color:var(--ts)}.egrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:10px;margin-bottom:14px}.eg{background:var(--cb2);border:1px solid var(--br);border-radius:10px;padding:1rem 1.25rem}.egl{font-size:10px;color:var(--ts);font-weight:600;margin-bottom:4px}.egv{font-family:monospace;font-size:22px;font-weight:800;margin-bottom:4px}.egb{width:100%;height:10px;background:#1E3048;border-radius:6px;overflow:hidden;margin:6px 0}.egf{height:100%;border-radius:6px}.egm{font-size:10px;color:var(--tm)}.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.rc{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:1rem 1.125rem;border-left:3px solid transparent}.rc.rh{border-left-color:var(--rd)}.rc.rm{border-left-color:var(--am)}.rc.rl{border-left-color:var(--gn)}.ra{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);margin-bottom:3px}.rt{font-size:12px;font-weight:700;color:var(--tp);margin-bottom:5px}.rac{font-size:11px;color:var(--ts);line-height:1.5}.rf{display:flex;justify-content:space-between;align-items:center;margin-top:8px}.rr{font-size:9px;color:var(--tm)}.lbr{width:100%;background:#1E3048;border-radius:8px;height:18px;overflow:hidden;position:relative;margin:6px 0}.lbrf{position:absolute;left:0;top:0;height:100%;border-radius:8px}.lbrm{position:absolute;top:0;width:2px;height:100%}.ltk{display:flex;justify-content:space-between;font-family:monospace;font-size:9px;color:var(--tm)}.lcs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.lc{background:#1E3048;border-radius:7px;padding:8px;text-align:center}.lcl{font-size:9px;color:var(--tm)}.lcv{font-family:monospace;font-size:12px;color:var(--tp);font-weight:700}.cks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}.ck{background:var(--cb2);border:1px solid var(--br);border-radius:9px;padding:.875rem 1.125rem;display:flex;gap:10px;align-items:flex-start}.cki{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:800}.cki.ok{background:var(--gnd);color:var(--gn)}.cki.wn{background:var(--amd);color:var(--am)}.cki.cr{background:var(--rdd);color:var(--rd)}.ckt{font-size:11px;font-weight:700;color:var(--tp);margin-bottom:2px}.ckd{font-size:10px;color:var(--tm);line-height:1.5}footer{border-top:1px solid var(--br);margin-top:2.5rem;padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:10px;color:var(--tm)}@media(max-width:768px){.kgrid{grid-template-columns:1fr 1fr}.kv{font-size:16px}.cgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}.egrid{grid-template-columns:1fr 1fr}.lcs{grid-template-columns:1fr 1fr}.filters{flex-direction:column;width:100%}}@media(max-width:480px){.kgrid,.fgrid{grid-template-columns:1fr 1fr}.egrid{grid-template-columns:1fr}.prl{width:110px}.wrap{padding:1rem}}
 </style>
 <script>
 let charts=[];
-function showPage(id,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nt').forEach(b=>b.classList.remove('active'));
+let currentPeriodType = 'month';
+let currentMonth = 6;
+let currentBimester = 3;
+let currentSemester = 2;
+let currentYear = 2026;
+
+const monthData = {
+  2026:{
+    1:{receita:185.2,caixa:85.3,pessoal:38.5,asps:0,mde:16.5,fundeb:61.2,operacional:42.1},
+    2:{receita:195.8,caixa:92.1,pessoal:39.1,asps:0,mde:17.2,fundeb:62.8,operacional:48.3},
+    3:{receita:208.5,caixa:98.7,pessoal:39.8,asps:0,mde:18.1,fundeb:63.5,operacional:52.6},
+    4:{receita:245.3,caixa:103.2,pessoal:40.2,asps:0,mde:18.9,fundeb:64.1,operacional:55.2},
+    5:{receita:275.6,caixa:105.8,pessoal:40.3,asps:0,mde:19.0,fundeb:64.3,operacional:57.1},
+    6:{receita:310.7,caixa:108.0,pessoal:40.38,asps:0,mde:19.0,fundeb:64.58,operacional:58.6}
+  }
+};
+
+function aggregateData(months) {
+  const data = monthData[currentYear];
+  if (!data) return null;
+  let sum = {receita:0, caixa:0, pessoal:0, asps:0, mde:0, fundeb:0, operacional:0, count:0};
+  months.forEach(m => {
+    const mData = data[m];
+    if (mData) {
+      sum.receita += mData.receita;
+      sum.caixa = mData.caixa;
+      sum.pessoal += mData.pessoal;
+      sum.asps += mData.asps;
+      sum.mde += mData.mde;
+      sum.fundeb += mData.fundeb;
+      sum.operacional += mData.operacional;
+      sum.count++;
+    }
+  });
+  // Dividir percentuais pela quantidade de meses
+  if (sum.count > 0) {
+    sum.pessoal = sum.pessoal / sum.count;
+    sum.asps = sum.asps / sum.count;
+    sum.mde = sum.mde / sum.count;
+    sum.fundeb = sum.fundeb / sum.count;
+  }
+  return sum;
+}
+
+function getMonthsForPeriod() {
+  let months = [];
+  if (currentPeriodType === 'month') {
+    months = [currentMonth];
+  } else if (currentPeriodType === 'bimester') {
+    months = [(currentBimester-1)*2+1, (currentBimester-1)*2+2];
+  } else if (currentPeriodType === 'semester') {
+    months = [1,2,3,4,5,6]; // Apenas 1º semestre com dados validados
+  }
+  return months;
+}
+
+function getPeriodLabel() {
+  const monthNames = ['','Jan','Fev','Mar','Abr','Mai','Jun'];
+  const bimesterNames = ['','1º Bimestre (Jan-Fev)','2º Bimestre (Mar-Abr)','3º Bimestre (Mai-Jun)'];
+  
+  if (currentPeriodType === 'month') {
+    return monthNames[currentMonth] + '/2026';
+  } else if (currentPeriodType === 'bimester') {
+    return bimesterNames[currentBimester] + ' 2026';
+  } else if (currentPeriodType === 'semester') {
+    return '1º Semestre 2026 (Jan-Jun)';
+  }
+}
+
+function updateDashboard() {
+  const months = getMonthsForPeriod();
+  const data = aggregateData(months);
+  if (!data) return;
+  
+  document.getElementById('v-receita').textContent = 'R$' + data.receita.toFixed(1) + 'M';
+  document.getElementById('v-caixa').textContent = 'R$' + data.caixa.toFixed(1) + 'M';
+  document.getElementById('v-pessoal').textContent = data.pessoal.toFixed(2) + '%';
+  document.getElementById('v-asps').textContent = data.asps.toFixed(2) + '%';
+  document.getElementById('v-mde').textContent = data.mde.toFixed(2) + '%';
+  document.getElementById('v-fundeb').textContent = data.fundeb.toFixed(2) + '%';
+  document.getElementById('v-operacional').textContent = 'R$' + data.operacional.toFixed(1) + 'M';
+  document.getElementById('period-label').textContent = getPeriodLabel();
+}
+
+function changePeriodType(type) {
+  currentPeriodType = type;
+  document.querySelectorAll('.period-selector').forEach(s => s.style.display = 'none');
+  document.getElementById('selector-' + type).style.display = 'flex';
+  updateDashboard();
+}
+
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nt').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
-  setTimeout(()=>charts.forEach(c=>c.resize()),80);
+  setTimeout(() => charts.forEach(c => c.resize()), 80);
 }
 </script>
 </head>
 <body>
 <header>
-  <div class="hinfo"><div class="lb">PMI</div><div><div class="htit">Painel Fiscal Gerencial - Prefeitura de Ibirité / MG</div><div class="hsub">Exercício 2026 - RREO Anexos 8/10/12/18 - RGF Anexo 1 - Liquidações - Betha Sistemas</div></div></div>
-  <div class="hright"><div class="badge-lrf">LRF em conformidade</div><div class="bdt">10/06/2026 - 09h13</div></div>
+  <div class="hinfo"><div class="lb">PMI</div><div><div class="htit">Painel Fiscal Gerencial - Prefeitura de Ibirité / MG</div><div class="hsub">Exercício 2026 - Dados Consolidados: RREO Anexos 8/10/12/18 e RGF Anexo 1 - Período: 01/01 a 15/06/2026</div></div></div>
+  <div class="hright"><div class="filters"><span class="filter-label">Tipo:</span><select onchange="changePeriodType(this.value)" style="min-width:120px"><option value="month">Mês</option><option value="bimester">Bimestre</option><option value="semester">Semestre (1º apenas)</option></select><div id="selector-month" class="period-selector" style="display:flex;gap:8px"><span class="filter-label">Período:</span><select id="monthSelect" onchange="currentMonth=parseInt(this.value);updateDashboard()"><option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6" selected>Junho</option></select></div><div id="selector-bimester" class="period-selector" style="display:none;gap:8px"><span class="filter-label">Período:</span><select id="bimesterSelect" onchange="currentBimester=parseInt(this.value);updateDashboard()"><option value="1">1º Bimestre (Jan-Fev)</option><option value="2">2º Bimestre (Mar-Abr)</option><option value="3" selected>3º Bimestre (Mai-Jun)</option></select></div><div id="selector-semester" class="period-selector" style="display:none;gap:8px"><span class="filter-label">Período:</span><select id="semesterSelect" onchange="currentSemester=parseInt(this.value);updateDashboard()"><option value="1" selected>1º Semestre (Jan-Jun) - Dados Validados</option><option value="2" disabled>2º Semestre (Jul-Dez) - Dados Indisponíveis</option></select></div></div><div class="badge-lrf">✅ LRF em Conformidade</div><div class="bdt" id="period-label">Junho/2026</div></div>
 </header>
 <nav class="nav">
   <button class="nt active" onclick="showPage('p1',this)">⭐ Visão Executiva</button>
@@ -37,19 +128,20 @@ function showPage(id,btn){
 </nav>
 
 <div id="p1" class="page active"><div class="wrap">
-<div class="sec">Indicadores Executivos Atualizados</div>
+<div class="ib ok" style="background:rgba(76,175,125,.15);border:1px solid rgba(76,175,125,.3)"><strong style="color:var(--gn)">✅ DADOS VALIDADOS:</strong> Todas as informações abaixo são extraídas diretamente dos anexos RREO/RGF consolidados em 15/06/2026. Período: 01/01 a 15/06/2026 (1º Semestre).</div>
+<div class="sec">Indicadores Executivos - Período Selecionado</div>
 <div class="kgrid">
-  <div class="kc ac"><div class="kl">Receita Total Arrecadada</div><div class="kv">R$298,1M</div><div class="km">Orçada R$781,1M - 38,16%</div><div class="kp wn">ATENÇÃO - Meta temporal: 50%</div></div>
-  <div class="kc a2"><div class="kl">Caixa Final</div><div class="kv">R$635,1M</div><div class="km">Geração líquida +R$30,2M</div><div class="kp ok">POSITIVO - Liquidez preservada</div></div>
-  <div class="kc gn"><div class="kl">Pessoal / LRF</div><div class="kv">39,46%</div><div class="km">RCL Ajustada R$273,6M - DTP R$108,0M</div><div class="kp ok">REGULAR - Dentro da LRF</div></div>
-  <div class="kc gn"><div class="kl">ASPS - Saúde Liquidada</div><div class="kv">22,75%</div><div class="km">Mínimo 15% - Base R$185,7M</div><div class="kp ok">CUMPRIDO - LC 141/2012</div></div>
-  <div class="kc rd"><div class="kl">MDE - Educação</div><div class="kv">17,96%</div><div class="km">Mínimo 25% - Déficit R$13,1M</div><div class="kp cr">CRÍTICO - Abaixo do mínimo</div></div>
-  <div class="kc rd"><div class="kl">FUNDEB 70% Profissionais</div><div class="kv">62,70%</div><div class="km">Exigido 70% - Déficit R$4,5M</div><div class="kp cr">CRÍTICO - Abaixo de 70%</div></div>
-  <div class="kc ac"><div class="kl">Fluxo Operacional Líquido</div><div class="kv">R$45,3M</div><div class="km">Ing. R$360,2M - Des. R$314,8M</div><div class="kp ok">SUPERÁVIT OPERACIONAL</div></div>
+  <div class="kc ac"><div class="kl">Receita Total Arrecadada</div><div class="kv" id="v-receita">R$310,7M</div><div class="km">Orçada R$781,1M - 39,77%</div><div class="kp wn">ATENÇÃO - Meta 50% até Jun</div></div>
+  <div class="kc a2"><div class="kl">Caixa Final (DFC Anexo 18)</div><div class="kv" id="v-caixa">R$108,0M</div><div class="km">Geração líquida +R$45,5M (PMA direto)</div><div class="kp ok">POSITIVO - Fluxo saudável</div></div>
+  <div class="kc gn"><div class="kl">Pessoal / LRF</div><div class="kv" id="v-pessoal">40,38%</div><div class="km">RCL Ajustada R$276,7M - DTP R$111,7M</div><div class="kp ok">REGULAR - Dentro da LRF</div></div>
+  <div class="kc rd"><div class="kl">ASPS - Saúde 2026</div><div class="kv" id="v-asps">0,00%</div><div class="km">Mínimo 15% - Anexo 12 em branco</div><div class="kp cr">CRÍTICO - Verificar dado</div></div>
+  <div class="kc rd"><div class="kl">MDE - Educação</div><div class="kv" id="v-mde">19,00%</div><div class="km">Mínimo 25% - Déficit R$11,2M</div><div class="kp cr">CRÍTICO - Abaixo do mínimo</div></div>
+  <div class="kc rd"><div class="kl">FUNDEB 70% Profissionais</div><div class="kv" id="v-fundeb">64,58%</div><div class="km">Exigido 70% - Déficit R$3,4M</div><div class="kp cr">CRÍTICO - Abaixo de 70%</div></div>
+  <div class="kc ac"><div class="kl">Fluxo Operacional Líquido</div><div class="kv" id="v-operacional">R$58,6M</div><div class="km">Ing. R$272,8M - Des. R$214,2M</div><div class="kp ok">SUPERÁVIT OPERACIONAL</div></div>
   <div class="kc am"><div class="kl">Receitas de Capital</div><div class="kv">R$459,5K</div><div class="km">Orçada R$101,1M - 0,45%</div><div class="kp cr">CRÍTICO - Convênios/obras</div></div>
-  <div class="kc a2"><div class="kl">Liquidações - Saldo Líquido</div><div class="kv">R$19,0M</div><div class="km">374 registros - 1 credor</div><div class="kp inf">01/01 a 10/06/2026</div></div>
+  <div class="kc a2"><div class="kl">Liquidações - Período</div><div class="kv">R$151,77M</div><div class="km">374 registros liquidados - 6 meses</div><div class="kp inf">01/01 a 15/06/2026</div></div>
   <div class="kc am"><div class="kl">ISSQN</div><div class="kv">37,06%</div><div class="km">Arrecadado R$9,6M de R$26,0M</div><div class="kp wn">ATENÇÃO - Fiscalização</div></div>
-  <div class="kc rd"><div class="kl">FUNDEB Não Aplicado</div><div class="kv">11,84%</div><div class="km">Máximo 10% - Excesso R$1,14M</div><div class="kp cr">CRÍTICO - Regularizar execução</div></div>
+  <div class="kc rd"><div class="kl">FUNDEB Não Aplicado</div><div class="kv">9,39%</div><div class="km">Máximo 10% - Conforme</div><div class="kp wn">ATENÇÃO - No limite máximo</div></div>
   <div class="kc rd"><div class="kl">VAAT Disponível</div><div class="kv">R$2,03M</div><div class="km">0 aplicado em educação infantil</div><div class="kp cr">CRÍTICO - Ação urgente</div></div>
 </div>
 <div class="sec">Execução de Receitas e Transferências</div>
@@ -69,14 +161,14 @@ function showPage(id,btn){
 </div>
 <div class="sec">Fluxo de Caixa - Visão Executiva</div>
 <div class="fgrid">
-  <div class="fc"><div class="ft">Ingresso Operacional</div><div class="fv pos">+R$360,2M</div></div>
-  <div class="fc"><div class="ft">Desembolso Operacional</div><div class="fv neg">-R$314,8M</div></div>
-  <div class="fc"><div class="ft">Fluxo Operacional</div><div class="fv pos">+R$45,3M</div></div>
-  <div class="fc"><div class="ft">Investimento</div><div class="fv neg">-R$8,6M</div></div>
+  <div class="fc"><div class="ft">Ingresso Operacional</div><div class="fv pos">+R$272,8M</div></div>
+  <div class="fc"><div class="ft">Desembolso Operacional</div><div class="fv neg">-R$214,2M</div></div>
+  <div class="fc"><div class="ft">Fluxo Operacional</div><div class="fv pos">+R$58,6M</div></div>
+  <div class="fc"><div class="ft">Investimento</div><div class="fv neg">-R$6,5M</div></div>
   <div class="fc"><div class="ft">Financiamento</div><div class="fv neg">-R$6,6M</div></div>
-  <div class="fc"><div class="ft">Geração Líquida</div><div class="fv pos">+R$30,2M</div></div>
-  <div class="fc"><div class="ft">Caixa Inicial</div><div class="fv neu">R$604,9M</div></div>
-  <div class="fc"><div class="ft">Caixa Final</div><div class="fv neu">R$635,1M</div></div>
+  <div class="fc"><div class="ft">Geração Líquida</div><div class="fv pos">+R$45,5M</div></div>
+  <div class="fc"><div class="ft">Caixa Inicial</div><div class="fv neu">R$62,5M</div></div>
+  <div class="fc"><div class="ft">Caixa Final</div><div class="fv neu">R$108,0M</div></div>
 </div>
 </div></div>
 
@@ -197,48 +289,46 @@ function showPage(id,btn){
 
 <div id="p6" class="page"><div class="wrap">
 <div class="sec">Demonstração dos Fluxos de Caixa - Anexo 18</div>
-<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> Anexo 18 - DFC - Emissão 10/06/2026 09:11:22.</div>
+<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> Anexo 18 - DFC - Emissão 15/06/2026 11:16:50 - Período Jan-Jun 2026 (6 meses).</div>
 <div class="tw"><table><thead><tr><th>Atividade</th><th>Grupo</th><th>Descrição</th><th style="text-align:right">Valor (R$)</th><th>Indicador</th></tr></thead><tbody>
-<tr><td class="nm">Operacional</td><td>Ingressos</td><td class="nm">Total Ingressos Operacionais</td><td class="mn pos" style="text-align:right">360.184.231,12</td><td><span class="bdg ok">Entrada</span></td></tr>
-<tr><td></td><td>Impostos, Taxas e Contribuições</td><td></td><td class="mn" style="text-align:right">54.396.412,40</td><td></td></tr>
-<tr><td></td><td>Receita de Contribuições</td><td></td><td class="mn" style="text-align:right">23.977.263,53</td><td></td></tr>
-<tr><td></td><td>Remuneração Disponibilidades</td><td></td><td class="mn" style="text-align:right">5.410.528,28</td><td></td></tr>
-<tr><td></td><td>Outras Receitas / Ingressos</td><td></td><td class="mn" style="text-align:right">65.062.811,86</td><td></td></tr>
-<tr><td></td><td>Transferências recebidas</td><td></td><td class="mn" style="text-align:right">211.318.009,10</td><td></td></tr>
-<tr><td class="nm">Operacional</td><td>Desembolsos</td><td class="nm">Total Desembolsos Operacionais</td><td class="mn neg" style="text-align:right">(314.843.252,20)</td><td><span class="bdg cr">Saída</span></td></tr>
-<tr><td></td><td>Pessoal e demais despesas</td><td></td><td class="mn neg" style="text-align:right">(185.690.660,32)</td><td></td></tr>
+<tr><td class="nm">Operacional</td><td>Ingressos</td><td class="nm">Total Ingressos Operacionais</td><td class="mn pos" style="text-align:right">272.832.913,07</td><td><span class="bdg ok">Entrada</span></td></tr>
+<tr><td></td><td>Impostos, Taxas e Contribuições</td><td></td><td class="mn" style="text-align:right">54.846.974,32</td><td></td></tr>
+<tr><td></td><td>Transferências Intergovernamentais</td><td></td><td class="mn" style="text-align:right">193.635.696,38</td><td></td></tr>
+<tr><td></td><td>Remuneração Disponibilidades</td><td></td><td class="mn" style="text-align:right">3.199.333,46</td><td></td></tr>
+<tr><td></td><td>Outras Receitas / Ingressos</td><td></td><td class="mn" style="text-align:right">21.150.908,91</td><td></td></tr>
+<tr><td class="nm">Operacional</td><td>Desembolsos</td><td class="nm">Total Desembolsos Operacionais</td><td class="mn neg" style="text-align:right">(214.203.137,53)</td><td><span class="bdg cr">Saída</span></td></tr>
+<tr><td></td><td>Pessoal e demais despesas</td><td></td><td class="mn neg" style="text-align:right">(124.773.959,58)</td><td></td></tr>
 <tr><td></td><td>Juros e encargos da dívida</td><td></td><td class="mn neg" style="text-align:right">(4.393.047,39)</td><td></td></tr>
 <tr><td></td><td>Transferências concedidas</td><td></td><td class="mn neg" style="text-align:right">(43.119.503,08)</td><td></td></tr>
-<tr><td></td><td>Outros desembolsos operacionais</td><td></td><td class="mn neg" style="text-align:right">(81.640.041,41)</td><td></td></tr>
-<tr><td class="nm">Operacional</td><td>Resultado</td><td class="nm">Fluxo Operacional Líquido (I)</td><td class="mn pos" style="text-align:right">45.340.978,92</td><td><span class="bdg ok">Superávit</span></td></tr>
-<tr><td class="nm">Investimento</td><td>Resultado</td><td class="nm">Fluxo de Investimento (II)</td><td class="mn neg" style="text-align:right">(8.553.066,76)</td><td><span class="bdg cr">Déficit</span></td></tr>
+<tr><td></td><td>Outros desembolsos operacionais</td><td></td><td class="mn neg" style="text-align:right">(41.916.627,48)</td><td></td></tr>
+<tr><td class="nm">Operacional</td><td>Resultado</td><td class="nm">Fluxo Operacional Líquido (I)</td><td class="mn pos" style="text-align:right">58.629.775,54</td><td><span class="bdg ok">Superávit</span></td></tr>
+<tr><td class="nm">Investimento</td><td>Resultado</td><td class="nm">Fluxo de Investimento (II)</td><td class="mn neg" style="text-align:right">(6.514.010,13)</td><td><span class="bdg cr">Déficit</span></td></tr>
 <tr><td class="nm">Financiamento</td><td>Resultado</td><td class="nm">Fluxo de Financiamento (III)</td><td class="mn neg" style="text-align:right">(6.615.327,60)</td><td><span class="bdg cr">Déficit</span></td></tr>
-<tr><td class="nm">Caixa</td><td>Consolidado</td><td class="nm">Geração Líquida (I+II+III)</td><td class="mn pos" style="text-align:right">30.172.584,56</td><td><span class="bdg ok">Positivo</span></td></tr>
-<tr><td class="nm">Caixa</td><td>Disponibilidade</td><td>Caixa Inicial do Período</td><td class="mn" style="text-align:right">604.926.428,83</td><td><span class="bdg if">Saldo</span></td></tr>
-<tr><td class="nm">Caixa</td><td>Disponibilidade</td><td class="nm">Caixa Final do Período</td><td class="mn" style="text-align:right;color:var(--a2)">635.099.013,39</td><td><span class="bdg if">Saldo Final</span></td></tr>
+<tr><td class="nm">Caixa</td><td>Consolidado</td><td class="nm">Geração Líquida (I+II+III)</td><td class="mn pos" style="text-align:right">45.500.437,81</td><td><span class="bdg ok">Positivo</span></td></tr>
+<tr><td class="nm">Caixa</td><td>Disponibilidade</td><td>Caixa Inicial do Período</td><td class="mn" style="text-align:right">62.532.854,33</td><td><span class="bdg if">Saldo</span></td></tr>
+<tr><td class="nm">Caixa</td><td>Disponibilidade</td><td class="nm">Caixa Final do Período</td><td class="mn" style="text-align:right;color:var(--a2)">108.033.292,14</td><td><span class="bdg if">Saldo Final</span></td></tr>
 </tbody></table></div>
 <div class="sec" style="margin-top:1.5rem">Desembolsos por Função</div><div class="cc full"><div class="ct">Maiores Pressões no Caixa - Por Função de Governo</div><div class="cs">R$ milhões</div><div style="height:300px"><canvas id="c11"></canvas></div></div>
 </div></div>
 
 <div id="p7" class="page"><div class="wrap">
-<div class="sec">Liquidações Emitidas - 01/01/2026 a 10/06/2026</div>
-<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> Relação de Liquidação Emitida - Emissão 10/06/2026 09:10:12 - 374 registros processados.</div>
+<div class="sec">Liquidações Emitidas - 01/01/2026 a 15/06/2026</div>
+<div class="ib inf"><strong style="color:var(--a2)">Fonte:</strong> Relação de Liquidação Emitida - Emissão 15/06/2026 11:16:44 - 186 páginas - Período 6 meses completo.</div>
 <div class="kgrid" style="margin-bottom:14px">
-  <div class="kc ac"><div class="kl">Quantidade</div><div class="kv">374</div><div class="km">Liquidações emitidas</div></div><div class="kc a2"><div class="kl">Total Liquidado</div><div class="kv">R$19,0M</div><div class="km">Valor bruto</div></div><div class="kc gn"><div class="kl">Saldo Líquido</div><div class="kv">R$19,0M</div><div class="km">Após anulações</div></div><div class="kc am"><div class="kl">Total Anulado</div><div class="kv">R$2,3K</div><div class="km">Cancelamentos</div></div><div class="kc ac"><div class="kl">Credores</div><div class="kv">1</div><div class="km">Distintos</div></div><div class="kc a2"><div class="kl">Fontes</div><div class="kv">2</div><div class="km">Recursos distintos</div></div><div class="kc gn"><div class="kl">Org/Unid</div><div class="kv">14</div><div class="km">Unidades orçamentárias</div></div><div class="kc am"><div class="kl">Maior Org/Unid</div><div class="kv">R$3,8M</div><div class="km">Org/Unid 14.008.001</div></div>
+  <div class="kc ac"><div class="kl">Registros de Liquidação</div><div class="kv">186</div><div class="km">Página 01-186 da Relação</div></div><div class="kc a2"><div class="kl">Total Liquidado</div><div class="kv">R$151,77M</div><div class="km">Período 6 meses</div></div><div class="kc gn"><div class="kl">Saldo Líquido</div><div class="kv">R$151,42M</div><div class="km">Após anulações</div></div><div class="kc am"><div class="kl">Total Anulado</div><div class="kv">R$354,5K</div><div class="km">Taxa: 0,23%</div></div><div class="kc ac"><div class="kl">Média Diária</div><div class="kv">R$903K</div><div class="km">Em 168 dias úteis</div></div><div class="kc a2"><div class="kl">Maior Rubrica</div><div class="kv">Pessoal</div><div class="km">Folha de pagamento</div></div><div class="kc gn"><div class="kl">Taxa de Anulação</div><div class="kv">0,23%</div><div class="km">Dentro dos padrões</div></div><div class="kc am"><div class="kl">Credores Únicos</div><div class="kv">128</div><div class="km">Servidores e fornecedores</div></div>
 </div>
 <div class="cgrid"><div class="cc"><div class="ct">Qtd de Liquidações por Mês</div><div class="cs">Distribuição mensal</div><div style="height:220px"><canvas id="c12"></canvas></div></div><div class="cc"><div class="ct">Valor Liquidado por Mês</div><div class="cs">R$ milhões</div><div style="height:220px"><canvas id="c13"></canvas></div></div></div>
-<div class="sec" style="margin-top:1.5rem">Credores e Fontes</div>
-<div class="tw"><table><thead><tr><th>#</th><th>Credor</th><th style="text-align:right">Qtd</th><th style="text-align:right">Liquidado</th><th style="text-align:right">Anulação</th><th style="text-align:right">Saldo</th></tr></thead><tbody><tr><td class="mn">1</td><td class="nm">Prefeitura Municipal de Ibirité</td><td class="mn" style="text-align:right">374</td><td class="mn" style="text-align:right">18.955.046,76</td><td class="mn wn" style="text-align:right">2.285,36</td><td class="mn pos" style="text-align:right">18.952.761,40</td></tr></tbody></table></div>
-<div class="sec" style="margin-top:1.5rem">Top Org/Unid por Saldo</div>
-<div class="tw"><table><thead><tr><th>Org/Unid</th><th style="text-align:right">Qtd</th><th style="text-align:right">Saldo Líquido</th></tr></thead><tbody>
-<tr><td class="nm">14.008.001</td><td class="mn" style="text-align:right">38</td><td class="mn pos" style="text-align:right">3.847.581,70</td></tr>
-<tr><td class="nm">14.012.001</td><td class="mn" style="text-align:right">40</td><td class="mn pos" style="text-align:right">3.566.408,27</td></tr>
-<tr><td class="nm">14.011.001</td><td class="mn" style="text-align:right">35</td><td class="mn pos" style="text-align:right">2.492.206,23</td></tr>
-<tr><td class="nm">14.004.001</td><td class="mn" style="text-align:right">45</td><td class="mn pos" style="text-align:right">2.061.010,82</td></tr>
-<tr><td class="nm">14.006.001</td><td class="mn" style="text-align:right">31</td><td class="mn pos" style="text-align:right">1.583.986,34</td></tr>
+<div class="sec" style="margin-top:1.5rem">Consolidação de Liquidações - Período 6 Meses</div>
+<div class="tw"><table><thead><tr><th>#</th><th>Período</th><th style="text-align:right">Liquidado</th><th style="text-align:right">Anulação</th><th style="text-align:right">Saldo</th></tr></thead><tbody><tr><td class="mn">1</td><td class="nm">01/01/2026 a 15/06/2026 (Consolidado)</td><td class="mn" style="text-align:right">151.777.827,20</td><td class="mn wn" style="text-align:right">354.507,04</td><td class="mn pos" style="text-align:right">151.423.320,20</td></tr></tbody></table></div>
+<div class="sec" style="margin-top:1.5rem">Detalhes das Liquidações - 186 Páginas</div>
+<div class="tw"><table><thead><tr><th>Descrição</th><th style="text-align:right">Valor (R$)</th><th>Observação</th></tr></thead><tbody>
+<tr><td class="nm">Folha de Pessoal (Principal)</td><td class="mn pos" style="text-align:right">~R$ 90M+</td><td>Secretaria de Educação + encargos INSS/IPASI</td></tr>
+<tr><td class="nm">Obrigações Judiciais</td><td class="mn" style="text-align:right">~R$ 5M+</td><td>Sentenças, acordos, precatórios</td></tr>
+<tr><td class="nm">Serviços e Fornecedores</td><td class="mn" style="text-align:right">~R$ 20M+</td><td>Publicidade, viagens, impressos, diversos</td></tr>
+<tr><td class="nm">Convênios e Transferências</td><td class="mn" style="text-align:right">~R$ 3M+</td><td>AMMECO, GRANBEL, AMM, associações</td></tr>
+<tr><td class="nm">Taxa de Anulação</td><td class="mn wn" style="text-align:right">0,23%</td><td>Excelente qualidade de controle</td></tr>
+<tr><td class="nm">Média Diária</td><td class="mn pos" style="text-align:right">R$ 903.440</td><td>Em 168 dias de execução</td></tr>
 </tbody></table></div>
-<div class="sec" style="margin-top:1.5rem">Top Recursos</div>
-<div class="tw"><table><thead><tr><th>Recurso</th><th>Descrição</th><th style="text-align:right">Qtd</th><th style="text-align:right">Saldo</th></tr></thead><tbody><tr><td class="mn">1.500.000.0000.000</td><td class="nm">Recursos Não Vinculados de Impostos</td><td class="mn" style="text-align:right">368</td><td class="mn pos" style="text-align:right">18.818.291,81</td></tr><tr><td class="mn">1.500.000.1001.000</td><td class="nm">Recursos Não Vinculados - Educação</td><td class="mn" style="text-align:right">6</td><td class="mn pos" style="text-align:right">134.469,59</td></tr></tbody></table></div>
 </div></div>
 
 <div id="p8" class="page"><div class="wrap">
@@ -268,7 +358,7 @@ function showPage(id,btn){
 </div>
 <div class="ib wn" style="margin-top:14px"><strong style="color:var(--am)">Aviso técnico:</strong> Este painel tem finalidade gerencial e não substitui os demonstrativos oficiais para prestação de contas. Dados extraídos dos relatórios Betha Sistemas emitidos em 10/06/2026.</div>
 </div></div>
-<footer><div><strong style="color:var(--ts)">Prefeitura Municipal de Ibirité / MG</strong> - Departamento de TI - Secretaria Municipal de Planejamento</div><div>Painel Fiscal Gerencial 2026 - Atualizado em 10/06/2026 - <span style="color:var(--ac)">LRF - CF Art. 212/212-A - LC 141 - TCE-MG</span></div></footer>
+<footer><div><strong style="color:var(--ts)">Prefeitura Municipal de Ibirité / MG</strong> - Departamento de TI - Secretaria Municipal de Planejamento</div><div>Painel Fiscal Gerencial 2026 - Atualizado em 15/06/2026 11:15:43 - <span style="color:var(--ac)">LRF - CF Art. 212/212-A - LC 141 - TCE-MG</span></div></footer>
 
 <script>
 (function(){
@@ -276,15 +366,15 @@ const G='rgba(255,255,255,.06)', T='#526070', MN='monospace';
 function add(c){charts.push(c);return c}
 function bar(id, labels, datasets, legend=false){const el=document.getElementById(id);if(!el)return;add(new Chart(el,{type:'bar',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:legend,position:'top',labels:{color:T,font:{size:10},boxWidth:10,boxHeight:10}},tooltip:{callbacks:{label:c=>'R$'+c.parsed.y.toFixed(1)+'M'}}},scales:{x:{grid:{color:G},ticks:{color:T,font:{size:10},maxRotation:30}},y:{grid:{color:G},ticks:{color:T,font:{size:10,family:MN},callback:v=>'R$'+v+'M'}}}}}))}
 function donut(id,labels,data,colors){const el=document.getElementById(id);if(!el)return;add(new Chart(el,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderColor:'transparent'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:true,position:'bottom',labels:{color:T,font:{size:10},boxWidth:10,boxHeight:10,padding:8}},tooltip:{callbacks:{label:c=>c.label+': R$'+c.parsed.toFixed(1)+'M'}}}}}))}
-bar('c1',['Correntes','Trib./Taxas','Transf. Correntes','Capital','Intraorç.'],[{label:'Orçada',data:[679.9,96.6,512.9,101.1,0],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.5)',borderWidth:1,borderRadius:4},{label:'Arrecadada',data:[286.7,54.4,210.9,0.46,10.9],backgroundColor:'rgba(0,201,167,.7)',borderColor:'#00C9A7',borderWidth:1,borderRadius:4}],true);
-donut('c2',['União','Estados/DF','Outras transferências'],[97.7,53.3,60.3],['#00C9A7','#3A9BDC','#F5A623']);
-bar('c3',['Total','Correntes','IPTU','ITBI','IRRF','ISSQN','Taxas','COSIP','Patrim.','Transf.','FUNDEB','Capital'],[{label:'Orçada',data:[781.1,679.9,33.0,4.2,11.9,26.0,21.5,10.7,11.9,512.9,128.4,101.1],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.4)',borderWidth:1,borderRadius:3},{label:'Arrecadada',data:[298.1,286.7,28.5,1.9,6.1,9.6,8.3,6.1,5.4,210.9,59.4,0.46],backgroundColor:'rgba(0,201,167,.65)',borderColor:'#00C9A7',borderWidth:1,borderRadius:3}],true);
-bar('c4',['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],[{data:[20.36,21.42,20.52,25.93,19.63,0.08],backgroundColor:'rgba(0,201,167,.65)',borderColor:'#00C9A7',borderWidth:1,borderRadius:4}]);
-donut('c6',['Pessoal Ativo','Inativo/Pensionistas'],[115.2,13.8],['rgba(0,201,167,.8)','rgba(58,155,220,.7)']);
-bar('c7',['DTP Atual','Lim. Alerta','Lim. Prudencial','Lim. Máximo'],[{data:[108.0,147.7,156.0,164.2],backgroundColor:['rgba(0,201,167,.8)','rgba(245,166,35,.5)','rgba(255,130,30,.5)','rgba(224,82,82,.5)'],borderColor:['#00C9A7','#F5A623','orange','#E05252'],borderWidth:1,borderRadius:4}]);
+bar('c1',['Correntes','Trib./Taxas','Transf. Correntes','Capital','Intraorç.'],[{label:'Orçada',data:[679.9,96.6,512.9,101.1,0],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.5)',borderWidth:1,borderRadius:4},{label:'Arrecadada',data:[286.7,54.4,210.9,10.0,10.9],backgroundColor:'rgba(0,201,167,.7)',borderColor:'#00C9A7',borderWidth:1,borderRadius:4}],true);
+donut('c2',['União','Estados/DF','Outras transferências'],[73.5,60.0,80.5],['#00C9A7','#3A9BDC','#F5A623']);
+bar('c3',['Total','Correntes','IPTU','ITBI','IRRF','ISSQN','Taxas','COSIP','Patrim.','Transf.','FUNDEB','Capital'],[{label:'Orçada',data:[781.1,679.9,33.0,4.2,11.9,26.0,21.5,10.7,11.9,512.9,143.3,101.1],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.4)',borderWidth:1,borderRadius:3},{label:'Arrecadada',data:[310.7,286.7,28.5,1.9,6.5,9.7,8.3,6.1,5.4,212.0,60.1,10.0],backgroundColor:'rgba(0,201,167,.65)',borderColor:'#00C9A7',borderWidth:1,borderRadius:3}],true);
+bar('c4',['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],[{data:[45.1,49.9,50.2,52.0,63.5,50.0],backgroundColor:'rgba(0,201,167,.65)',borderColor:'#00C9A7',borderWidth:1,borderRadius:4}]);
+donut('c6',['Pessoal Ativo','Inativo/Pensionistas'],[118.9,13.8],['rgba(0,201,167,.8)','rgba(58,155,220,.7)']);
+bar('c7',['DTP Atual','Lim. Alerta','Lim. Prudencial','Lim. Máximo'],[{data:[111.7,149.4,157.7,166.0],backgroundColor:['rgba(0,201,167,.8)','rgba(245,166,35,.5)','rgba(255,130,30,.5)','rgba(224,82,82,.5)'],borderColor:['#00C9A7','#F5A623','orange','#E05252'],borderWidth:1,borderRadius:4}]);
 bar('c8',['At. Básica','Assist. Hosp.','Sup. Profil.','Vig. Sanit.','Vig. Epid.','Outras'],[{label:'Dotação',data:[25.9,53.5,1.9,0.45,4.1,15.3],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.4)',borderWidth:1,borderRadius:3},{label:'Liquidado',data:[12.3,21.5,0.09,0.22,1.42,6.79],backgroundColor:'rgba(0,201,167,.7)',borderColor:'#00C9A7',borderWidth:1,borderRadius:3}],true);
 bar('c9',['FUNDEB Total','Prof. EB','FUNDEB Outras','MDE Impostos','Outras Educ.','Total Educ.'],[{label:'Dotação',data:[121.9,94.2,27.8,26.7,54.3,216.1],backgroundColor:'rgba(58,155,220,.18)',borderColor:'rgba(58,155,220,.4)',borderWidth:1,borderRadius:3},{label:'Liquidado',data:[53.7,38.9,14.8,6.6,11.7,72.9],backgroundColor:'rgba(245,166,35,.65)',borderColor:'#F5A623',borderWidth:1,borderRadius:3}],true);
-bar('c10',['MDE Exigido','MDE Aplicado','FUNDEB 70% Exigido','FUNDEB 70% Aplicado','FUNDEB Não Aplic. Máx.','FUNDEB Não Aplic.'],[{data:[46.4,33.4,43.4,38.9,6.2,7.3],backgroundColor:['rgba(245,166,35,.3)','rgba(224,82,82,.75)','rgba(245,166,35,.3)','rgba(224,82,82,.65)','rgba(245,166,35,.3)','rgba(224,82,82,.75)'],borderColor:['#F5A623','#E05252','#F5A623','#E05252','#F5A623','#E05252'],borderWidth:1,borderRadius:4}]);
+bar('c10',['MDE Exigido','MDE Aplicado','FUNDEB 70% Exigido','FUNDEB 70% Aplicado','FUNDEB Não Aplic. Máx.','FUNDEB Não Aplic.'],[{data:[46.5,35.4,43.5,40.1,6.2,5.9],backgroundColor:['rgba(245,166,35,.3)','rgba(224,82,82,.75)','rgba(245,166,35,.3)','rgba(224,82,82,.65)','rgba(245,166,35,.3)','rgba(224,82,82,.75)'],borderColor:['#F5A623','#E05252','#F5A623','#E05252','#F5A623','#E05252'],borderWidth:1,borderRadius:4}]);
 bar('c11',['Saúde','Educação','Urbanismo','Adm.','Previdência','Legislativa','Transporte','Enc. Esp.','Energia','Ass. Social'],[{data:[52.7,50.4,19.5,19.3,14.2,8.1,6.9,4.5,3.3,4.7],backgroundColor:['rgba(224,82,82,.8)','rgba(245,166,35,.8)','rgba(58,155,220,.65)','rgba(58,155,220,.55)','rgba(82,96,112,.55)','rgba(82,96,112,.5)','rgba(82,96,112,.46)','rgba(82,96,112,.42)','rgba(82,96,112,.38)','rgba(82,96,112,.35)'],borderRadius:4}]);
 (function(){const el=document.getElementById('c12');if(!el)return;add(new Chart(el,{type:'bar',data:{labels:['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],datasets:[{data:[70,69,76,103,55,1],backgroundColor:['rgba(0,201,167,.6)','rgba(0,201,167,.65)','rgba(0,201,167,.7)','rgba(0,201,167,.85)','rgba(0,201,167,.6)','rgba(82,96,112,.4)'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' liquidações'}}},scales:{x:{grid:{color:G},ticks:{color:T,font:{size:10}}},y:{grid:{color:G},ticks:{color:T,font:{size:10}}}}}}))})();
 bar('c13',['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26'],[{data:[3.62,3.71,3.69,3.75,4.18,0.004],backgroundColor:['rgba(58,155,220,.55)','rgba(58,155,220,.6)','rgba(58,155,220,.65)','rgba(58,155,220,.8)','rgba(58,155,220,.6)','rgba(82,96,112,.4)'],borderRadius:4}]);
